@@ -1,0 +1,17 @@
+@prefix : <{BASE_08_URL}/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix web: <{WEB_08_URL}/> .
+@prefix i18n: <{I18N_08_URL}/> .
+@prefix config: <{CONFIG_08_URL}/> .
+@base <{BASE_08_URL}/> .
+
+<{BASE_08_URL}> rdf:type owl:Ontology ;
+                                            owl:versionIRI <{BASE_08_URL}/0.0.1> ;
+                                            owl:imports <{SCHEMA_ORG_08_URL}> ;
+                                            owl:imports <{WEB_08_URL}> ;
+                                            owl:imports <{I18N_08_URL}> ;
+                                            owl:imports <{CONFIG_08_URL}> .

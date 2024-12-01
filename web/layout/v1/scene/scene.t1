@@ -1,0 +1,60 @@
+package scene 
+
+import (
+	"github.com/senforsce/tndrf1sh/web/layout/i"
+	"github.com/senforsce/tndr0cean/router"
+	"github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+)
+
+t1 HTMX(c *router.Context) {
+	<section class={ c.Get("cls:container_scene").(string) } role="media" style="width: 100%">
+		{ children... }
+		<input
+			id={ c.Get("id:sceneTrigger").(string) }
+			class={ c.Get("cls:multiPayloadElement").(string) }
+			name={ c.Get("hx:ScenePayload").(string) }
+			type="hidden"
+			hx-post={ c.Get("path:CurrentComponent").(string) }
+			hx-trigger={ c.Get("hx:ChangeThrottleHalfSecond").(string) }
+			hx-target={ c.Get("ids:scene-active").(string) }
+		/>
+		<div id={ c.Get("id:scene-active").(string) } class={ c.Get("i18n:SceneInstructions").(string) }>
+			<article class={ c.Get("cls:scene-active").(string) }>
+				<hgroup>
+					<h2>{ c.Get("i18n:WelcomeMessage").(string) }</h2>
+					<h3>{ c.Get("i18n:WelcomeSubMessage").(string) }</h3>
+				</hgroup>
+				<section class={ c.Get("cls:noComponentWrapper").(string) }>
+					<div class={ c.Get("cls:nocomponent").(string) }>
+						@i.NoComponent()
+					</div>
+					<div class={ c.Get("cls:message").(string) }>
+						<p>
+							{ c.Get("i18n:SceneInstructions").(string) }
+						</p>
+					</div>
+				</section>
+				<section>
+					<ul>
+						<li><span><kbd>Esc</kbd> + <kbd>Q</kbd></span><a>{ c.Get("i18n:ShowAllCommands").(string) }</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>A</kbd></span><a>{ c.Get("i18n:GoToFile").(string) }</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>F</kbd></span><a>{ c.Get("i18n:FindInFile").(string) }</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>S</kbd></span><a>{ c.Get("i18n:ShowSettings").(string) }</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>E</kbd></span><a>{ c.Get("i18n:ExploreOntology").(string) }</a></li>
+					</ul>
+				</section>
+			</article>
+		</div>
+	</section>
+}
+
+script Propagate(c meta.Config) {
+	const triggerInputElement = document.querySelector(c.PayloadSelector);
+	triggerInputElement.value = c.Payload;
+	if(c.Inspect) {
+		console.log("Propagating");
+		console.log({ c })
+		const event = new Event('change');
+		triggerInputElement.dispatchEvent(event);
+	}
+}

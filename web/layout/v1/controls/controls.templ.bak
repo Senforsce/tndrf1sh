@@ -1,0 +1,29 @@
+package controls
+
+import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+import "github.com/senforsce/tndr0cean/router"
+
+t1 HTMX(c *router.Context) {
+	<section class="controls" role="controls" style="height: 760px; width: 100%">
+		<input
+			id="fileeditorTrigger"
+			class="multiPayloadElement"
+			name="scenePayload"
+			type="hidden"
+			hx-post={ c.Get("path:FileEdit").(string) }
+			hx-trigger="change throttle:0.5s"
+			hx-target="#fileeditor"
+		/>
+		<div id="fileeditor" class="fileeditor" style="height: 720px; width 100%"></div>
+	</section>
+}
+
+// used by text editor to prevent cyclic dependencies
+
+script Propagate(c meta.TextEditorConfig) {
+	console.log(c)
+	const triggerInputElement = document.querySelector(c.PayloadSelector);
+	triggerInputElement.value = c.Payload;
+	const event = new Event('change');
+	triggerInputElement.dispatchEvent(event);
+}

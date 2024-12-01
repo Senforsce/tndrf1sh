@@ -1,0 +1,23 @@
+
+package discovery
+
+import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+import "github.com/senforsce/tndr0cean/router"
+
+t1 HTMX(cf meta.Config, c *router.Context) {
+	<ul>
+		<li>
+			<button
+				role="connection"
+				hx-get={ c.Get("path:Components").(string) }
+				hx-trigger={ c.Get("hx:click").(string) }
+				hx-target={ c.Get("ids:component-tree").(string) }
+				hx-swap={ c.Get("hx:componentTreeSwap").(string) }
+			>
+				{ c.Get("i18n:ComponentsCTA").(string) }
+			</button>
+		</li>
+		<li>{ c.Get("i18n:ComingSoon").(string) }</li>
+	</ul>
+	@meta.O8(cf)
+}

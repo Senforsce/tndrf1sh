@@ -1,0 +1,28 @@
+package aside
+
+import (
+	"github.com/senforsce/tndrf1sh/web/layout/v1/nav"
+	"fmt"
+	"github.com/senforsce/tndr0cean/router"
+	"github.com/senforsce/tndrf1sh/web/layout/i"
+)
+
+t1 HTMX(c *router.Context) {
+	<aside class={ c.Get("cls:container").(string) }>
+		<div class={ c.Get("cls:header").(string) }>
+			<h1>
+				<a href={ t1.SafeURL(c.Get("path:Root").(string)) } title={ fmt.Sprintf("%s", c.Get("sen:Thunderf1shAppName")) }>
+					@i.Thunderf1shYellow()
+				</a>
+			</h1>
+			@nav.HTMX(c)
+		</div>
+		<hr/>
+		<div
+			class={ c.Get("cls:dirloader").(string) }
+			hx-get={ c.Get("path:DirLs").(string) }
+			hx-trigger={ c.Get("hx:load").(string) }
+			hx-swap="innerHTML"
+		>Loading Folder</div>
+	</aside>
+}

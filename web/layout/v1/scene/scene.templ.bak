@@ -1,0 +1,60 @@
+package scene 
+
+import (
+	"github.com/senforsce/tndrf1sh/web/layout/i"
+	"github.com/senforsce/tndr0cean/router"
+	"github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+)
+
+t1 HTMX(c *router.Context) {
+	<section class="container scene" role="media" style="width: 100%">
+		{ children... }
+		<input
+			id="sceneTrigger"
+			class="multiPayloadElement"
+			name="scenePayload"
+			type="hidden"
+			hx-post={ c.Get("path:CurrentComponent").(string) }
+			hx-trigger="change throttle:0.5s"
+			hx-target="#scene-active"
+		/>
+		<div id="scene-active" class="scene-active">
+			<article class="whenNoComponent">
+				<hgroup>
+					<h2>Welcome to TndrFish</h2>
+					<h3>Part of the Senfosce Tndr Suite</h3>
+				</hgroup>
+				<section class="noComponentWrapper">
+					<div class="nocomponent">
+						@i.NoComponent()
+					</div>
+					<div class="message">
+						<p>
+							{ c.Get("i18n:SceneInstructions").(string) }
+						</p>
+					</div>
+				</section>
+				<section>
+					<ul>
+						<li><span><kbd>Esc</kbd> + <kbd>Q</kbd></span><a>Show All Commands</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>A</kbd></span><a>Go to file</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>F</kbd></span><a>Find in File</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>S</kbd></span><a>Show Settings</a></li>
+						<li><span><kbd>Esc</kbd> + <kbd>E</kbd></span><a>Explore Ontology</a></li>
+					</ul>
+				</section>
+			</article>
+		</div>
+	</section>
+}
+
+script Propagate(c meta.Config) {
+	const triggerInputElement = document.querySelector(c.PayloadSelector);
+	triggerInputElement.value = c.Payload;
+	if(c.Inspect) {
+		console.log("Propagating");
+		console.log({ c })
+		const event = new Event('change');
+		triggerInputElement.dispatchEvent(event);
+	}
+}

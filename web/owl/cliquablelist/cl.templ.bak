@@ -1,0 +1,31 @@
+package cliquablelist
+
+import "fmt"
+import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+
+t1 HTMX(items []Item, c meta.Config) {
+	<ul>
+		for _, item := range items {
+			<li>
+				<button
+					role="navigation"
+					hx-get={ item.URL }
+					hx-trigger="click"
+					hx-target={ c.TargetSelector }
+					hx-swap={ fmt.Sprintf("innerHTML show:%s:top", c.TargetSelector) }
+				>
+					{ item.Name }
+				</button>
+			</li>
+		}
+	</ul>
+	@meta.O8(c)
+}
+
+// ttl O8() {
+// 	###  http://senforsce.com/o8/brain#componentConfig
+// 	:componentList a :componentConfiguration .
+// 	:componentList :has :turtleFile .
+// 	:componentList :turtleFileName "./componentList.ttl" .
+// 	:componentList :hasNot :hdtFile .
+// }

@@ -1,0 +1,26 @@
+package currentintegrations
+
+import (
+	"github.com/senforsce/sparql"
+	"github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+	"github.com/senforsce/tndr0cean/router"
+)
+
+t1 HTMX(results []map[string]sparql.Binding, cfg meta.Config, c *router.Context) {
+	<div data-testid={ c.Get("tid:CurrentIntegrations").(string) }>
+		<p>{ results[0]["s"].Value }</p>
+		<ul>
+			<li>
+				for term := range(results) {
+					<details>
+						<summary>
+							{ results[term]["p"].Value }
+						</summary>
+						{ results[term]["o"].Value }
+					</details>
+				}
+			</li>
+		</ul>
+	</div>
+	@meta.O8(cfg)
+}

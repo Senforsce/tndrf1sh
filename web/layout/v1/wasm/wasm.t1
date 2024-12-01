@@ -1,0 +1,13 @@
+package wasm
+
+import "github.com/senforsce/tndr0cean/router"
+
+t1 HTMX(c *router.Context) {
+	<script src={ c.Get("path:WasmExecJs").(string) }></script>
+	<script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch(c.Get("path:MainWasm").(string)), go.importObject).then((result) => {
+            go.run(result.instance);
+        });
+    </script>
+}

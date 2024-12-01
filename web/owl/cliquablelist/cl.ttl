@@ -1,0 +1,14 @@
+@prefix : <http://senforsce.com/o8/brain/> .
+@prefix pwd: <http://senforsce.com/o8/brain/ui> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@base <http://senforsce.com/o8/brain/> .
+
+<http://senforsce.com/o8/brain> a owl:Ontology ;
+                                            owl:versionIRI <http://senforsce.com/o8/brain/0.0.1> ;
+                                            owl:imports <file:/home/asy/SenForsce/Code/core/Brain/schema.dev.ttl> .
+
+###  http://senforsce.com/o8/brain#componentConfig
+:componentList a :componentConfiguration .
+:componentList :has :turtleFile .
+:componentList :turtleFileName "./componentList.ttl" .
+:componentList :hasNot :hdtFile .

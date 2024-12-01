@@ -1,0 +1,32 @@
+package cliquablelist
+
+import "fmt"
+import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+import "github.com/senforsce/tndr0cean/router"
+
+t1 HTMX(items []Item, cfg meta.Config, c *router.Context) {
+	<ul>
+		for _, item := range items {
+			<li>
+				<button
+					role={ c.Get("role:navigation").(string) }
+					hx-get={ item.URL }
+					hx-trigger={ c.Get("hx:Click").(string) }
+					hx-target={ cfg.TargetSelector }
+					hx-swap={ fmt.Sprintf("innerHTML show:%s:top", cfg.TargetSelector) }
+				>
+					{ item.Name }
+				</button>
+			</li>
+		}
+	</ul>
+	@meta.O8(cfg)
+}
+
+// ttl O8() {
+// 	###  http://senforsce.com/o8/brain#componentConfig
+// 	:componentList a :componentConfiguration .
+// 	:componentList :has :turtleFile .
+// 	:componentList :turtleFileName "./componentList.ttl" .
+// 	:componentList :hasNot :hdtFile .
+// }

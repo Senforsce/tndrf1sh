@@ -1,0 +1,32 @@
+Page: **Home**
+ - Navbar
+ - Hero Header Section: Introduce ThunderFish with a captivating headline and a strong value proposition.
+ - Feature Section: Highlight the visualization capabilities of ThunderFish for web-components.
+ - Feature Section: Explain how ThunderFish aids in building smart components for web development.
+ - Feature Section: Detail the lifecycle management features after deployment with ThunderFish.
+ - Benefits Section: Outline the key benefits of using ThunderFish, including efficiency, ease of use, and advanced features.
+ - How It Works Section: Describe the process of using ThunderFish with a step-by-step guide or an interactive diagram.
+ - CTA Section: Engage visitors to sign up or request a demo to experience ThunderFish firsthand.
+ - Footer
+
+Sub-pages: About Us, Features, Blog
+
+
+Page: **About Us**
+ - About Section: Provide information about the company
+ - How It Works Section: Describe how the product or service works
+ - Contact Section: Encourage visitors to contact company
+
+Page: **Features**
+ - Features List Section: Highlight a list of features and benefits
+ - FAQ Section: Answer frequently asked questions
+
+Page: **Blog**
+ - Featured Blog List Header Section: Introduce the Blog with a featured list of Blog Posts
+ - Blog List Section: Showcase a list of Blog Posts
+
+Sub-pages: Blog Post
+
+
+Page: **Blog Post**
+ - Blog Post Body Section: Showcase the content of the Blog Post

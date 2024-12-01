@@ -1,0 +1,55 @@
+package texteditor
+
+import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/tndrf1sh/web/layout/v1/controls"
+
+t1 HTMX(c *router.Context, te meta.ComponentConfig) {
+	<div id={ ~ id:host ~ } style="height: 760px;">
+		<form>
+			<div class={ ~ cls:toolbelt ~ }>
+				<label>{ te.TextEditorConfig.RelativeFilePath }</label>
+				<div class={ ~ cls:SaveSignature ~ }>
+					<button>V</button>
+					<button>^</button>
+					<button>X</button>
+				</div>
+			</div>
+			<div id={ ~ id:editor ~ } style="height: 720px;">{ te.TextEditorConfig.Contents }</div>
+			<a>{ ~ i18n:Save ~  }</a>
+			<a>{ ~ i18n:Cancel ~  }</a>
+		</form>
+		<script src={ ~ se:AceJsCDNURL ~ }></script>
+		<script src={ ~ se:AceJsThemeCDNURL ~ }></script>
+		@Js(te.TextEditorConfig.LibraryCss)
+	</div>
+	@meta.O8(te.MetaConfig)
+	@controls.Propagate(te.TextEditorConfig)
+}
+
+script Js(css string) {
+	let timeout, ace;
+	// window.console.log("trying something")
+
+	(function waitForScript() {
+		if (!window.ace) {
+			window.clearTimeout(timeout)
+			timeout = window.setTimeout(() => waitForScript(), 1000)
+			
+			return;
+		}
+		// const host = document.querySelector("#host");
+		// const shadow = host.attachShadow({ mode: "open" });
+		const stylesheet = new CSSStyleSheet();
+		const editor = window.ace.edit("editor");
+		window.document.getElementById("editor").style.fontSize='16px';
+
+		stylesheet.replaceSync(css);
+		// window.document.adoptedStyleSheets = [stylesheet];
+		editor.setTheme("ace/theme/dracula");
+		editor.setReadOnly(false);  // false to make it editable
+		editor.session.setMode("ace/mode/golang");
+
+	})()
+	
+}

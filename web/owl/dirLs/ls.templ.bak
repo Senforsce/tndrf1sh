@@ -1,0 +1,41 @@
+package dirls
+
+import (
+	"github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+	"github.com/senforsce/tndr0cean/router"
+)
+
+type File struct {
+	isDir bool
+	Name  string
+}
+
+t1 HTMX(cf meta.Config, c *router.Context, folder string, list []File) {
+	<details class="owlComponent" open>
+		<summary>
+			<span>{ folder }</span>
+		</summary>
+		<ul>
+			for i := range(list) {
+				<li>
+					if !list[i].isDir {
+						<a
+							class="file-tree"
+							hx-get={ c.Get("path:FileOpen").(string) + folder + "/" + list[i].Name }
+							hx-target="#fileeditor"
+							hx-trigger="click"
+						>{ list[i].Name }</a>
+					} else {
+						<a
+							class="file-tree"
+							hx-get={ c.Get("path:DirLs").(string) + "/" + list[i].Name }
+							hx-trigger="click"
+							hx-swap="outerHTML"
+						>{ list[i].Name }</a>
+					}
+				</li>
+			}
+		</ul>
+	</details>
+	@meta.O8(cf)
+}

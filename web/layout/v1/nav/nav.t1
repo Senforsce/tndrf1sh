@@ -1,0 +1,42 @@
+package nav
+
+import (
+	"github.com/senforsce/tndrf1sh/web/layout/i"
+	"github.com/senforsce/tndr0cean/router"
+)
+
+t1 HTMX(c *router.Context) {
+	<div class={ c.Get("cls:secondary-nav").(string) }>
+		<ul>
+			<li>
+				<h3>
+					<div class={ c.Get("cls:icon-holder").(string) }>
+						<a title={ c.Get("i18n:Home").(string) } href="/">
+							@i.Home()
+						</a>
+					</div>
+				</h3>
+			</li>
+			<li>
+				<h3>
+					<div class={ c.Get("cls:icon-holder").(string) }>
+						<a title={ c.Get("i18n:Dashboard").(string) } href="/">
+							@i.DashboardGauge()
+						</a>
+					</div>
+				</h3>
+			</li>
+			<li>
+				<h3>
+					<div class={ c.Get("cls:icon-holder").(string) }>
+						<a title={ c.Get("i18n:Config").(string) } href="/">
+							@i.Config()
+						</a>
+					</div>
+				</h3>
+			</li>
+		</ul>
+		<hr/>
+		<div><small>TndrFish - { c.Get("sen:Thunderf1shAppVersion").(string) }</small></div>
+	</div>
+}

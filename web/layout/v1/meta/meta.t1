@@ -1,0 +1,29 @@
+package meta 
+
+import (
+	"github.com/senforsce/tndr0cean/router"
+)
+
+t1 HTMX(c *router.Context) {
+	<aside class={ c.Get("cls:meta").(string) }>
+		<input
+			id={ "metaPayload" }
+			class={ c.Get("cls:multiPayloadElement").(string) }
+			name={ c.Get("sen:metaPayload").(string) }
+			type="hidden"
+			hx-post={ c.Get("path:Components").(string) }
+			hx-trigger={ c.Get("hx:ChangeThrottleHalfSecond").(string) }
+			hx-target={ c.Get("ids:metaContents").(string) }
+		/>
+		<div id={ c.Get("id:metaContents").(string) } class={ c.Get("cls:metaContents").(string) }></div>
+	</aside>
+}
+
+script O8(c Config) {
+	const sidebarTrigger = document.querySelector(c.TargetSelector);
+	sidebarTrigger.value = c.Payload;
+	if(c.Inspect) {
+		const event = new Event('change');
+		sidebarTrigger.dispatchEvent(event);
+	}
+}

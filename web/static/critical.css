@@ -1,0 +1,259 @@
+.scene {
+    height: calc(100vh - 2rem);
+    overflow: hidden;
+}
+
+.scene:has(+ .controls .fileeditor div) {
+    margin-bottom: 0;
+}
+
+#host .ace_dark .ace_fold-widget {
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    color: rgb(144, 145, 148);
+    cursor: pointer;
+    font-size: 16px;
+    height: 16px;
+    margin-bottom: 0px;
+    margin-left: 1px;
+    margin-right: -12px;
+    margin-top: 0px;
+    width:11px;
+}
+
+
+.toolbelt {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+
+    justify-content: space-between;
+
+    label {
+        display: inline-block;
+        width: auto;
+    }
+
+    .options {
+        width: 200px;
+        display: flex;
+
+        button {
+            padding: 0;
+            margin: 0;
+            background-color: transparent;
+            border-color: transparent;
+        }
+    }
+}
+
+
+.controls {
+    display: none;
+    
+}
+
+.controls:has(#fileeditor div) {
+    display: block;
+    border-top: 1px solid #555555;
+    box-shadow: 3px -6px 13px 2px hsl(205deg 20.21% 15.84%)
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    height: 108px;
+    svg {
+        margin-top: 4px;
+        width: 80px;
+        height: 80px;
+    }
+}
+
+.secondary-nav {
+    width: calc(100% - 102px);
+
+    ul {
+        margin-bottom: 4px;
+    }
+}
+
+.controls:has(.fileeditor div) {
+    display: block;
+}
+
+aside {
+    grid-area: aside;
+    padding: 0 1rem;
+    background-color: #21212c;
+}
+
+.noComponentWrapper {
+    display: flex;
+    height: 300px;
+    width: 732px;
+    overflow: hidden;
+}
+.noComponentWrapper svg {
+    width: 300px;
+    height: 300px;
+}
+
+.noComponentWrapper .message {
+    height: 300px;
+    line-height: 300px;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+aside > h1 {
+    width: 82px;
+    display: flex;
+    font-size: 1.25rem;
+    height: 82px;
+    margin: 0;
+    justify-items: center;
+    align-items: center
+}
+
+aside > .owlComponent {
+    border-top-style: solid;
+    border-top-width: thin;
+    margin-top: 8px;
+    padding-bottom: 16px;
+}
+
+.owlComponent > h4, .owlComponent > h3, .secondary-nav h3{
+    font-size: 1rem;
+    display: flex;
+    justify-content: left;
+    gap: 24px;
+    align-content: center;
+}
+
+.secondary-nav ul {
+    padding: 0;
+    display: flex;
+}
+
+.secondary-nav li {
+    padding: 0;
+    margin: 0;
+    width: 33.2%;
+    text-align: center;
+    list-style-type: none;
+}
+
+.secondary-nav h3 {
+    padding: 0;
+    margin: 12px;
+    width: 32px;
+    margin-inline: auto;
+}
+
+h1 small, .owlComponent > h4 {
+    font-weight: 50;
+}
+
+.owlComponent > h3 {
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    margin: 0;
+    line-height: 2rem;
+}
+
+.icon-holder svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+}
+
+main.work-area {
+    grid-area: main;
+    max-width: 1460px;
+}
+
+main.work-area:not(:has(~ .meta)) {
+    padding-right: 1.75rem;
+}
+
+.work-area {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+body {
+    display: grid;
+    grid-template-areas: "aside main";
+    grid-template-columns: 20% calc(80% - 2rem);
+    gap: 2rem;
+}
+
+
+aside.meta {
+    grid-area: sidebar;
+}
+
+aside.meta :has(.metaContents > div) {
+    display: block;
+}
+
+/* aside.meta :not(:has(.metaContents > div)) {
+    display: none;
+} */
+
+body:has(aside.meta .metaContents div) {
+    grid-template-areas: "aside main sidebar";
+    grid-template-columns: 20% calc(60% - 1.5rem) calc(20% - 1.5rem);
+    gap: 1.5rem;
+}
+
+body:not(:has(aside.meta .metaContents div)) {
+    grid-template-areas: "aside main";
+    grid-template-columns: 16% calc(84% - 0.5rem);
+    gap: 1.5rem;
+}
+
+.scene-active {
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.scene-active:has(.whenNoComponent) {
+    height: 850px;
+    margin-top: 0;
+    justify-content: center;
+}
+
+.whenNoComponent {
+    height: 876px;
+    margin-top: 0;
+    hgroup {
+        text-align: center;
+    }
+    ul {
+        text-align: center;
+        width: 48%;
+        margin-inline: auto;
+        li {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
+.dirloader {
+    margin-top: 20px;
+
+    li {
+        padding: 0;
+        font-size: 0.7rem;
+    }
+}
