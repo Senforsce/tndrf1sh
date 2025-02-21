@@ -7,7 +7,7 @@ import (
 )
 
 t1 HTMX(results []map[string]sparql.Binding, cfg meta.Config, c *router.Context) {
-	<div data-testid={ c.Get("tid:CurrentComponent").(string) }>
+	<div data-testid=+tid:CurrentComponent>
 		<p>{ results[0]["s"].Value }</p>
 		<ul>
 			<li>

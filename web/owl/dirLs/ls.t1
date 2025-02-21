@@ -3,10 +3,11 @@ package dirls
 import (
 	"github.com/senforsce/tndrf1sh/web/layout/v1/meta"
 	"github.com/senforsce/tndr0cean/router"
+	"fmt"
 )
 
 t1 HTMX(cf meta.Config, c *router.Context, folder string, list []File) {
-	<details class={ c.Get("cls:OwlComponent") } open>
+	<details open class=+cls:OwlComponent>
 		<summary>
 			<span>{ folder }</span>
 		</summary>
@@ -15,17 +16,17 @@ t1 HTMX(cf meta.Config, c *router.Context, folder string, list []File) {
 				<li>
 					if !list[i].isDir {
 						<a
-							class={ c.Get("cls:file-tree").(string) }
-							hx-get={ c.Get("path:FileOpen").(string) + folder + "/" + list[i].Name }
-							hx-target={ c.Get("ids:fileeditor").(string) }
-							hx-trigger={ c.Get("hx:click").(string) }
+							class=+cls:file-tree 
+							hx-get={fmt.Sprintf("%s%s/%s", tr.Tr("path:FileOpen", c), folder, list[i].Name)}
+							hx-target=+ids:fileeditor
+							hx-trigger=+hx:click
 						>{ list[i].Name }</a>
 					} else {
 						<a
-							class={ c.Get("cls:file-tree").(string) }
-							hx-get={ c.Get("path:DirLs").(string) + "/" + list[i].Name }
-							hx-trigger={ c.Get("hx:click").(string) }
-							hx-swap={ c.Get("hx:SwapOuterHTML").(string) }
+							class=+cls:file-tree
+							hx-get={fmt.Sprintf("%s/%s", tr.Tr("path:DirLs", c), list[i].Name)}
+							hx-trigger=+hx:click
+							hx-swap=+hx:SwapOuterHTML
 						>{ list[i].Name }</a>
 					}
 				</li>

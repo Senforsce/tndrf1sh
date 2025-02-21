@@ -1,6 +1,8 @@
 module github.com/senforsce/tndrf1sh
 
-go 1.21.6
+go 1.23
+
+toolchain go1.23.3
 
 replace github.com/senforsce/tndr0cean => ../tndr0cean
 
@@ -14,7 +16,7 @@ replace github.com/senforsce/configurator => ../configurator
 
 require (
 	github.com/senforsce/sparql v0.0.0-00010101000000-000000000000
-	github.com/senforsce/tndr v0.0.4
+	github.com/senforsce/tndr v0.0.6
 	github.com/senforsce/tndr0cean v0.0.0-00010101000000-000000000000
 )
 

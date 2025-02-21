@@ -6,12 +6,12 @@ import (
 )
 
 t1 HTMX(c *router.Context) {
-	<div class={ c.Get("cls:secondary-nav").(string) }>
+	<div class=+cls:secondary-nav>
 		<ul>
 			<li>
 				<h3>
-					<div class={ c.Get("cls:icon-holder").(string) }>
-						<a title={ c.Get("i18n:Home").(string) } href="/">
+					<div class=+cls:icon-holder>
+						<a title=+i18n:Home href="/">
 							@i.Home()
 						</a>
 					</div>
@@ -19,8 +19,8 @@ t1 HTMX(c *router.Context) {
 			</li>
 			<li>
 				<h3>
-					<div class={ c.Get("cls:icon-holder").(string) }>
-						<a title={ c.Get("i18n:Dashboard").(string) } href="/">
+					<div class=+cls:icon-holder>
+						<a title=+i18n:Dashboard href="/">
 							@i.DashboardGauge()
 						</a>
 					</div>
@@ -28,8 +28,8 @@ t1 HTMX(c *router.Context) {
 			</li>
 			<li>
 				<h3>
-					<div class={ c.Get("cls:icon-holder").(string) }>
-						<a title={ c.Get("i18n:Config").(string) } href="/">
+					<div class=+cls:icon-holder>
+						<a title=+i18n:Config href="/">
 							@i.Config()
 						</a>
 					</div>
@@ -37,6 +37,6 @@ t1 HTMX(c *router.Context) {
 			</li>
 		</ul>
 		<hr/>
-		<div><small>TndrFish - { c.Get("sen:Thunderf1shAppVersion").(string) }</small></div>
+		<div><small>+sen:Thunderf1shAppVersion</small></div>
 	</div>
 }

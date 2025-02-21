@@ -15,11 +15,11 @@ t1 Base(c *router.Context) {
 		<head>
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>{ fmt.Sprintf(c.Get("sen:Thunderf1shPageTitle").(string), "Home") }</title>
+			<title>+sen:Thunderf1shPageTitle | Home</title>
 			<link rel="stylesheet" href={ fmt.Sprintf("%s/pico.classless.min.css", c.Get("static")) } type="text/css"/>
 			<link rel="stylesheet" href={ fmt.Sprintf("%s/critical.css", c.Get("static")) } type="text/css"/>
 			<link rel="icon" href={ fmt.Sprintf("%s/img/favicon.svg", c.Get("static")) } type="text/css"/>
-			<script src={ c.Get("se:HTMXUrl").(string) } defer></script>
+			<script src=+se:HTMXUrl defer></script>
 		</head>
 		<body>
 			@aside.HTMX(c)

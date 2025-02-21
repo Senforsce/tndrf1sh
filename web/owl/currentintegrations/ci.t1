@@ -6,17 +6,17 @@ import (
 	"github.com/senforsce/tndr0cean/router"
 )
 
-t1 HTMX(results []map[string]sparql.Binding, cfg meta.Config, c *router.Context) {
-	<div data-testid={ c.Get("tid:CurrentIntegrations").(string) }>
-		<p>{ results[0]["s"].Value }</p>
+type Binding  = []map[string]sparql.Binding
+
+t1 HTMX(results Binding, cfg meta.Config, c *router.Context) {
+	<div data-testid=+tid:CurrentIntegrations>
+		<p>{  results[0]["s"].Value  }</p>
 		<ul>
 			<li>
-				for term := range(results) {
+				for _, result := range(results) {
 					<details>
-						<summary>
-							{ results[term]["p"].Value }
-						</summary>
-						{ results[term]["o"].Value }
+						<summary>{ result["p"].Value }</summary>
+						{ result["o"].Value }
 					</details>
 				}
 			</li>

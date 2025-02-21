@@ -6,32 +6,26 @@ import (
 )
 
 t1 HTMX(cf meta.Config, c *router.Context) {
-	<div id={ c.Get("id:SignaturePadScid").(string) }>
+	<div id=+id:SignaturePadScid>
 		<form id="test">
-			<canvas id={ c.Get("id:Signature").(string) }></canvas>
-			<button id={ c.Get("id:SaveSignature").(string) }>
-				{ c.Get("i18n:Save").(string) }
-			</button>
+			<canvas id=+id:Signature></canvas>
+			<button id=+id:SaveSignature>+i18n:Save</button>
 		</form>
 	</div>
-	@Init(c)
+	//@Init(c)
 	@meta.O8(cf)
-}
+    <script type="text/javascript">
+    const canvas = document.querySelector( tr.Tr("id:Signature", c) );
+    const save = document.querySelector( tr.Tr("id:SaveSignature", c) );
 
-script Init(c *router.Context) {
-    //     <script src={ c.Get("path:SignaturePad").(string) } type="text/javascript"></script>
-
-    const canvas = document.querySelector( c.Get("id:Signature").(string) });
-    const save = document.querySelector( c.Get("id:SaveSignature").(string) });
-
-    const signaturePad = new SignaturePad(canvas, 
+    const signaturePad = new SignaturePad(canvas, {
         minWidth: 5,
         maxWidth: 10,
         penColor: "rgb(66, 133, 244)"
     });
 
     const signaturePad = new SignaturePad(canvas);
-    signaturePad.addEventListener("endStroke", () => 
+    signaturePad.addEventListener("endStroke", () => {
         console.log("Ended started");
         save.removeAttribute("disabled");
 
@@ -46,14 +40,14 @@ script Init(c *router.Context) {
 
         // Return svg string without converting to base64
         signaturePad.toSVG(); // "<svg...</svg>"
-        signaturePad.toSVG(includeBackgroundColor: true}); // add background color to svg output
+        signaturePad.toSVG({includeBackgroundColor: true}); // add background color to svg output
 
         // Draws signature image from data URL (mostly uses https://mdn.io/drawImage under-the-hood)
         // NOTE: This method does not populate internal data structure that represents drawn signature. Thus, after using #fromDataURL, #toData won't work properly.
         signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...");
 
         // Draws signature image from data URL and alters it with the given options
-        signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...",  ratio: 1, width: 400, height: 200, xOffset: 100, yOffset: 50 });
+        signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...",  {ratio: 1, width: 400, height: 200, xOffset: 100, yOffset: 50 });
 
         // Returns signature image as an array of point groups
         const data = signaturePad.toData();
@@ -62,8 +56,9 @@ script Init(c *router.Context) {
         signaturePad.fromData(data);
 
         // Draws signature image from an array of point groups, without clearing your existing image (clear defaults to true if not provided)
-        signaturePad.fromData(data,  clear: false });
+        signaturePad.fromData(data, { clear: false });
 
 
-    },  once: true });
+    },  once: true);
+    </script>
 }

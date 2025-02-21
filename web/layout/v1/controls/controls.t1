@@ -4,23 +4,22 @@ import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
 import "github.com/senforsce/tndr0cean/router"
 
 t1 HTMX(c *router.Context) {
-	<section
-		class={ c.Get("cls:controls").(string) }
-		role={ c.Get("role:controls").(string) }
-		style="height: 760px; width: 100%"
-	>
+	<section style="height: 760px; width: 100%"
+		class=+cls:controls
+		role=+role:controls>
 		<input
-			id={ c.Get("id:fileeditorTrigger").(string) }
-			class={ c.Get("cls:multiPayloadElement").(string) }
-			name={ c.Get("i18n:scenePayload").(string) }
 			type="hidden"
-			hx-post={ c.Get("path:FileEdit").(string) }
-			hx-trigger={ c.Get("hx:ChangeThrottleHalfSecond").(string) }
-			hx-target={ c.Get("ids:fileeditor").(string) }
+			class=+cls:multiPayloadElement
+			name=+i18n:scenePayload
+			hx-post=+path:FileEdit
+			hx-trigger=+hx:ChangeThrottleHalfSecond
+			hx-target=+ids:fileeditor
+			id=+id:fileeditorTrigger
+
 		/>
 		<div
-			id={ c.Get("id:fileeditor").(string) }
-			class={ c.Get("cls:fe").(string) }
+			id=+id:fileeditor
+			class=+cls:fe
 			style="height: 720px; width 100%"
 		></div>
 	</section>
@@ -28,10 +27,12 @@ t1 HTMX(c *router.Context) {
 
 // used by text editor to prevent cyclic dependencies
 
-script Propagate(c meta.TextEditorConfig) {
+t1 Propagate(c meta.TextEditorConfig) {
+	<script>
 	console.log(c)
 	const triggerInputElement = document.querySelector(c.PayloadSelector);
 	triggerInputElement.value = c.Payload;
 	const event = new Event('change');
 	triggerInputElement.dispatchEvent(event);
+	</script>
 }

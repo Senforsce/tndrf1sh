@@ -5,25 +5,29 @@ import (
 )
 
 t1 HTMX(c *router.Context) {
-	<aside class={ c.Get("cls:meta").(string) }>
+	<aside class=+cls:meta>
 		<input
-			id={ "metaPayload" }
-			class={ c.Get("cls:multiPayloadElement").(string) }
-			name={ c.Get("sen:metaPayload").(string) }
+			id="metaPayload"
+			class=+cls:multiPayloadElement
+			name=+sen:metaPayload
 			type="hidden"
-			hx-post={ c.Get("path:Components").(string) }
-			hx-trigger={ c.Get("hx:ChangeThrottleHalfSecond").(string) }
-			hx-target={ c.Get("ids:metaContents").(string) }
+			hx-post=+path:Components
+			hx-trigger=+hx:ChangeThrottleHalfSecond
+			hx-target=+ids:metaContents
 		/>
-		<div id={ c.Get("id:metaContents").(string) } class={ c.Get("cls:metaContents").(string) }></div>
+		<div id=+id:metaContents class=+cls:metaContents></div>
 	</aside>
 }
 
-script O8(c Config) {
-	const sidebarTrigger = document.querySelector(c.TargetSelector);
-	sidebarTrigger.value = c.Payload;
-	if(c.Inspect) {
-		const event = new Event('change');
-		sidebarTrigger.dispatchEvent(event);
-	}
+t1 O8(c Config) {
+	<script>
+	(() => {
+		const sidebarTrigger = document.querySelector(c.TargetSelector);
+		sidebarTrigger.value = c.Payload;
+		if(c.Inspect) {
+			const event = new Event('change');
+			sidebarTrigger.dispatchEvent(event);
+		}
+	})()
+	</script>
 }

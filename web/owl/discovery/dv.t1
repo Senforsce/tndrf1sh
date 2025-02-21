@@ -9,15 +9,13 @@ t1 HTMX(cf meta.Config, c *router.Context) {
 		<li>
 			<button
 				role="connection"
-				hx-get={ c.Get("path:Components").(string) }
-				hx-trigger={ c.Get("hx:click").(string) }
-				hx-target={ c.Get("ids:component-tree").(string) }
-				hx-swap={ c.Get("hx:componentTreeSwap").(string) }
-			>
-				{ c.Get("i18n:ComponentsCTA").(string) }
-			</button>
+				hx-get=+path:Components
+				hx-trigger=+hx:click
+				hx-target=+ids:componenttree
+				hx-swap=+hx:componentTreeSwap
+			>+i18n:ComponentsCTA</button>
 		</li>
-		<li>{ c.Get("i18n:ComingSoon").(string) }</li>
+		<li>+i18n:ComingSoon</li>
 	</ul>
 	@meta.O8(cf)
 }
