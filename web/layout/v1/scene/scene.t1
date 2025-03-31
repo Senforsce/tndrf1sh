@@ -7,30 +7,29 @@ import (
 )
 
 t1 HTMX(c *router.Context) {
-	<section class=+cls:container_scene role="media" style="width: 100%">
+	<section class=§cls:container_scene! role="media" style="width: 100%">
 		{ children... }
 		<input
-			id=+id:sceneTrigger
-			class=+cls:multiPayloadElement
-			name=+hx:ScenePayload
+			id=§id:sceneTrigger!
+			class=§cls:multiPayloadElement!
+			name=§hx:ScenePayload!
 			type="hidden"
-			hx-post=+path:CurrentComponent
-			hx-trigger=+hx:ChangeThrottleHalfSecond
-			hx-target=+ids:scene-active
+			hx-post=§path:CurrentComponent!
+			hx-trigger=§hx:ChangeThrottleHalfSecond!
+			hx-target=§ids:scene-active!
 		/>
-		<div id=+id:scene-active
-			 class=+i18n:SceneInstructions>
-			<article class=+cls:scene-active>
+		<div id=§id:scene-active!>
+			<article class=§cls:scene-active!>
 				<hgroup>
-					<h2>+i18n:WelcomeMessage</h2>
-					<h3>+i18n:WelcomeSubMessage</h3>
+					<h2 id="WelcomeMessage">§i18n:WelcomeMessage!</h2>
+					<h3>§i18n:WelcomeSubMessage!</h3>
 				</hgroup>
-				<section class=+cls:noComponentWrapper>
-					<div class=+cls:nocomponent>
+				<section class=§cls:noComponentWrapper!>
+					<div class=§cls:nocomponent!>
 						@i.NoComponent()
 					</div>
-					<div class=+cls:message>
-						<p>+i18n:SceneInstructions</p>
+					<div class=§cls:message!>
+						<p>§i18n:SceneInstructions!</p>
 					</div>
 				</section>
 				<section>
@@ -38,31 +37,31 @@ t1 HTMX(c *router.Context) {
 						<li><span>
 								<kbd>Esc</kbd> <b>+</b>  <kbd>Q</kbd>
 							</span>
-							<a>+i18n:ShowAllCommands</a>
+							<a>§i18n:ShowAllCommands!</a>
 						</li>
 						<li>
 							<span>
 								<kbd>Esc</kbd>  <b>+</b> <kbd>A</kbd>
 							</span>
-							<a>+i18n:GoToFile</a>
+							<a>§i18n:GoToFile!</a>
 						</li>
 						<li>
 							<span>
 								<kbd>Esc</kbd>  <b>+</b> <kbd>F</kbd>
 							</span>
-							<a>+i18n:FindInFile</a>
+							<a>§i18n:FindInFile!</a>
 						</li>
 						<li>
 							<span>
 								<kbd>Esc</kbd>  <b>+</b> <kbd>S</kbd>
 							</span>
-							<a>+i18n:ShowSettings</a>
+							<a>§i18n:ShowSettings!</a>
 						</li>
 						<li>
 							<span>
 								<kbd>Esc</kbd>  <b>+</b> <kbd>E</kbd>
 							</span>
-							<a>+i18n:ExploreOntology</a>
+							<a>§i18n:ExploreOntology!</a>
 						</li>
 					</ul>
 				</section>
@@ -72,16 +71,21 @@ t1 HTMX(c *router.Context) {
 }
 
 t1 Propagate(c meta.Config) {
+	<div class="propagate_scene" data-propagate={ t1.JSONString(c) }></div>
 	<script>
-	(() =>{
-		const triggerInputElement = document.querySelector(c.PayloadSelector);
-		triggerInputElement.value = c.Payload;
-		if(c.Inspect) {
-			console.log("Propagating");
-			console.log({ c })
-			const event = new Event('change');
-			triggerInputElement.dispatchEvent(event);
-		}
+	(() => {
+		const data = document.querySelectorAll(".propagate_scene");
+		const lastdata = data.length-1; //always get the last most recent data
+		const topropagate = JSON.parse(data[lastdata].dataset.propagate);
+		console.log({ topropagate })
+		if (!topropagate.PayloadSelector) return;
+		const triggerInputElement = document.querySelector(topropagate.PayloadSelector);
+		triggerInputElement.value = topropagate.Payload;
+		console.log("Propagating");
+		console.log({ topropagate })
+		const event = new Event('change');
+		triggerInputElement.dispatchEvent(event);
+		
 	})()
 
 	</script>

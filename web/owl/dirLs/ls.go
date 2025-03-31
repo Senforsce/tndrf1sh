@@ -16,26 +16,31 @@ type File struct {
 	Name  string
 }
 
+func Must[T any](value T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+	return value
+}
+
 func Handler(c *router.Context) error {
 	// add a comment
 
 	so := meta.ShouldInspect(c.Request.URL)
 
-	u, err := url.Parse(c.Request.URL.String())
-	if err != nil {
-		panic(err)
-	}
+	u := Must(url.Parse(c.Request.URL.String()))
 
 	files := make(map[string]File, 0)
 
 	var root string
+	o8Root := c.Get("O8ROOT").(string)
 	// Replace 'filename' with the actual filename you want to use
-	dir, r := os.Getwd()
+	_, r := os.ReadDir(o8Root)
 	if r != nil {
-		fmt.Println("Cannot get current directory")
+		fmt.Println("Cannot get root directory")
 	}
 
-	root = dir + u.Path // careful path comes from frontend
+	root = o8Root + u.Path // careful path comes from frontend
 
 	e := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 

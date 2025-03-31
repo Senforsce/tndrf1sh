@@ -1,6 +1,7 @@
 package texteditor
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io"
 	"log"
@@ -15,26 +16,33 @@ import (
 
 var cachedCss []byte
 
-func Handler(c *router.Context) error {
-	var b []byte
-
-	u, err := url.Parse(c.Request.URL.String())
+func Must[T any](value T, err error) T {
 	if err != nil {
 		panic(err)
 	}
+	return value
+}
+
+func Handler(c *router.Context) error {
+	var b []byte
+
+	so := meta.ShouldInspect(c.Request.URL)
+
+	u := Must(url.Parse(c.Request.URL.String()))
 
 	var root string
+	o8Root := c.Get("O8ROOT").(string)
 	// Replace 'filename' with the actual filename you want to use
-	dir, r := os.Getwd()
+	_, r := os.ReadDir(o8Root)
 	if r != nil {
-		fmt.Println("Cannot get current directory")
+		fmt.Println("Cannot get root directory")
 	}
 
-	root = dir + u.Path // careful path comes from frontend
+	root = o8Root + u.Path // careful path comes from frontend
 
 	path := root
 
-	fmt.Printf("path is %s ->/ ,%s %s", u.Path, dir, path)
+	fmt.Printf("path is %s ->/ ,%s %s", u.Path, o8Root, path)
 
 	full := strings.Replace(path, "/file/open", "", 1)
 	if len(path) < 2 {
@@ -70,14 +78,15 @@ func Handler(c *router.Context) error {
 	// 	TargetSelector: "",
 	// 	Inspect:        so,
 	// }, c
-	so := meta.ShouldInspect(c.Request.URL)
+	fmt.Printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> should inspect %v, %s \n", so, base64.StdEncoding.EncodeToString([]byte(display)))
 
 	conf := meta.NewComponentConfig(c)
 	cn := conf.WithMetaConfig(meta.Config{
-		TargetSelector: "",
-		Inspect:        so,
+		TargetSelector: "#metaPayload",
+		Inspect:        true,
 		Payload: map[string]string{
-			"Subject": display,
+			"Subject": base64.StdEncoding.EncodeToString([]byte(display)),
+			"Path":    u.Path,
 		},
 	})
 	cte := cn.WithTextEditorConfig(meta.TextEditorConfig{

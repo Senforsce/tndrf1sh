@@ -8,6 +8,12 @@ replace github.com/senforsce/tndr0cean => ../tndr0cean
 
 replace github.com/senforsce/tndr => ../tndr
 
+replace github.com/senforsce/coachmj => ../coach-mj
+
+replace github.com/senforsce/userconfig => ../userconfig
+
+replace github.com/senforsce/fh => ../fh
+
 replace github.com/senforsce/tndrf1sh/ => ../tndrf1sh
 
 replace github.com/senforsce/sparql => ../sparql

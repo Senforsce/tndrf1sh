@@ -8,7 +8,14 @@ up:
 	go build .
 	go run .
 
+regenup:
+	@make -C ../ regen
+	t1 generate
+	@make up
+
 genup:
+	@make -C ../../fh generate
+
 	t1 generate
 	@make up
 

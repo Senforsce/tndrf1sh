@@ -3,11 +3,17 @@ package wasm
 import "github.com/senforsce/tndr0cean/router"
 
 t1 HTMX(c *router.Context) {
-	<script src=+path:WasmExecJs></script>
+	<script src=§path:WasmExecJs!></script>
+	<div class="wasm_data" data-propagate={ t1.JSONString(c) }></div>
 	<script>
+	(() => {
+		const data = document.querySelectorAll(".wasm_data");
+		const lastdata = data.length-1; //always get the last most recent data
+		const topropagate = JSON.parse(data[lastdata].dataset.propagate);
         const go = new Go();
-        WebAssembly.instantiateStreaming(fetch(tr.Tr("path:MainWasm", c)), go.importObject).then((result) => {
+        WebAssembly.instantiateStreaming(fetch(tr.Tr("path:MainWasm", topropagate)), go.importObject).then((result) => {
             go.run(result.instance);
         });
+    })()
     </script>
 }

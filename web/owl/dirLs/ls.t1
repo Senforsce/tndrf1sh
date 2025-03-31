@@ -7,7 +7,7 @@ import (
 )
 
 t1 HTMX(cf meta.Config, c *router.Context, folder string, list []File) {
-	<details open class=+cls:OwlComponent>
+	<details open class=§cls:OwlComponent!>
 		<summary>
 			<span>{ folder }</span>
 		</summary>
@@ -16,17 +16,17 @@ t1 HTMX(cf meta.Config, c *router.Context, folder string, list []File) {
 				<li>
 					if !list[i].isDir {
 						<a
-							class=+cls:file-tree 
+							class=§cls:file-tree! 
 							hx-get={fmt.Sprintf("%s%s/%s", tr.Tr("path:FileOpen", c), folder, list[i].Name)}
-							hx-target=+ids:fileeditor
-							hx-trigger=+hx:click
+							hx-target=§ids:fileeditor!
+							hx-trigger=§hx:click!
 						>{ list[i].Name }</a>
 					} else {
 						<a
-							class=+cls:file-tree
+							class=§cls:file-tree!
 							hx-get={fmt.Sprintf("%s/%s", tr.Tr("path:DirLs", c), list[i].Name)}
-							hx-trigger=+hx:click
-							hx-swap=+hx:SwapOuterHTML
+							hx-trigger=§hx:click!
+							hx-swap=§hx:SwapOuterHTML!
 						>{ list[i].Name }</a>
 					}
 				</li>

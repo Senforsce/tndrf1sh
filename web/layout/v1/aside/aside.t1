@@ -4,24 +4,56 @@ import (
 	"github.com/senforsce/tndrf1sh/web/layout/v1/nav"
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/layout/i"
+	"fmt"
 )
 
 t1 HTMX(c *router.Context) {
-	<aside class=+cls:container>
-		<div class=+cls:header>
+	<aside class=§cls:container!>
+		<div class=§cls:header!>
 			<h1>
-				<a href=+path:Root title=+sen:Thunderf1shAppName>
+				<a href=§path:Root! title=§sen:Thunderf1shAppName!>
 					@i.Thunderf1shYellow()
 				</a>
 			</h1>
 			@nav.HTMX(c)
 		</div>
 		<hr/>
+		
+		<hr/>
+		<div>Gestion</div>
+		<hr/>
+		<div class="aside-users">
+			<h4>Utilisateurs</h4>
+			<ul>
+				<li><span class="image"><img src="/static/img/team-3.png" width="30px" height="30px" /></span><span class="userfullname">{ fmt.Sprintf("@%s", "ENauche")}</span></li>
+				<li><span class="image"><img src="/static/img/team-2.png" width="30px" height="30px" /></span><span class="userfullname">{ fmt.Sprintf("@%s", "ASy")}</span></li>
+				<li><span class="image"><img src="/static/img/team-4.png" width="30px" height="30px" /></span><span class="userfullname">{ fmt.Sprintf("@%s", "Jacques_Chirac")}</span></li>
+			</ul>
+		</div>
+		<hr/>
+		<div>Temps</div>
+			<ul>
+				<li>Leçons</li>
+				<li>Accompagnement</li>
+			</ul>
+		<hr/>
+		<h3>Contenu</h3>
+		<div>Bblt. de Mouvements</div>
+		<button hx-swap="innerHTML"
+			hx-get="/forms/newMovement"
+			hx-target="#formView"
+			hx-trigger="click">Ajouter</button>
+		<ul>
+			<li>Squats</li>
+			<li>Pompes classiques</li>
+		</ul>
+		<hr/>
+
 		<div
 			hx-swap="innerHTML"
-			class=+cls:dirloader
-			hx-get=+path:DirLs
-			hx-trigger=+hx:load>
+			class=§cls:dirloader!
+			hx-get=§path:DirLs!
+			hx-trigger=§hx:load!>
 		Loading Folder
 		</div>
 	</aside>

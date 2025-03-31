@@ -3,14 +3,36 @@ package componentpreview
 import "github.com/senforsce/tndr0cean/router"
 import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
 
-t1 wrapChildren(c *router.Context) {
-	<div class=+cls:componentPreview>
-		{ children... }
+t1 wrapChildren(c *router.Context, cf CSSContextFile) {
+	<div id="host">
+		<template id="tmpl" shadowrootmode="open">
+			{ children... }
+		</template>
 	</div>
+	<div class="css_data" data-css={ cf.Contents }></div>
+	<script>
+	(() => {
+		const data = document.querySelectorAll(".css_data");
+		const lastdata = data.length-1; //always get the last most recent data
+		const cssstring = data[lastdata].dataset.css;
+		console.log({ cssstring })
+		const sheet = new CSSStyleSheet();
+		sheet.replaceSync(cssstring);
+
+		const host = document.querySelector("#host");
+
+		const shadow = host.attachShadow({ mode: "open" });
+		const template = document.getElementById("tmpl");
+		const tr = document.querySelector("#tmpl");
+
+		shadow.appendChild(template.content);
+		shadow.adoptedStyleSheets = [sheet];
+	})()
+	</script>
 }
 
-t1 HTMX(c *router.Context, contents t1.Component, cfg meta.ComponentConfig) {
-	@wrapChildren(c) {
+t1 HTMX(c *router.Context, contents t1.Component, cfg meta.ComponentConfig, cf CSSContextFile) {
+	@wrapChildren(c, cf) {
 		@contents
 	}
 	@meta.O8(cfg.MetaConfig)

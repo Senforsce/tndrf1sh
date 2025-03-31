@@ -4,35 +4,51 @@ import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
 import "github.com/senforsce/tndr0cean/router"
 
 t1 HTMX(c *router.Context) {
-	<section style="height: 760px; width: 100%"
-		class=+cls:controls
-		role=+role:controls>
+	<section
+		class=§cls:controls!
+		role=§role:controls!>
 		<input
 			type="hidden"
-			class=+cls:multiPayloadElement
-			name=+i18n:scenePayload
-			hx-post=+path:FileEdit
-			hx-trigger=+hx:ChangeThrottleHalfSecond
-			hx-target=+ids:fileeditor
-			id=+id:fileeditorTrigger
+			class=§cls:multiPayloadElement!
+			name=§i18n:scenePayload!
+			hx-post=§path:FileEdit!
+			hx-trigger=§hx:ChangeThrottleHalfSecond!
+			hx-target=§ids:fileeditor!
+			id=§id:fileeditorTrigger!
 
 		/>
 		<div
-			id=+id:fileeditor
-			class=+cls:fe
-			style="height: 720px; width 100%"
+			id=§id:fileeditor!
+			class=§cls:fe!
 		></div>
 	</section>
+	<style>
+		section.controls {
+			height: 760px; width 100%'
+		}
+
+		section.controls fe {
+			height: 720px; width 100%;
+		}
+	</style>
 }
 
 // used by text editor to prevent cyclic dependencies
 
 t1 Propagate(c meta.TextEditorConfig) {
+	<div class="propagate_controls" data-propagate={ t1.JSONString(c) }></div>
 	<script>
-	console.log(c)
-	const triggerInputElement = document.querySelector(c.PayloadSelector);
-	triggerInputElement.value = c.Payload;
-	const event = new Event('change');
-	triggerInputElement.dispatchEvent(event);
+	(() => {
+		const data = document.querySelectorAll(".propagate_controls");
+		const lastdata = data.length-1; //always get the last most recent data
+		const topropagate = JSON.parse(data[lastdata].dataset.propagate);
+		console.log({ topropagate })
+		if (!topropagate.PayloadSelector) return;
+		const triggerInputElement = document.querySelector(topropagate.PayloadSelector);
+		triggerInputElement.value = topropagate.Payload;
+		const event = new Event('change');
+		triggerInputElement.dispatchEvent(event);
+	})()
+
 	</script>
 }

@@ -6,21 +6,17 @@ import (
 	"github.com/senforsce/tndr0cean/router"
 )
 
-t1 HTMX(results []map[string]sparql.Binding, cfg meta.Config, c *router.Context) {
-	<div data-testid=+tid:CurrentComponent>
-		<p>{ results[0]["s"].Value }</p>
-		<ul>
-			<li>
-				for term := range(results) {
-					<details>
-						<summary>
-							{ results[term]["p"].Value }
-						</summary>
-						{ results[term]["o"].Value }
-					</details>
-				}
-			</li>
-		</ul>
+t1 HTMX(_ []map[string]sparql.Binding, view *ViewConfig, cfg meta.Config, c *router.Context) {
+	<div data-testid=§tid:CurrentComponent!>
+		<h3>Component: { view.Title }</h3>
+		<hr />
+		<small>{ view.FilePathFromRoot } <span>{ view.FiletypeSymbol }</span></small>
+		<hr />
+
+		<p>{ view.Description }</p>
+		<hr />
+		<p>Project: { view.Project }</p>
+		<p>Package: { view.Package }</p>
 	</div>
 	@meta.O8(cfg)
 }

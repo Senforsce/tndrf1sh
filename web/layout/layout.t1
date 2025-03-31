@@ -11,19 +11,42 @@ import (
 
 t1 Base(c *router.Context) {
 	<!DOCTYPE html>
-	<html lang={ fmt.Sprintf("%s", c.Get("lang")) } data-theme="dark">
+	<html lang={ fmt.Sprintf("%s", tr.Tr("lang", c)) } data-theme="dark">
 		<head>
 			<meta charset="utf-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>+sen:Thunderf1shPageTitle | Home</title>
-			<link rel="stylesheet" href={ fmt.Sprintf("%s/pico.classless.min.css", c.Get("static")) } type="text/css"/>
-			<link rel="stylesheet" href={ fmt.Sprintf("%s/critical.css", c.Get("static")) } type="text/css"/>
-			<link rel="icon" href={ fmt.Sprintf("%s/img/favicon.svg", c.Get("static")) } type="text/css"/>
-			<script src=+se:HTMXUrl defer></script>
+			<meta name="viewport" content={ tr.Echo("width=device-width, initial-scale=1.0") }/>
+			<title>§sen:Thunderf1shPageTitle!</title>
+			<link rel="stylesheet" href="/static/pico.classless.min.css" type="text/css"/>
+			<link rel="stylesheet" href="/static/tndrf1sh.css?v=2" type="text/css"/>
+			<link rel="icon" href="/static/img/favicon.svg" type="text/css"/>
+			<script src=§se:HTMXUrl! defer></script>
 		</head>
 		<body>
 			@aside.HTMX(c)
-			<main class="container-fluid work-area">
+			<main class={ tr.Echo("container-fluid work-area") } style="position:relative;">
+				<a href="/" title="Logo du Project Coach MJ" class={ tr.Echo("sticky-company-logo") }>
+					<h1 class={ tr.Echo("m-0 text-primary") } style="display:inline-flex;">
+						<img src=§path:LogoImgSymbol! class=§cls:LogoImgSymbol! width="60px" height="60px" alt="Coach MJ - Logo Symbol" />
+						<img style="filter:invert(100%)" src=§path:LogoImgTitle! class=§cls:LogoImgTitle! width="196px" height="60px" alt={tr.Echo("Coach Mj")} />
+					</h1>
+				</a>
+				<div class="sticky-header">
+					<div class="userSection">
+						<p class="userGreeting">
+							<span class="greeting">Bonjour</span> <span class="username">Maxence !</span>
+						</p>
+						<div class="userWrapper">
+							<div class="userAvatar">
+								<img src="/static/img/team-1.png" width="60px" height="60px" alt="" />
+							</div>
+							<div class="UserInfo">
+								<p>Coach-MJ</p>
+								<p>Administrator</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="formView"></div>
 				@scene.HTMX(c)
 				@controls.HTMX(c)
 			</main>

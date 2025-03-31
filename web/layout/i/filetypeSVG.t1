@@ -1,7 +1,7 @@
 package i
 
 t1 FiletypeSVG() {
-	<svg width="800px" height="800px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<svg width="800px" height="800px" viewBox={ tr.Echo("0 0 512 512") } version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<title>svg-document</title>
 		<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 			<g id="icon" fill="#000000" transform="translate(85.333333, 42.666667)">

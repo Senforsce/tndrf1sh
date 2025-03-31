@@ -8,15 +8,19 @@ import (
 
 	jira "github.com/andygrunwald/go-jira"
 	"github.com/joho/godotenv"
+	"github.com/senforsce/fh/handlers"
 	"github.com/senforsce/sparql"
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/layout"
+	"github.com/senforsce/userconfig"
 )
 
 func main() {
 	app := router.New()
 	Plugs(app)
-	log.Fatal(app.Start())
+	userConfig := userconfig.NewUserConfig()
+
+	log.Fatal(app.Start(userConfig.StaticRoot))
 
 }
 
@@ -28,25 +32,31 @@ func init() {
 
 func Plugs(app *router.Tndr0cean) {
 	WithO8(app)
+	WithO8MJ(app)
+	WithBootstrap(app)
+	userConfig := userconfig.NewUserConfig()
 
 	app.Plug(WithAuth)
-	WithSparQlServer(app)
+	app.Plug(WithRootDirectories)
+	WithSparQlServer(app, userConfig)
 	WithHTMXComponents(app)
 	WithHTMXRegistry(app)
 	WithHTMXServer(app)
-	// WithHTMXPreviews(app)
+	WithHTMXPreviews(app)
 }
 
 func WithHTMXServer(app *router.Tndr0cean) func(h router.Handler) {
 	app.Get("/", layout.Handler)
+	app.Get("/forms/newMovement", handlers.FormNewMovement)
+	app.Post("/process/newMove", handlers.HandleCreateNewMovement)
 	// Other routes will be injected with tree-shaking on build inside ./injected_routes.go
 	return nil
 }
 
-func WithSparQlServer(app *router.Tndr0cean) func(h router.Handler) {
-	repo, err := sparql.NewRepo("http://localhost:3030/ds",
-		sparql.DigestAuth("dba", "dba"),
-		sparql.Timeout(time.Millisecond*1500),
+func WithSparQlServer(app *router.Tndr0cean, userConfig *userconfig.UserConfig) func(h router.Handler) {
+	repo, err := sparql.NewRepo(userConfig.SparQlUrl,
+		sparql.DigestAuth(userConfig.SparQlDigestAuthUsername, userConfig.SparQlDigestAuthPassword),
+		sparql.Timeout(time.Millisecond*time.Duration(userConfig.SparQlTimeoutMillisecond)),
 	)
 
 	if err != nil {
@@ -67,21 +77,34 @@ func WithSparQlServer(app *router.Tndr0cean) func(h router.Handler) {
 }
 
 func WithAuth(h router.Handler) router.Handler {
+	userConfig := userconfig.NewUserConfig()
+
 	return func(c *router.Context) error {
-		c.Set("username", "Senforsce")
-		c.Set("password", "test")
+		c.Set(userConfig.AuthUsernameKey, userConfig.AuthPasswordValue)
+		c.Set(userConfig.AuthPasswordKey, userConfig.AuthPasswordValue)
 
 		return h(c)
 	}
 }
 
-func jiraClient() *jira.Client {
+func WithRootDirectories(h router.Handler) router.Handler {
+	userConfig := userconfig.NewUserConfig()
+
+	return func(c *router.Context) error {
+		c.Set("O8ROOT", userConfig.O8Root)
+		c.Set("CSSROOT", userConfig.CSSRoot)
+
+		return h(c)
+	}
+}
+
+func jiraClient(config userconfig.UserConfig) *jira.Client {
 	jt := jira.BasicAuthTransport{
-		Username: os.Getenv("JIRA_USER"),
-		Password: os.Getenv("JIRA_TOKEN"),
+		Username: os.Getenv(config.TicketSystemUsername),
+		Password: os.Getenv(config.TicketSystemToken),
 	}
 
-	client, err := jira.NewClient(jt.Client(), os.Getenv("JIRA_URL"))
+	client, err := jira.NewClient(jt.Client(), os.Getenv(config.TicketSystemUrl))
 	if err != nil {
 		fmt.Println(err)
 	}

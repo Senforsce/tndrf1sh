@@ -6,12 +6,12 @@ import (
 )
 
 t1 HTMX(c *router.Context) {
-	<div class=+cls:secondary-nav>
+	<div class=§cls:secondary-nav!>
 		<ul>
 			<li>
 				<h3>
-					<div class=+cls:icon-holder>
-						<a title=+i18n:Home href="/">
+					<div class=§cls:icon-holder!>
+						<a title=§i18n:Home! href="/">
 							@i.Home()
 						</a>
 					</div>
@@ -19,8 +19,8 @@ t1 HTMX(c *router.Context) {
 			</li>
 			<li>
 				<h3>
-					<div class=+cls:icon-holder>
-						<a title=+i18n:Dashboard href="/">
+					<div class=§cls:icon-holder!>
+						<a title=§i18n:Dashboard! href="/">
 							@i.DashboardGauge()
 						</a>
 					</div>
@@ -28,8 +28,8 @@ t1 HTMX(c *router.Context) {
 			</li>
 			<li>
 				<h3>
-					<div class=+cls:icon-holder>
-						<a title=+i18n:Config href="/">
+					<div class=§cls:icon-holder!>
+						<a title=§i18n:Config! href="/">
 							@i.Config()
 						</a>
 					</div>
@@ -37,6 +37,6 @@ t1 HTMX(c *router.Context) {
 			</li>
 		</ul>
 		<hr/>
-		<div><small>+sen:Thunderf1shAppVersion</small></div>
+		<div><small>§sen:Thunderf1shAppVersion!</small></div>
 	</div>
 }

@@ -5,29 +5,50 @@ import (
 )
 
 t1 HTMX(c *router.Context) {
-	<aside class=+cls:meta>
+	<aside class=§cls:meta!>
 		<input
 			id="metaPayload"
-			class=+cls:multiPayloadElement
-			name=+sen:metaPayload
+			class=§cls:multiPayloadElement!
+			name=§sen:metaPayload!
 			type="hidden"
-			hx-post=+path:Components
-			hx-trigger=+hx:ChangeThrottleHalfSecond
-			hx-target=+ids:metaContents
+			hx-post=§path:Components!
+			hx-trigger=§hx:ChangeThrottleHalfSecond!
+			hx-target=§ids:metaContents!
 		/>
-		<div id=+id:metaContents class=+cls:metaContents></div>
+		<div id=§id:metaContents! class=§cls:metaContents!></div>
 	</aside>
 }
 
 t1 O8(c Config) {
-	<script>
+	<div class="o8_data" data-propagate={ t1.JSONString(c) }></div>
+	<script defer>
 	(() => {
-		const sidebarTrigger = document.querySelector(c.TargetSelector);
-		sidebarTrigger.value = c.Payload;
-		if(c.Inspect) {
-			const event = new Event('change');
-			sidebarTrigger.dispatchEvent(event);
+		const data = document.querySelectorAll(".o8_data");
+		const lastdata = data.length-1; //always get the last most recent data
+		const topropagate = JSON.parse(data[lastdata].dataset.propagate);
+		if (!topropagate.TargetSelector) {
+			console.log({
+					evt: 'abort:noTargetSelector',
+					topropagate,
+				})
+			return;
 		}
+		const sidebarTrigger = document.querySelector(topropagate.TargetSelector);
+		console.log({ topropagate, sidebarTrigger })
+
+		if (sidebarTrigger) {
+			sidebarTrigger.value = JSON.stringify(topropagate.Payload);
+			if(topropagate.Inspect) {
+				const event = new Event('change');
+				console.log({
+					evt: 'evt:dispatched',
+					topropagate,
+					event
+				})
+				sidebarTrigger.dispatchEvent(event);
+			}
+		}
+		
 	})()
 	</script>
 }

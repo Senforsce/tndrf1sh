@@ -3,7 +3,19 @@ package abdoulsylogo
 import "github.com/senforsce/tndr0cean/router"
 
 t1 HTMX(c *router.Context) {
-	<div class=+cls:abdoulsyLogo>
-		<p>Abdoul Sy</p>
+	<div class=§cls:abdoulsyLogo!>
+		 <div id="logo" class="logo">
+			@SVG()
+		</div>
+
+		<script defer type="module">
+		import initlogo from "/static/js/components/Logo.mjs"
+
+		window.onload = function(){
+			//your code
+			initlogo()
+		}
+		
+		</script>
 	</div>
 }

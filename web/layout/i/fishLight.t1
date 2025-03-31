@@ -1,7 +1,7 @@
 package i
 
 t1 FishLight() {
-	<svg width="800px" height="800px" viewBox="0 0 32 32" id="fish_Light" data-name="fish/Light" xmlns="http://www.w3.org/2000/svg">
+	<svg width="800px" height="800px" viewBox={ tr.Echo("0 0 32 32") } id="fish_Light" data-name="fish/Light" xmlns="http://www.w3.org/2000/svg">
 		<path id="Path" d="M0,0H2V8H0Z" fill="#1a1a1a"></path>
 		<path id="Path-2" data-name="Path" d="M2,0H32V32H26V30h2V28h2V24H26V20h2V12H24V10H22V8H20V6H10v6H6v8H8v2h2v2h2v2H22v6H0V8H2Z" fill="#ffffff"></path>
 		<path id="Path-3" data-name="Path" d="M0,0H2V4H0Z" transform="translate(4 4)" fill="#1a1a1a"></path>

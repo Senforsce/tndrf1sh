@@ -9,7 +9,7 @@ import (
 type Binding  = []map[string]sparql.Binding
 
 t1 HTMX(results Binding, cfg meta.Config, c *router.Context) {
-	<div data-testid=+tid:CurrentIntegrations>
+	<div data-testid=§tid:CurrentIntegrations!>
 		<p>{  results[0]["s"].Value  }</p>
 		<ul>
 			<li>

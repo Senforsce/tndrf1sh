@@ -9,9 +9,9 @@ t1 HTMX(items []Item, cfg meta.Config, c *router.Context) {
 		for _, item := range items {
 			<li>
 				<button
-					role=+role:navigation
+					role=§role:navigation!
 					hx-get={ item.URL }
-					hx-trigger=+hx:Click
+					hx-trigger=§hx:Click!
 					hx-target={ cfg.TargetSelector }
 					hx-swap={ fmt.Sprintf("innerHTML show:%s:top", cfg.TargetSelector) }
 				>

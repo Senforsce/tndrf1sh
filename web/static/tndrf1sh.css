@@ -71,6 +71,133 @@
     }
 }
 
+.card {
+    box-sizing: border-box;
+    position: relative;
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.card::after, .card::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top:50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 10px;
+    background-image: conic-gradient(from var(--angle), transparent 20%, red, purple, cyan, green, orange, red);
+    animation: 3s spin linear infinite
+}
+
+#WelcomeMessage {
+    font-size: 4rem;
+    background: linear-gradient(to right, green, rgb(145, 255, 71), turquoise, cyan, blue, purple, orange, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+.card::before{
+    filter: blur(1.5rem);
+    opacity: 0.6;
+}
+
+
+.sticky-company-logo {
+    position: absolute;
+    top: 34px;
+    left: 0;
+}
+
+.FormComponent {
+    margin-top: 50px;
+    width: 60%;
+    background-color: black;
+    border: 1px solid;
+    margin-inline: auto;
+    & form {
+        padding: 2rem;
+    }
+}
+
+.aside-users {
+    line-height: 30px;
+
+    & li {
+        margin: 0;
+        padding: 0;
+    }
+
+    & .image img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        margin-right: 0.5rem;
+    }
+
+}
+
+.sticky-header {
+
+    position: absolute;
+    padding-top: 1rem;
+    top: 0;
+    right: 0%;
+
+    & .userSection, .userWrapper {
+        display: inline-flex;
+        gap: 2rem;
+    }
+
+    & .userGreeting {
+        line-height: 92px;
+    }
+
+
+    & .userWrapper {
+        height: 74px;
+        height: 92px;
+        padding: 16px;
+        background-color: black;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        
+    }
+
+    & .userAvatar {
+        & img {
+            border-radius: 50%;
+            border: 3px solid;
+        }
+    }
+
+    & .UserInfo {
+        & p {
+            margin: 0;
+            font-weight: bold;
+        }
+    }
+}
+
 .secondary-nav {
     width: calc(100% - 102px);
 
@@ -257,3 +384,28 @@ body:not(:has(aside.meta .metaContents div)) {
         font-size: 0.7rem;
     }
 }
+
+
+
+#Circle {
+    fill: #f0f8ff;
+    stroke: #fff;
+    opacity: .8
+}
+
+#Letter_A {
+    fill: #474646;
+    stroke: #fff;
+    opacity: .98
+}
+
+#Letter_S {
+    fill: #270c11;
+    stroke: #fff;
+    opacity: .9
+}
+
+#Inner_S {
+    stroke: none
+}
+
