@@ -47,6 +47,13 @@ t1 Base(c *router.Context) {
 					</div>
 				</div>
 				<div id="formView"></div>
+				<div id="programmeView"></div>
+				<div id="userView"></div>
+				<div id="blogView"></div>
+				<div id="movementView"></div>
+				<div id="calendarView"></div>
+				<div id="serviceView"></div>
+				<div id="abonnementsView"></div>
 				@scene.HTMX(c)
 				@controls.HTMX(c)
 			</main>

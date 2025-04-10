@@ -1,0 +1,35 @@
+package service
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/sparql"
+
+import "github.com/senforsce/tndrf1sh/web/owl/userlist"
+
+t1 HTMX(c *router.Context) {
+    <div class="serviceview">
+        <div>
+            <h5>Cours Collectifs</h5>
+            <div>
+                <img src="/static/img/cours-collectifs.svg" width="25%" alt="" />
+            </div>
+
+            <div>
+                <h6>Abonnés</h6>
+                @userlist.HTMX([]map[string]sparql.Binding{},c)
+            </div>
+
+            <div>
+                <h6>Utilisateurs Uniques</h6>
+                @userlist.HTMX([]map[string]sparql.Binding{},c)
+
+            </div>
+
+
+            <div>
+                <h6>Prochaine Séance</h6>
+            </div>
+
+
+        </div>
+    </div>
+}

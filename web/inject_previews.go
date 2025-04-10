@@ -18,7 +18,7 @@ import (
 	"github.com/senforsce/coachmj/web/owl/fullcalendar"
 	"github.com/senforsce/coachmj/web/owl/header"
 	"github.com/senforsce/coachmj/web/owl/headercarousel"
-	"github.com/senforsce/coachmj/web/owl/headerstats"
+	"github.com/senforsce/coachmj/web/owl/hero"
 	"github.com/senforsce/coachmj/web/owl/monthlystats"
 	"github.com/senforsce/coachmj/web/owl/myvalues"
 	"github.com/senforsce/coachmj/web/owl/navbar"
@@ -55,7 +55,7 @@ func WithHTMXPreviews(app *router.Tndr0cean) error {
 	app.Get("/preview/fullcalendar", fullcalendar.Preview)
 	app.Get("/preview/header", header.Preview)
 	app.Get("/preview/headercarousel", headercarousel.Preview)
-	app.Get("/preview/headerstats", headerstats.Preview)
+	app.Get("/preview/headerstats", hero.Preview)
 	app.Get("/preview/monthlystats", monthlystats.Preview)
 	app.Get("/preview/myvalues", myvalues.Preview)
 	app.Get("/preview/navbar", navbar.Preview)

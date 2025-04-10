@@ -12,6 +12,16 @@ import (
 	"github.com/senforsce/sparql"
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/layout"
+	"github.com/senforsce/tndrf1sh/web/owl/abonnement"
+	"github.com/senforsce/tndrf1sh/web/owl/blogtexteditor"
+	"github.com/senforsce/tndrf1sh/web/owl/programme"
+
+	"github.com/senforsce/tndrf1sh/web/owl/movement"
+	"github.com/senforsce/tndrf1sh/web/owl/moves"
+	"github.com/senforsce/tndrf1sh/web/owl/service"
+	"github.com/senforsce/tndrf1sh/web/owl/user"
+	"github.com/senforsce/tndrf1sh/web/owl/userlist"
+
 	"github.com/senforsce/userconfig"
 )
 
@@ -48,7 +58,19 @@ func Plugs(app *router.Tndr0cean) {
 func WithHTMXServer(app *router.Tndr0cean) func(h router.Handler) {
 	app.Get("/", layout.Handler)
 	app.Get("/forms/newMovement", handlers.FormNewMovement)
+	app.Get("/blog/new", blogtexteditor.Handler)
+	app.Get("/programme/new", programme.Handler)
+
 	app.Post("/process/newMove", handlers.HandleCreateNewMovement)
+	app.Get("/forms/newUser", handlers.FormNewUser)
+	app.Post("/process/newUser", handlers.HandleCreateNewUser)
+	app.Get("/mj/moves", moves.Handler)
+	app.Get("/mj/userlist", userlist.Handler)
+	app.Get("/mj/user/*userName", user.Handler)
+	app.Get("/mj/movement/*moveId", movement.Handler)
+	app.Get("/mj/abonnement/*abonnementName", abonnement.Handler)
+	app.Get("/mj/service/*serviceName", service.Handler)
+
 	// Other routes will be injected with tree-shaking on build inside ./injected_routes.go
 	return nil
 }

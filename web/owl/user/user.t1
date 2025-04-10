@@ -1,0 +1,93 @@
+package user
+
+import (
+    "github.com/senforsce/tndr0cean/router"
+    "github.com/senforsce/tndrf1sh/web/owl/figure"
+)
+
+t1 HTMX(c *router.Context) {
+    <div class="userview" style="margin-top:50px;">
+        <div class="main">
+            <div class="figure-wrapper">
+             @figure.HTMX("/static/img/team-3.png")
+            </div>
+            <div class="infoWrapper">
+                <h5>
+                Abdoul Sy
+                (38 ans)
+                </h5>
+                <p>Membre depuis le <span>10/12/2024</span></p>
+                <p>Email: <span>asy@senforsce.com</span></p>
+                <p>Tél: <span>0666406640</span></p>
+                <p>Adresse: 
+                  <span>9 rue des Prairies</span><br />
+                  <span>75020</span><br />
+                  <span>Paris</span><br />
+                </p>
+                <p>Carte: ..0054 valide</p>
+            </div>
+        </div>
+        <div class="userfields">
+            <div class="sub">
+                <h5>Client Entreprise</h5>
+                <p class="field"><span class="fieldTitle">configuration</span> Entreprise</p>
+                <p class="field"><span class="fieldTitle">Raison sociale</span> Entreprise</p>
+                <p class="field"><span class="fieldTitle">SIRET</span> Entreprise</p>
+                <p class="field"><span class="fieldTitle">Adresse de facturation</span> 9 rue des Prairies</p>
+                <p class="field"><span class="fieldTitle">nomContact</span> Chirac</p>
+                <p class="field"><span class="fieldTitle">mailContact</span> Jacques</p>
+                <p class="field"><span class="fieldTitle">telContact</span> 010203005</p>
+            </div>
+            <div class="sport">
+                <h5>Informations Médicales</h5>
+                <p class="field"><span class="fieldTitle">Personne étant atteinte d'affections longues durée</span> Oui</p>
+                <p class="field"><span class="fieldTitle">Nom de l'affection longue durée</span> Eczema Atopique</p>
+                <p class="field"><span class="fieldTitle">Nom du spécialiste</span> Dr House</p>
+                <p class="field"><span class="fieldTitle">médecin traitant</span>  Dr Cuddy</p>
+                <p class="field"><span class="fieldTitle">Ordonnance téléchargeable</span> Telecharger</p>
+                <p class="field"><span class="fieldTitle">Mail du médecin</span> drhouse@senforsce.com</p>
+                <p class="field"><span class="fieldTitle">Numéro de téléphone du médecin</span> 0102030405</p>
+                <p class="field"><span class="fieldTitle">Personne à contacter en cas de problèmes</span> Jacques Chirac</p>
+            </div>
+            <div class="objectifs">
+                <h5>Objectifs</h5>
+                <p class="field"><span class="fieldTitle">Objectif</span> prendre 5 kg en un an</p>
+            </div>
+            <div class="prestations-particulier">
+                <h5>Prestations Particulier</h5>
+
+                <p class="field"><span class="fieldTitle">type</span> Abonnnement</p>
+                <p class="field"><span class="fieldTitle">prestation</span> 2 semaine d'essai</p>
+                <p class="field"><span class="fieldTitle">Date de souscription</span> 01/03/2024</p>
+                <p class="field"><span class="fieldTitle">Date de fin</span> 01/03/2025</p>
+            </div>
+            <div class="prestations-entreprise">
+                <h5>Prestations Entreprise</h5>
+
+                <p class="field"><span class="fieldTitle">type</span> Abonnnement</p>
+                <p class="field"><span class="fieldTitle">prestation</span> Cours Collectifs</p>
+                <p class="field"><span class="fieldTitle">Date de souscription</span> 01/03/2024</p>
+                <p class="field"><span class="fieldTitle">Date de fin</span> 01/03/2025</p>
+            </div>
+            <div class="customisation">
+                <h5>Paramètres Utilisateur</h5>
+
+                <p class="field"><span class="fieldTitle">Animal Totem</span> Turtle</p>
+                <p class="field"><span class="fieldTitle">Template appliqué</span> #e41411</p>
+                <p class="field"><span class="fieldTitle">kpi1</span> Abonnnement</p>
+                <p class="field"><span class="fieldTitle">kpi2</span> Abonnnement</p>
+                <p class="field"><span class="fieldTitle">kpi3</span> Abonnnement</p>
+                <p class="field"><span class="fieldTitle">Courbe représentant l'état émotionnel</span> WTF</p>
+                <p class="field"><span class="fieldTitle">les images des mouvements préférés du client</span> [][]</p>
+                <p class="field"><span class="fieldTitle">type</span> Abonnnement</p>
+            </div>
+            <div class="prs">
+                <h5>Records Personnels</h5>
+
+                <p class="field"><span class="fieldTitle">squat</span> 10kg</p>
+                <p class="field"><span class="fieldTitle">Cossack Squat</span> 20kg</p>
+                <p class="field"><span class="fieldTitle">Pompes</span> 50kg</p>
+            </div>
+        </div>
+    </div>
+}

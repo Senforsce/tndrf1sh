@@ -1,0 +1,156 @@
+package customselect
+
+t1 HTMX() {
+    <select>
+  <button>
+    <span class="label">Where</span>
+    <selectedcontent></selectedcontent>
+  </button>
+  <div class="option-container">
+    <option value="" hidden>
+      <span>Search destinations</span>
+    </option>
+    <option value="anywhere">
+      <img src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" alt="">
+      <span class="text">Everywhere</span>
+    </option>
+    <option value="europe">
+      <img src="https://a0.muscache.com/im/pictures/7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.jpg?im_w=320" alt="">
+      <span class="text">Europe</span>
+    </option>
+    <option value="italy">
+      <img src="https://a0.muscache.com/im/pictures/ea5598d7-2b07-4ed7-84da-d1eabd9f2714.jpg?im_w=320" alt="">
+      <span class="text">Italy</span>
+    </option>
+    <option value="caribbean">
+      <img src="https://a0.muscache.com/im/pictures/c61d10f5-4ab3-4d16-bed7-0449e15c8277.jpg?im_w=320" alt="">
+      <span class="text">Caribbean</span>
+    </option>
+    <option value="canada">
+      <img src="https://a0.muscache.com/im/pictures/cd9f2bf0-eefc-4980-b7cb-9c8ca3dae883.jpg?im_w=320" alt="">
+      <span class="text">Canada</span>
+    </option>
+    <option value="south-america">
+      <img src="https://a0.muscache.com/im/pictures/06a30699-aead-492e-ad08-33ec0b383399.jpg?im_w=320" alt="">
+      <span class="text">South America</span>
+    </option>
+  </div>
+</select>
+<style>
+select, ::picker(select) {
+  appearance: base-select;
+  font: -webkit-small-control;
+}
+
+.option-container {
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+::picker(select) {
+  padding: 1rem;
+  border-radius: 2rem;
+  border-width: 0;
+  margin-top: 0.5rem;
+  box-shadow: 0px 12.8px 28.8px rgba(0, 0, 0, 0.13), 0px 0px 9.2px rgba(0, 0, 0, 0.11);
+}
+
+selectedcontent {
+  & img {
+    display: none;
+  }
+}
+
+option {
+  display: grid;
+  
+  &::checkmark {
+    display: none;
+  }
+
+  &:hover {
+    background: none;
+
+    & img {
+      border-color: dimgray;
+      cursor: pointer;
+    }
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+img {
+  width: 100%;
+  max-width: 120px;
+  border-radius: 1rem;
+  border: 1px solid lightgray;
+  margin-bottom: 0.25rem;
+}
+
+.header {
+  font-weight: 700;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Button */
+select {
+  text-align: left;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  width: 300px;
+  background: #eee;
+  border-width: 0;
+  transition-duration: 0.25s;
+  background-color: white;
+  
+  button {
+    
+  }
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
+
+/* 🤔 */
+select:open {
+  box-shadow: 0 0 20px lightgray;
+}
+
+.label {
+  font-weight: 700;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+span {
+  font-size: 0.9rem;
+}
+
+button {
+  display: grid;
+}
+
+::picker-icon {
+  display: none;
+}
+
+@media (width <= 550px) {
+  .option-container {
+    width: 90vw;
+    grid-template-rows: 1fr;
+    grid-auto-flow: column;
+  }
+  
+  option {
+    width: 120px;
+  }
+}
+</style>
+}

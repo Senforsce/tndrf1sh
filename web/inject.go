@@ -45,7 +45,7 @@ func WithO8(app *router.Tndr0cean) error {
 	app.S("i18n:SceneInstructions", "Select a component on the sidebar to display it.")
 	app.S("i18n:ShowAllCommands", "Show all commands")
 	app.S("i18n:ShowSettings", "Show Settings")
-	app.S("i18n:WelcomeMessage", "Welcome to Thunderf1sh !")
+	app.S("i18n:WelcomeMessage", "Welcome to Tndrf1sh !")
 	app.S("i18n:WelcomeSubMessage", "Part of the Tndr Suite From Senforsce.")
 	app.S("id:CurrentComponent", "CurrentComponent")
 	app.S("id:CurrentIntegrations", "CurrentIntegrations")

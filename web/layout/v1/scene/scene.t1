@@ -21,7 +21,7 @@ t1 HTMX(c *router.Context) {
 		<div id=§id:scene-active!>
 			<article class=§cls:scene-active!>
 				<hgroup>
-					<h2 id="WelcomeMessage">§i18n:WelcomeMessage!</h2>
+					<h2 id="WelcomeMessage" class="WelcomeMessage">§i18n:WelcomeMessage!</h2>
 					<h3>§i18n:WelcomeSubMessage!</h3>
 				</hgroup>
 				<section class=§cls:noComponentWrapper!>

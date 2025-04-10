@@ -1,0 +1,67 @@
+package userlist
+
+import(
+
+	"github.com/senforsce/sparql"
+	"github.com/senforsce/tndr0cean/router"
+)
+
+t1 HTMX(b []map[string]sparql.Binding, c *router.Context) {
+   <section>
+   <h5>Utilisateurs</h5>
+  <div class="avatars">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=14" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=41" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=21" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=12" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=36" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=55" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=31" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=18" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=29" alt="">
+    <img class="avatar" src="https://i.pravatar.cc/200?img=37" alt="">
+  </div>
+  <style>
+
+.avatars {
+  --avatar-count: 10;
+  --avatar-size: 75px;
+
+  --column-size: calc(var(--avatar-size) / 2);
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--avatar-count), var(--column-size));
+  transition: 500ms;
+  transition-delay: 500ms;
+}
+
+.avatars:hover {
+  --column-size: calc(var(--avatar-size) * 1.5);
+  transition-delay: 0ms;
+}
+
+.avatar {
+  width: var(--avatar-size);
+  border-radius: 100vw;
+  border: 5px solid white;
+  box-shadow: 0.25rem 0.25rem 0.5rem hsl(0 0% 0% / 0.2);
+
+  transition: scale 500ms;
+}
+
+.avatar:hover {
+  scale: 2;
+  z-index: 2;
+}
+
+@supports selector(:has(+ *)) {
+  .avatar:hover + .avatar,
+  .avatar:has(+ .avatar:hover) {
+    scale: 1.5;
+  }
+}
+
+  </style>
+</section> 
+}

@@ -1,0 +1,623 @@
+package programme
+
+import "github.com/senforsce/tndr0cean/router"
+import "fmt"
+
+t1 HTMX(c *router.Context) {
+    <script src="https://cdn.jsdelivr.net/npm/datalist-css/dist/datalist-css.min.js"></script>
+    <script type="module">
+    import {
+        Draggable,
+        Sortable,
+        Droppable,
+        Swappable,
+    } from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/index.mjs';
+
+    const mod = (function mod() {
+        const containers = document.querySelectorAll('#UniqueDropzone .BlockLayout');
+
+        if (containers.length === 0) {
+            return false;
+        }
+
+        const droppable = new Droppable(containers, {
+            draggable: '.Block--isDraggable',
+            dropzone: '.BlockWrapper--isDropzone',
+            mirror: {
+            constrainDimensions: true,
+            },
+        });
+
+        let droppableOrigin;
+
+        // --- Draggable events --- //
+        droppable.on('drag:start', (evt) => {
+            droppableOrigin = evt.originalSource.parentNode.dataset.dropzone;
+            console.log({ droppableOrigin });
+        });
+
+        droppable.on('droppable:dropped', (evt) => {
+            console.log({ droppableOrigin , a: 0});
+
+            if (droppableOrigin !== evt.dropzone.dataset.dropzone) {
+                console.log({ droppableOrigin , a: 2});
+                evt.cancel();
+            }
+            console.log({ droppableOrigin , a: 1});
+
+        });
+
+    });
+
+    setTimeout(mod, 2000)
+    
+    </script>
+    <h2 style="margin-top:100px;" class="WelcomeMessage">Création D'un nouveau Programme</h2>
+
+    <div class="threeRows" id="UniqueDropzone" style="margin-top:40px;">
+
+        <div class={ tr.Echo("halfthird BlockLayout") }>
+
+
+
+            <details>
+
+
+                <summary>Ajoute Un Coaché</summary>
+
+
+                <h6>Sélectionne un utilisateur et glisse le dans la zone</h6>
+                <label for="users">Choose your browser from the list:</label>
+                <input list="userlist" name="users" id="users" />
+
+                <div class={ tr.Echo("")} >
+
+                <ul class={ tr.Echo("step1 ") } >
+                    <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="2">
+                        
+
+
+
+                        <span class={ tr.Echo("Block Block--item2 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0" style="">
+                            <div class="BlockContent">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
+                                    <span class="image">
+                                        <img src="/static/img/team-2.png" width="30px" height="30px" />
+                                    </span>
+                                    <span class="userfullname">
+                                        { fmt.Sprintf("@%s", "ASy") }
+                                    </span>
+                                </h3>
+                                <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                                <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                            </div>
+                        </span>
+
+
+
+
+
+                    </li>
+                    <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="2">
+                        
+
+
+                        <span class={ tr.Echo("Block Block--item2 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0" style="">
+                            <div class="BlockContent">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
+                                <span class="image">
+                                    <img src="/static/img/team-3.png" width="30px" height="30px" />
+                                </span>
+                                <span class="userfullname">
+                                    { fmt.Sprintf("@%s", "ENauche") }
+                                </span>
+                                </h3>
+                                <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                                <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                            </div>
+                        </span>
+
+
+
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+        </details>
+
+
+        <details>
+
+
+            <summary>Ajoute Un Type De Programme</summary>
+         
+
+            <h6>Sélectionne un Type de Programme et glisse le dans la zone</h6>
+            <label for="users">Choose your browser from the list:</label>
+            <input list="userlist" name="users" id="users" />
+
+            <div class={ tr.Echo("")} >
+
+            <ul class={ tr.Echo("step2 ") } >
+				<li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+					
+
+
+
+                    <span class={ tr.Echo("Block Block--typeHollow")}>
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>TABATA</h3>
+                        </div>
+                    </span>
+                    <span class={ tr.Echo("Block Block--item4 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>TABATA</h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+
+
+
+
+
+				</li>
+				<li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+					
+
+                    <span class={ tr.Echo("Block Block--typeHollow")}>
+
+                    <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>EMOM</h3>
+                        </div>
+                    </span>
+                    <span class={ tr.Echo("Block Block--item4 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>EMOM</h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+
+
+
+				</li>
+
+                <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+					
+
+                    <span class={ tr.Echo("Block Block--typeHollow")}>
+
+                    <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>HIIT</h3>
+                        </div>
+                    </span>
+                    <span class={ tr.Echo("Block Block--item4 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>HIIT</h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+
+
+
+				</li>
+
+                <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+					
+
+                    <span class={ tr.Echo("Block Block--typeHollow")}>
+
+                    <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>AMRAP</h3>
+                        </div>
+                    </span>
+                    <span class={ tr.Echo("Block Block--item4 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>AMRAP</h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+
+
+
+				</li>
+
+                <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+					
+
+                    <span class={ tr.Echo("Block Block--typeHollow")}>
+
+                    <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>MANUEL</h3>
+                        </div>
+                    </span>
+                    <span class={ tr.Echo("Block Block--item4 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>MANUEL</h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+
+
+
+				</li>
+			</ul>
+
+
+
+            </div>
+
+
+               
+        </details>
+
+
+
+
+        
+        <details>
+
+                <summary>Ajoute Un Mouvement D'exercice</summary>
+
+
+            <h6>Sélectionne des Mouvements et assigne les dans la zone</h6>
+            <label for="moves">Choose your browser from the list:</label>
+            <input list="movelist" name="moves" id="moves" />
+
+          
+            <ul>
+				<li>
+					 <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied")} data-dropzone="6">
+                        <span class={ tr.Echo("Block Block--typeHollow")}>
+                            <div class="BlockContent">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>six</h3>
+                            </div>
+                        </span>
+                        <span class={ tr.Echo("Block Block--item6 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                            <div class="BlockContent">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>six</h3>
+                                <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                                <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                            </div>
+                        </span>
+                    </div>
+				</li>
+				
+			</ul>
+
+        </details>
+
+
+
+
+
+
+
+                <details>
+
+                <summary>Ajoute Un Mouvement D'exercice</summary>
+
+
+            <h6>Sélectionne des Mouvements et assigne les dans la zone</h6>
+            <label for="moves">Choose your browser from the list:</label>
+            <input list="movelist" name="moves" id="moves" />
+
+          
+            <ul>
+				<li>
+					  <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied")} data-dropzone="7">
+                <span class={ tr.Echo("Block Block--typeHollow")}>
+                    <div class="BlockContent">
+                        <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>seven</h3>
+                    </div>
+                </span>
+                <span class={ tr.Echo("Block Block--item7 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                    <div class="BlockContent">
+                        <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>seven</h3>
+                        <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                        <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                    </div>
+                </span>
+            </div>
+				</li>
+				
+			</ul>
+
+        </details>
+
+
+
+
+
+
+
+                <details>
+
+                <summary>Ajoute Un Mouvement D'exercice</summary>
+
+
+            <h6>Sélectionne des Mouvements et assigne les dans la zone</h6>
+            <label for="moves">Choose your browser from the list:</label>
+            <input list="movelist" name="moves" id="moves" />
+
+          
+            <ul>
+				<li>
+					  <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied")} data-dropzone="8">
+                <span class={ tr.Echo("Block Block--typeHollow")}>
+                    <div class="BlockContent">
+                        <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>eight</h3>
+                    </div>
+                </span>
+                <span class={ tr.Echo("Block Block--item8 Block--isDraggable")} title={ tr.Echo("Click to drag")} tabindex="0">
+                    <div class="BlockContent">
+                        <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>eight</h3>
+                        <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                        <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                    </div>
+                </span>
+            </div>
+				</li>
+				
+			</ul>
+
+        </details>
+
+
+           
+
+           
+
+
+
+           
+            
+
+        </div>
+    
+        <div data-dropzone="1" class={ tr.Echo(" zone twothird ") } id="programmeZone">
+            <input type="text" placeholder={ tr.Echo("Saisis Le Nom du programme") } name="programme-name" />
+            // <h6>Création Programme</h6>
+            // <hr />
+            
+            // <a hx-swap="innerHTML"
+            //     hx-get="/mj/user/asy"
+            //     hx-target="#userView"
+            //     hx-trigger="click"
+            // >
+            // <span class="image">
+            //     <img src="/static/img/team-2.png" width="30px" height="30px" />
+            // </span>
+            // <span class="userfullname">
+            //     { fmt.Sprintf("%s", "Abdoul Sy") }
+            // </span>
+            // 38 ans, 1m80, 73kg
+            // </a>
+            // <hr />
+            // Objectif: Envahir la terre et prendre 5kg.
+            // <hr />
+            //         Type de Programme: TABATA
+            // <hr />
+            //         Echauffement
+            // <hr />
+            //         CORPS DE SEANCE
+            // <hr />
+            //         RETOUR AU CALME
+            // <hr />
+            //         MOBILITE
+
+            <section  class="UniqueDropzone">
+
+            
+                <article class={ tr.Echo("BlockLayout BlockLayout--typeGrid")} tabindex="0">
+                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied")} data-dropzone="1">
+                        <span class={ tr.Echo("Block Block--typeStripes")}>
+                            <div class="BlockContent"></div>
+                        </span>
+                        <span class={ tr.Echo("Block Block--item1 Block--isDraggable")} title="Click to drag" tabindex="0" style="">
+                            <div class="BlockContent" style="background-image:url(/static/img/o/reg/ACCUEIL_Ensemble_nous.jpg);background-size:cover;">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>Coach</h3>
+                                <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                                <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="2">
+                        <span class={ tr.Echo("Block Block--typeStripes")}>
+                            <div class="BlockContent"></div>
+                        </span>
+                    </div>
+                    <div class="BlockWrapper">
+                        <span class={ tr.Echo("Block Block--typeShell Block--item3")}>
+                            <div class="BlockContent">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>Date</h3>
+                            </div>
+                        </span>
+                    </div>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="4">
+                        <span class={ tr.Echo("Block Block--typeStripes")}>
+                            <div class="BlockContent"></div>
+                        </span>
+                    </div>
+                    <div class="BlockWrapper">
+                        <span class={ tr.Echo("Block Block--typeShell Block--item5")}>
+                            <div class="BlockContent">
+                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>Temps</h3>
+                            </div>
+                        </span>
+                    </div>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="6">
+                        <span class={ tr.Echo("Block Block--typeStripes Block--item6")}>
+                            <div class="BlockContent"></div>
+                        </span>
+                    </div>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="7">
+                        <span class={ tr.Echo("Block Block--typeStripes Block--item7")}>
+                            <div class="BlockContent"></div>
+                        </span>
+                    </div>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="8">
+                        <span class={ tr.Echo("Block Block--typeStripes")}>
+                            <div class="BlockContent"></div>
+                        </span>
+                    </div>
+                </article>
+        </section>
+
+        </div>
+
+        <div class={ tr.Echo("step2 halfthird") }>
+            <h6>Programme: <span id="tempProgrammeName">Sans Nom</span>  <br />Avec</h6>
+            <hr />
+            Coach:
+            <form action="/programme/new">
+                <input type="hidden" name="trainingCoach" value="http://senforsce.com/o8/brain/Abdoul_SY" />
+                <details>
+                    <summary>
+                        <span class="image">
+                            <img src="/static/img/o/reg/ACCUEIL_Ensemble_nous.jpg" width="30px" height="30px" />
+                        </span>
+                        <span class="userfullname">
+                            { fmt.Sprintf("%s", "Maxence Jeudy") }
+                        </span>
+                    </summary>
+                    <button>
+                        Annuler
+                    </button>
+                </details>
+
+                <input type="hidden" name="trainingSubject" value="http://senforsce.com/o8/brain/Abdoul_SY" />
+                <hr />
+                <p>Client </p>
+                <details>
+                    <summary>
+                        <span class="image">
+                            <img src="/static/img/team-1.png" width="30px" height="30px" />
+                        </span>
+                        <span class="userfullname">
+                            { fmt.Sprintf("%s", "Abdoul Sy") }
+                        </span>
+                    </summary>
+                    <button>
+                        Annuler
+                    </button>
+                </details>
+
+                <input type="hidden" name="trainingSubject" value="http://senforsce.com/o8/brain/Abdoul_SY" />
+                <hr />
+                <p>Type De Programme </p>
+                <details>
+                    <summary>
+                        <span class="userfullname">
+                            { fmt.Sprintf("%s", "TABATA") }
+                        </span>
+                    </summary>
+                    Intervalle haute intensité avec phases de travail/repos fixes
+                    <button>
+                        Annuler
+                    </button>
+                </details>
+
+                 <input type="hidden" name="trainingSubject" value="http://senforsce.com/o8/brain/Abdoul_SY" />
+                <hr />
+                <p>Echauffement </p>
+                <details>
+                    <summary>
+                        <span class="userfullname">
+                            { fmt.Sprintf("%s", "Squat") }
+                        </span>
+                    </summary>
+                    
+                    <button>
+                        Annuler
+                    </button>
+                </details>
+
+                 <input type="hidden" name="trainingSubject" value="http://senforsce.com/o8/brain/Abdoul_SY" />
+                <hr />
+                <p>Corps De Séance </p>
+                <details>
+                    <summary>
+                        <span class="userfullname">
+                            { fmt.Sprintf("%s", "Squat") }
+                        </span>
+                    </summary>
+                    
+                    <button>
+                        Annuler
+                    </button>
+                </details>
+
+                 <input type="hidden" name="trainingSubject" value="http://senforsce.com/o8/brain/Abdoul_SY" />
+                <hr />
+                <p>Retour Au Calme</p>
+                <details>
+                    <summary>
+                        <span class="userfullname">
+                            { fmt.Sprintf("%s", "Squat") }
+                        </span>
+                    </summary>
+                    
+                    <button>
+                        Annuler
+                    </button>
+                </details>
+
+                <button type="button" >
+                Créer Le Programme
+                </button>
+
+            </form>
+        </div>
+    </div>
+    <style>
+    .threeRows {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .zone {
+        border: 2px dashed white;
+    }
+
+    .third {
+        width: 30%;
+    }
+
+    .halfthird {
+        width: 15%;
+    }
+
+    .twothird {
+        width: 60%;
+    }
+   /* datalist {
+        position: absolute;
+        max-height: 20em;
+        border: 0 none;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    datalist option {
+        font-size: 0.8em;
+        padding: 0.3em 1em;
+        background-color: #ccc;
+        cursor: pointer;
+    }
+   */
+    /* option active styles */
+   /* datalist option:hover, datalist option:focus {
+        color: #fff;
+        background-color: #036;
+        outline: 0 none;
+    }*/
+    </style>
+}

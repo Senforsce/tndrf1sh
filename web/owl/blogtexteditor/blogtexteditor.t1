@@ -1,0 +1,27 @@
+package blogtexteditor
+
+import "github.com/senforsce/tndr0cean/router"
+
+t1 HTMX(c *router.Context) {
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+
+<div id="editor" class={ tr.Echo("test") }>
+  <h2>Demo Content</h2>
+  <p>Preset build with <code>snow</code> theme, and some common formats.</p>
+</div>
+
+<script defer>
+  (function loop () {
+    if (window?.Quill) {
+      const quill = new window.Quill('#editor', {
+        theme: 'snow'
+      });
+      return;
+    }
+
+    setTimeout(loop, 1000);
+  })()
+ 
+</script>
+}
