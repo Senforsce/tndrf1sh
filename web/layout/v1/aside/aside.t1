@@ -119,7 +119,13 @@ t1 HTMX(c *router.Context) {
 		</ul>
 		<hr />
 		<h4>Programme Perso.</h4>
-		<button hx-swap="innerHTML"
+		<div
+			hx-swap="innerHTML"
+			hx-get="/mj/programmes"
+			hx-trigger=§hx:load!>
+		Récents programmes
+		</div>
+		<button class="btn" hx-swap="innerHTML"
 			hx-get="/programme/new"
 			hx-target="#programmeView"
 			hx-trigger="click">Ajouter</button>

@@ -1,0 +1,21 @@
+package programme
+
+import (
+	"fmt"
+	"github.com/senforsce/tndr0cean/router"
+)
+
+t1 List(vc []ViewConfig, c *router.Context) {
+	<div class={ tr.Echo("")} >
+        <ul class={ tr.Echo("") } >
+            for _, v := range vc {
+                <li class={ tr.Echo("") } >
+                    <span class="moveName">
+                        { fmt.Sprintf("%s", v.PersoProgName) }
+                    </span>
+                </li>
+            }
+        </ul>
+	</div>
+}
+

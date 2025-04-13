@@ -1,0 +1,34 @@
+package movesdrag
+
+import (
+	"fmt"
+	"github.com/senforsce/tndr0cean/router"
+)
+
+t1 HTMX(vc []ViewConfig, c *router.Context) {
+	<div class={ tr.Echo("")} >
+        <ul class={ tr.Echo("step1 ") } >
+            for _, v := range vc {
+                <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied mxZone") }  data-dropzone="6">
+                    <span class={ tr.Echo("Block Block--item6 Block--isDraggable")}
+                        data-item={ tr.Echo(`{  "MoveExerciceName": "`+ v.MoveExerciceName +`", "MJMoveGifMediaDescription": "`+ v.MJMoveGifMediaDescription +`", "type": "moveexercise", "Subject": "`+ v.Subject +`"}`)}
+                        title={ tr.Echo("Click to drag")} tabindex="0" style="">
+                        <div class="BlockContent">
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
+                                <span class="image">
+                                    <img src="/static/img/team-2.png" width="30px" height="30px" />
+                                </span>
+                                <span class="moveName">
+                                    { fmt.Sprintf("%s", v.MoveExerciceName) }
+                                </span>
+                            </h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+                </li>
+            }
+        </ul>
+	</div>
+}
+

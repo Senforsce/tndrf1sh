@@ -18,9 +18,12 @@ import (
 
 	"github.com/senforsce/tndrf1sh/web/owl/movement"
 	"github.com/senforsce/tndrf1sh/web/owl/moves"
+	"github.com/senforsce/tndrf1sh/web/owl/movesdrag"
+	"github.com/senforsce/tndrf1sh/web/owl/programmetypedrag"
 	"github.com/senforsce/tndrf1sh/web/owl/service"
 	"github.com/senforsce/tndrf1sh/web/owl/user"
 	"github.com/senforsce/tndrf1sh/web/owl/userlist"
+	"github.com/senforsce/tndrf1sh/web/owl/userlistdrag"
 
 	"github.com/senforsce/userconfig"
 )
@@ -60,17 +63,22 @@ func WithHTMXServer(app *router.Tndr0cean) func(h router.Handler) {
 	app.Get("/forms/newMovement", handlers.FormNewMovement)
 	app.Get("/blog/new", blogtexteditor.Handler)
 	app.Get("/programme/new", programme.Handler)
+	app.Post("/programme/process", handlers.HandleCreateNewProgramme)
 
 	app.Post("/process/newMove", handlers.HandleCreateNewMovement)
 	app.Get("/forms/newUser", handlers.FormNewUser)
 	app.Post("/process/newUser", handlers.HandleCreateNewUser)
 	app.Get("/mj/moves", moves.Handler)
+	app.Get("/mj/programmes", programme.ListHandler)
+
 	app.Get("/mj/userlist", userlist.Handler)
 	app.Get("/mj/user/*userName", user.Handler)
 	app.Get("/mj/movement/*moveId", movement.Handler)
 	app.Get("/mj/abonnement/*abonnementName", abonnement.Handler)
 	app.Get("/mj/service/*serviceName", service.Handler)
-
+	app.Get("/mj/movesdrag", movesdrag.Handler)
+	app.Get("/mj/userlistdrag", userlistdrag.Handler)
+	app.Get("/mj/programmetypedrag", programmetypedrag.Handler)
 	// Other routes will be injected with tree-shaking on build inside ./injected_routes.go
 	return nil
 }
