@@ -69,6 +69,10 @@ t1 HTMX(c *router.Context) {
 		<h3>Contenu</h3>
 		<div>Bblt. de Mouvements</div>
 		<button hx-swap="innerHTML"
+			hx-get="/mj/movelist"
+			hx-target="#movelistview"
+			hx-trigger="click">Voir tous</button>
+		<button hx-swap="innerHTML"
 			hx-get="/forms/newMovement"
 			hx-target="#formView"
 			hx-trigger="click">Ajouter</button>

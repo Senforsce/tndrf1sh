@@ -8,6 +8,7 @@ import (
 
 	jira "github.com/andygrunwald/go-jira"
 	"github.com/joho/godotenv"
+	"github.com/senforsce/coachmj/web/owl/movelist"
 	"github.com/senforsce/fh/handlers"
 	"github.com/senforsce/sparql"
 	"github.com/senforsce/tndr0cean/router"
@@ -69,6 +70,7 @@ func WithHTMXServer(app *router.Tndr0cean) func(h router.Handler) {
 	app.Get("/forms/newUser", handlers.FormNewUser)
 	app.Post("/process/newUser", handlers.HandleCreateNewUser)
 	app.Get("/mj/moves", moves.Handler)
+	app.Get("/mj/movelist", movelist.ListHandler)
 	app.Get("/mj/programmes", programme.ListHandler)
 
 	app.Get("/mj/userlist", userlist.Handler)

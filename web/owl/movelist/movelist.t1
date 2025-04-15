@@ -1,0 +1,75 @@
+package movelist 
+
+import "github.com/senforsce/tndr0cean/router"
+
+t1 HTMX(c *router.Context, vc []ViewConfig,) {
+	<div class={ tr.Echo("bd bgc-white") }>
+		<div class={ tr.Echo("layers") }>
+			<div class={ tr.Echo("layer w-100 p-20") }>
+				<h6 class={ tr.Echo("lh-1") }>Bibliothèque de mouvements</h6>
+			</div>
+			<div class={ tr.Echo("layer w-100") }>
+				<div class={ tr.Echo("bgc-light-blue-500 c-white p-20") }>
+					<div class={ tr.Echo("peers ai-c jc-sb gap-40") }>
+						<div class={ tr.Echo("peer peer-greed") }>
+							<h5>Avril 2025</h5>
+							<p class={ tr.Echo("mB-0") }>Bibliothèque de Programmes</p>
+						</div>
+						<div class={ tr.Echo("peer") }>
+							<h3 class={ tr.Echo("text-end") }>Coach MJ</h3>
+						</div>
+					</div>
+				</div>
+				<div class={ tr.Echo("table-responsive p-20") }>
+					<table class={ tr.Echo("table") }>
+						<thead>
+							<tr>
+								<th class={ tr.Echo("bdwT-0") }>Nom</th>
+								<th class={ tr.Echo("bdwT-0") }>Description</th>
+								<th class={ tr.Echo("bdwT-0") }>Groupes Musculaires</th>
+								<th class={ tr.Echo("bdwT-0") }>Tips de CoachMJ</th>
+
+								<th class={ tr.Echo("bdwT-0") }>Sujet</th>
+								<th class={ tr.Echo("bdwT-0") }>Gif Animé</th>
+								<th class={ tr.Echo("bdwT-0") }>image</th>
+								<th class={ tr.Echo("bdwT-0") }>icone</th>
+							</tr>
+						</thead>
+						<tbody>
+						for _, v := range vc {
+							<tr data-subject={ v.Subject }>
+								<td class={ tr.Echo("fw-600") }>{ v.MoveExerciceName }</td>
+								<td>{ v.MoveDescription }</td>
+								<td><span class={ tr.Echo("badge bgc-red-50 c-red-700 p-10 lh-0 tt-c rounded-pill") }>{ v.WorksMuscularGroupsFlattened }</span> </td>
+								<td><span class={ tr.Echo("text-success") }>{ v.MoveTipsFlattened }</span></td>
+
+								<td class={ tr.Echo("fw-600") }>{ v.Subject }</td>
+								<td>
+									<span class={ tr.Echo("") }>
+									 <img src={ "/static/img/"+ v.MJMoveGifMediaDescription } alt={ v.MoveExerciceName } width="300" />
+									</span>
+									<small>{ v.MoveGifDescriptionCredits }</small>
+								</td>
+								<td>{ v.MovePicture }</td>
+								<td><span class={ tr.Echo("text-success") }>{ v.MoveIcon }</span></td>
+							</tr>
+							<tr class="programmeInfo"></tr>
+								<!--<td><span class={ tr.Echo("badge bgc-deep-purple-50 c-deep-purple-700 p-10 lh-0 tt-c rounded-pill") }>New</span></td>
+								<td><span class={ tr.Echo("badge bgc-pink-50 c-pink-700 p-10 lh-0 tt-c rounded-pill") }>New</span></td>
+								<td><span class={ tr.Echo("badge bgc-green-50 c-green-700 p-10 lh-0 tt-c rounded-pill") }>Unavailable</span></td>
+								<td><span class={ tr.Echo("badge bgc-red-50 c-red-700 p-10 lh-0 tt-c rounded-pill") }>Used</span></td>
+								<td><span class={ tr.Echo("badge bgc-orange-50 c-orange-700 p-10 lh-0 tt-c rounded-pill") }>Used</span> </td>
+								<td><span class={ tr.Echo("badge bgc-yellow-50 c-yellow-700 p-10 lh-0 tt-c rounded-pill") }>Old</span></td>-->
+
+						}
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class={ tr.Echo("ta-c bdT w-100 p-20") }>
+			<a href="#">Check all the sales</a>
+		</div>
+	</div>
+}

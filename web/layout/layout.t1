@@ -47,6 +47,7 @@ t1 Base(c *router.Context) {
 					</div>
 				</div>
 				<div id="formView"></div>
+				<div id="movelistview"></div>
 				<div id="programmeView"></div>
 				<div id="userView"></div>
 				<div id="blogView"></div>

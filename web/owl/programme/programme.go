@@ -13,7 +13,6 @@ func Handler(c *router.Context) error {
 	return nil
 }
 
-var term = "<http://senforsce.com/o8/brain/coach-mj/%s>"
 var selectDetails = `
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT ?s ?p ?o WHERE {  ?s rdf:type <http://senforsce.com/o8/brain/PersonnalizedProgram> .
@@ -39,16 +38,14 @@ func ListHandler(c *router.Context) error {
 	if err != nil {
 		panic(fmt.Sprintf(panicMessage, query))
 	}
-	fmt.Println("///////////////////////////////////////////////")
 
-	fmt.Println(res.Results.Bindings)
-
-	fmt.Println("///////////////////////////////////////////////")
-
-	view := NewViewConfig(res.Results.Bindings)
+	liste := ListOfSubjects(res.Results.Bindings)
 	views := []ViewConfig{}
-	views = append(views, view)
-	fmt.Println(views)
+	for i, _ := range liste {
+		view := NewViewConfig(liste[i])
+		views = append(views, view)
+
+	}
 
 	return c.Render(List(views, c))
 }

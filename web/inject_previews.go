@@ -22,8 +22,9 @@ import (
 	"github.com/senforsce/coachmj/web/owl/monthlystats"
 	"github.com/senforsce/coachmj/web/owl/myvalues"
 	"github.com/senforsce/coachmj/web/owl/navbar"
+	"github.com/senforsce/coachmj/web/owl/ocean"
+	"github.com/senforsce/coachmj/web/owl/programmelist"
 	"github.com/senforsce/coachmj/web/owl/quickchat"
-	"github.com/senforsce/coachmj/web/owl/saleshistory"
 	"github.com/senforsce/coachmj/web/owl/service"
 	"github.com/senforsce/coachmj/web/owl/sitevisits"
 	"github.com/senforsce/coachmj/web/owl/spinner"
@@ -59,8 +60,10 @@ func WithHTMXPreviews(app *router.Tndr0cean) error {
 	app.Get("/preview/monthlystats", monthlystats.Preview)
 	app.Get("/preview/myvalues", myvalues.Preview)
 	app.Get("/preview/navbar", navbar.Preview)
+	app.Get("/preview/ocean", ocean.Preview)
+
 	app.Get("/preview/quickchat", quickchat.Preview)
-	app.Get("/preview/saleshistory", saleshistory.Preview)
+	app.Get("/preview/programmelist", programmelist.Preview)
 	app.Get("/preview/service", service.Preview)
 	app.Get("/preview/sitevisits", sitevisits.Preview)
 	app.Get("/preview/spinner", spinner.Preview)
