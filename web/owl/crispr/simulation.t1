@@ -1,0 +1,48 @@
+package crispr
+
+import "github.com/senforsce/tndr0cean/router"
+t1 HTMX(c *router.Context) {
+    <div id="simulation-container">
+        <img id="cas9-image" src="path/to/cas9-image.png" alt="Cas9 Image" class="draggable" draggable="true">
+        <img id="guide-rna-image" src="path/to/guide-rna-image.png" alt="Guide RNA Image" class="draggable" draggable="true">
+
+        <div id="gene-sequence" class="draggable" draggable="false">
+            <span class="dna-letter">A</span>
+            <span class="dna-letter">C</span>
+            <span class="dna-letter">T</span>
+            <span class="dna-letter">G</span>
+        </div>
+        <div class="mutation-circle"></div>
+    </div>
+    <script>
+    // Enable drag-and-drop interaction for the Cas9-RNA complex
+    document.addEventListener('DOMContentLoaded', function () {
+      const cas9Complex = document.getElementById('cas9-rna-complex');
+      const mutationCircle = document.querySelector('.mutation-circle');
+
+      cas9Complex.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', 'cas9'); // Set data to be transferred
+      });
+
+      mutationCircle.addEventListener('dragover', function (event) {
+        event.preventDefault(); // Prevent default behavior
+        mutationCircle.classList.add('drag-over');
+      });
+
+      mutationCircle.addEventListener('dragleave', function () {
+        mutationCircle.classList.remove('drag-over');
+      });
+
+      mutationCircle.addEventListener('drop', function (event) {
+        event.preventDefault(); // Prevent default behavior
+        mutationCircle.classList.remove('drag-over');
+
+        const draggedItem = event.dataTransfer.getData('text/plain');
+
+        if (draggedItem === 'cas9') {
+          mutationCircle.style.display = 'none'; // Make the red circle disappear
+        }
+      });
+    });
+    </script>
+}

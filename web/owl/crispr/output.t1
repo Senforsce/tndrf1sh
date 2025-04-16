@@ -1,0 +1,23 @@
+package crispr
+
+import "github.com/senforsce/tndr0cean/router"
+t1 Output(c *router.Context) {
+    <div id="output">
+        <h2>Gene Editing Results:</h2>
+        <p id="result">Results will be displayed here.</p>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const resultOutput = document.getElementById('result');
+
+        function displaySuccessMessage() {
+        resultOutput.textContent = 'Mutation successfully edited! The disease is cured.';
+        }
+    
+        function displayErrorMessage() {
+        resultOutput.textContent = 'Error: Unable to edit the mutation. Please try again.';
+        }
+    });
+    </script>
+    }

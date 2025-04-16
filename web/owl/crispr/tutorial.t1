@@ -1,0 +1,69 @@
+package crispr
+
+import "github.com/senforsce/tndr0cean/router"
+t1 Tuto(c *router.Context) {
+    <div id="tutorial">
+    <h2>CRISPR Gene Editing Tutorial</h2>
+    <p>
+      Welcome to the CRISPR simulation. In this tutorial, you will learn about CRISPR-Cas9 gene editing and its application in curing Cystic Fibrosis.
+      The Cas9 enzyme, guided by RNA, can precisely cut DNA to remove mutations, offering a potential cure for genetic diseases.
+      Follow the steps below to use the simulation and experience the gene-editing process.
+    </p>
+  </div>
+  <style>
+  #tutorial {
+      text-align: center;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #3498db;
+      color: #fff;
+      border-radius: 5px;
+      position: absolute;
+      top: 50px; 
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2em;
+    }
+
+    .bonded {
+        transition: all 0.3s ease-in-out; /* Smooth transition for bonding effect */
+        transform: scale(0.8); /* Scale down for bonding effect */
+        border: 2px solid green; /* Border for visual effect */
+    }
+  </style>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cas9Image = document.getElementById('cas9-image');
+        const guideRnaImage = document.getElementById('guide-rna-image');
+
+        cas9Image.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text/plain', 'cas9');
+        });
+
+        guideRnaImage.addEventListener('dragover', function (event) {
+            event.preventDefault();
+            guideRnaImage.classList.add('drag-over');
+        });
+
+        guideRnaImage.addEventListener('dragleave', function () {
+            guideRnaImage.classList.remove('drag-over');
+        });
+
+        guideRnaImage.addEventListener('drop', function (event) {
+            event.preventDefault();
+            guideRnaImage.classList.remove('drag-over');
+
+            const draggedItem = event.dataTransfer.getData('text/plain');
+
+            if (draggedItem === 'cas9') {
+            cas9Image.style.position = 'relative';
+            cas9Image.style.top = '-30px';
+
+            // Bonding effect
+            cas9Image.classList.add('bonded');
+            guideRnaImage.classList.add('bonded');
+            }
+        });
+    });
+  </script>
+}
