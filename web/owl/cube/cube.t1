@@ -97,5 +97,5 @@ t1 HTMX(c *router.Context) {
     }
 
 
-    </script>
+    </style>
 }
