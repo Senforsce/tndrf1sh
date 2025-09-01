@@ -11,7 +11,11 @@ t1 HTMX(c *router.Context) {
 			<li>
 				<h3>
 					<div class=§cls:icon-holder!>
-						<a title=§i18n:Home! href="/">
+						<a hx-swap="innerHTML"
+						hx-get="/mj/queryandtable"
+						hx-target="#queryAndTableView"
+						href="javascript:void(0);"
+						hx-trigger="click">
 							@i.Home()
 						</a>
 					</div>

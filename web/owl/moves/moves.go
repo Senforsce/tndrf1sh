@@ -11,9 +11,9 @@ import (
 var term = "<http://senforsce.com/o8/brain/coach-mj/%s>"
 var selectDetails = `
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT ?s ?p ?o WHERE {  ?s rdf:type <http://senforsce.com/o8/brain/SportMovementExercise> .
+SELECT ?s ?p ?o WHERE {  ?s rdf:type <http://senforsce.com/o8/brain/SportMovement> .
 	?s ?p ?o .
-} LIMIT 100`
+} LIMIT 1000`
 var panicMessage = "failed sparql query %s"
 
 func Handler(c *router.Context) error {

@@ -1,0 +1,180 @@
+package programme
+
+import "github.com/senforsce/tndr0cean/router"
+import "fmt"
+
+t1 Templates(c *router.Context) {
+        <template id="trainingExerciseEchauffementTemplate">
+        <div class="inside">
+            <input type="hidden" name="Echauffement" value="nothing" class={ tr.Echo("hidden formControl") } />
+            <input type="hidden" name="EchauffementPayload" value="nothing" class={ tr.Echo("payload formControl hasExerciseId") } />
+            <input type="hidden" name="ExerciceType" value="Echauffement"  />
+            <details class="withColor">
+                <summary>
+                    <span class="pictoxl">
+                        <img src="/static/img/echauffement.svg" width="50" height="50" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:-15%;width:50px;" />
+                    </span>
+                    <span class="movename" style="text-overflow:ellipsis;text-wrap:nowrap;width:155px;overflow:hidden;">
+                        { fmt.Sprintf("%s", "Squat") }
+                    </span>
+                </summary>
+                <span class={ tr.Echo("moveOptions moveOptions-Echauffement") }>
+                    <button type="button" data-target="Echauffement_NbSets_" class={ tr.Echo("Echauffement_ hasExerciseId") }>Sets ?</button>
+                    <button type="button" data-target="Echauffement_NbReps_" class={ tr.Echo("Echauffement_ hasExerciseId") }>Reps ?</button>
+
+                    <button type="button" data-target="Echauffement_Time_"  class={ tr.Echo("Echauffement_ hasExerciseId") }>Temps ?</button>
+                    <button type="button" data-target="Echauffement_Weight_" class={ tr.Echo("Echauffement_ hasExerciseId") }>Poids ?</button>
+                </span>
+                <span class={ tr.Echo("moveOptionsInputs moveOptionsInputs-Echauffement") }>
+                    <div class={ tr.Echo("Echauffement_NbSets_ hasExerciseId EchauffementWrapper") }>
+                        <input type="numeric" name="MoveExerciceSets"  placeholder={ tr.Echo("Nb Sets") } class={ tr.Echo("formExtra hasExerciseId") } />
+                        <p>Sets</p>
+                    </div>
+                    <div class={ tr.Echo("Echauffement_NbReps_ hasExerciseId EchauffementWrapper") }>
+                        <input type="numeric" name="MoveExerciceReps"  placeholder={ tr.Echo("Nb Reps") } class={ tr.Echo("formExtra hasExerciseId") } />
+                        <p>Repétitions</p>
+                    </div>
+                    <div class={ tr.Echo("Echauffement_Time_ hasExerciseId EchauffementWrapper") }>
+                        <input type="numeric" name="MoveExerciseTime"  placeholder={ tr.Echo("Temps") } class={ tr.Echo("formExtra hasExerciseId") } />
+                        <select name="MoveExerciceTimeUnit" class={ tr.Echo("formExtra hasExerciseId") }>
+                            <option value="secondes">secondes</option>
+                            <option value="minutes">minutes</option>
+                            <option value="heures">heures</option>
+
+                        </select>
+                    </div>
+                    <div class={ tr.Echo("Echauffement_Weight_ hasExerciseId EchauffementWrapper") }>
+                        <input type="numeric" name="MoveExerciceWeight"  placeholder={ tr.Echo("Poids") } class={ tr.Echo("formExtra hasExerciseId") } />
+                        <select name="MoveExerciceWeightUnit" class={ tr.Echo("formExtra hasExerciseId") }>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                        </select>
+                    </div>
+                    <button type="button" data-target="EchauffementWrapper" style="display:none;" class={ tr.Echo("partialValidate hasExerciseId Echauffement_NbSets_Button Echauffement_NbReps_Button Echauffement_Time_Button Echauffement_Weight_Button") }>valider</button>
+
+                </span>
+                <span class="moveimgwrapper">
+                    <img src="" alt="" width="100%" />
+                </span>
+                
+
+                <span class="movedesc"></span>
+            </details>
+        </div>
+    </template>
+    <template id="trainingExercisePrincipalTemplate">
+        <div class="inside">
+            <input type="hidden" name="CorpsDeSeance" value="nothing" class={ tr.Echo("hidden formControl")} />
+            <input type="hidden" name="CorpsDeSeancePayload" value="nothing" class={ tr.Echo("payload formControl hasExerciseId")} />
+            <input type="hidden" name="ExerciceType" value="CorpsDeSeance"  />
+            <details class="withColor">
+                <summary>
+                    <span class="pictoxl">
+                        <img src="/static/img/corps-seance.svg" width="50" height="50" alt="CorpsDeSeance" style="position:absolute;z-index:20;left:23%;top:-15%;width:50px;" />
+                    </span>
+                    <span class="movename" style="text-overflow:ellipsis;text-wrap:nowrap;width:155px;overflow:hidden;">
+                        { fmt.Sprintf("%s", "Squat") }
+                    </span>
+                </summary>
+                <span class={ tr.Echo("moveOptions moveOptions-CorpsDeSeance") }>
+                    <button type="button" data-target="CorpsDeSeance_NbSets_" class={ tr.Echo("CorpsDeSeance_ hasExerciseId") }>Sets ?</button>
+                    <button type="button" data-target="CorpsDeSeance_NbReps_" class={ tr.Echo("CorpsDeSeance_ hasExerciseId") }>Reps ?</button>
+                    
+                    <button type="button" data-target="CorpsDeSeance_Time_"  class={ tr.Echo("CorpsDeSeance_ hasExerciseId") }>Temps ?</button>
+                    <button type="button" data-target="CorpsDeSeance_Weight_" class={ tr.Echo("CorpsDeSeance_ hasExerciseId") }>Poids ?</button>
+                </span>
+                <span class={ tr.Echo("moveOptionsInputs moveOptionsInputs-CorpsDeSeance") }>
+                <div class={ tr.Echo("CorpsDeSeance_NbSets_ hasExerciseId CorpsDeSeanceWrapper") }>
+                    <input type="numeric" name="MoveExerciceSets"  placeholder={ tr.Echo("Nb Sets") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <p>Repétitions</p>
+                </div>
+                <div class={ tr.Echo("CorpsDeSeance_NbReps_ hasExerciseId CorpsDeSeanceWrapper") }>
+                    <input type="numeric" name="MoveExerciceReps"  placeholder={ tr.Echo("Nb Reps") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <p>Repétitions</p>
+                </div>
+                <div class={ tr.Echo("CorpsDeSeance_Time_ hasExerciseId CorpsDeSeanceWrapper") }>
+                    <input type="numeric" name="MoveExerciseTime"  placeholder={ tr.Echo("Temps") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <select name="MoveExerciceTimeUnit" class={ tr.Echo("formExtra hasExerciseId") }>
+                        <option value="secondes">secondes</option>
+                        <option value="minutes">minutes</option>
+                        <option value="heures">heures</option>
+                    </select>
+                </div>
+                <div class={ tr.Echo("CorpsDeSeance_Weight_ hasExerciseId CorpsDeSeanceWrapper") }>
+                    <input type="numeric" name="MoveExerciceWeight"  placeholder={ tr.Echo("Poids") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <select name="MoveExerciceWeightUnit" class={ tr.Echo("formExtra hasExerciseId") }>
+                        <option value="grammes">g</option>
+                        <option value="kilos">kg</option>
+                    </select>
+                </div>
+                <button type="button" data-target="CorpsDeSeanceWrapper" style="display:none;" class={ tr.Echo("partialValidate hasExerciseId  CorpsDeSeance_NbReps_Button CorpsDeSeance_NbSets_Button CorpsDeSeance_Time_Button CorpsDeSeance_Weight_Button") }>valider</button>
+
+
+                </span>
+                <span class="moveimgwrapper">
+                    <img src="" alt="" width="100%" />
+                </span>
+               
+                <span class="movedesc"></span>
+            </details>
+        </div>
+    </template>
+
+    <template id="trainingExerciseCoolingTemplate">
+        <div class="inside">
+            <input type="hidden" name="RetourAuCalme" value="nothing" class={ tr.Echo("hidden formControl") } />
+            <input type="hidden" name="RetourAuCalmePayload" value="nothing" class={ tr.Echo("payload formControl hasExerciseId") } />
+            <input type="hidden" name="ExerciceType" value="RetourAuCalme"  />
+            <details class="withColor">
+                <summary>
+                    <span class="pictoxl">
+                        <img src="/static/img/retour-calme.svg" width="50" height="50" alt="RetourAuCalme" style="position:absolute;z-index:20;left:23%;top:-15%;width:50px;" />
+                    </span>
+                    <span class="movename" style="text-overflow:ellipsis;text-wrap:nowrap;width:155px;overflow:hidden;">
+                        { fmt.Sprintf("%s", "Squat") }
+                    </span>
+                </summary>
+                <span class={ tr.Echo("moveOptions moveOptions-RetourAuCalme") }>
+                    <button type="button" data-target="RetourAuCalme_NbSets_" class={ tr.Echo("RetourAuCalme_ hasExerciseId") }>Sets ?</button>
+                    <button type="button" data-target="RetourAuCalme_NbReps_" class={ tr.Echo("RetourAuCalme_ hasExerciseId") }>Reps ?</button>
+                    <button type="button" data-target="RetourAuCalme_Time_"  class={ tr.Echo("RetourAuCalme_ hasExerciseId") }>Temps ?</button>
+                    <button type="button" data-target="RetourAuCalme_Weight_" class={ tr.Echo("RetourAuCalme_ hasExerciseId") }>Poids ?</button>
+                </span>
+                <span class={ tr.Echo("moveOptionsInputs moveOptionsInputs-RetourAuCalme") }>
+                <div class={ tr.Echo("RetourAuCalme_NbSets_ hasExerciseId RetourAuCalmeWrapper") }>
+                    <input type="numeric" name="MoveExerciceSets"  placeholder={ tr.Echo("Nb Sets") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <p>Sets</p>
+                </div>
+                <div class={ tr.Echo("RetourAuCalme_NbReps_ hasExerciseId RetourAuCalmeWrapper") }>
+                    <input type="numeric" name="MoveExerciceReps"  placeholder={ tr.Echo("Nb Reps") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <p>Repétitions</p>
+                </div>
+                <div class={ tr.Echo("RetourAuCalme_Time_ hasExerciseId RetourAuCalmeWrapper") }>
+                    <input type="numeric" name="MoveExerciseTime"  placeholder={ tr.Echo("Temps") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <select name="MoveExerciceTimeUnit" class={ tr.Echo("formExtra hasExerciseId") }>
+                        <option value="secondes">secondes</option>
+                        <option value="minutes">minutes</option>
+                        <option value="heures">heures</option>
+
+                    </select>
+                </div>
+                <div class={ tr.Echo("RetourAuCalme_Weight_ hasExerciseId RetourAuCalmeWrapper") }>
+                    <input type="numeric" name="MoveExerciceWeight"  placeholder={ tr.Echo("Poids") } class={ tr.Echo("formExtra hasExerciseId") } />
+                    <select name="MoveExerciceWeightUnit" class={ tr.Echo("formExtra hasExerciseId") }>
+                        <option value="grammes">g</option>
+                        <option value="kilos">kg</option>
+                    </select>
+                </div>
+
+                    <button type="button" data-target="RetourAuCalmeWrapper" style="display:none;" class={ tr.Echo("partialValidate hasExerciseId RetourAuCalme_NbReps_Button RetourAuCalme_NbSets_Button RetourAuCalme_Time_Button RetourAuCalme_Weight_Button") }>valider</button>
+
+                </span>
+                <span class="moveimgwrapper">
+                    <img src="" alt="" width="100%" />
+                </span>
+                
+                <span class="movedesc"></span>
+            </details>
+        </div>
+    </template>
+}

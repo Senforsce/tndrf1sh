@@ -7,12 +7,13 @@ import (
 )
 
 type ViewConfig struct {
-	Firstname      string
-	Lastname       string
-	ContactEmail   string
-	Telephone      string
-	ProfilePicture string
-	Subject        string
+	Firstname         string
+	Lastname          string
+	ContactEmail      string
+	Telephone         string
+	ProfilePicture    string
+	Subject           string
+	HasProfilePicture ProfilePicture
 }
 
 //naive find triple
@@ -49,13 +50,59 @@ func ListOfSubjects(results []map[string]sparql.Binding) map[string][]map[string
 	return toReturn
 }
 
+func NewProfilePicture(res []map[string]sparql.Binding, subject string) ProfilePicture {
+	return ProfilePicture{
+		Filename: sparql.GetValue("ProfilePictureFilename", res),
+		Filepath: sparql.GetValue("ProfilePictureFilepath", res),
+		Salt:     sparql.GetValue("ProfilePictureSalt", res),
+		Subject:  subject,
+	}
+}
+
+type ProfilePicture struct {
+	Filename string
+	Data     string
+	Filepath string
+	Salt     string
+	Subject  string
+}
+
+type CompleteMainInfo struct {
+	Birthdaydate      string
+	BelongsTo         string
+	Subject           string
+	Object            string
+	PrChartDataLabels string
+	PrChartData       string
+	Firstname         string
+	Lastname          string
+	Email             string
+	ProfilePicture    string
+	HasProfilePicture ProfilePicture
+	Telephone         string
+}
+
+func NewCompleteMainInfo(results []map[string]sparql.Binding) CompleteMainInfo {
+	return CompleteMainInfo{
+		BelongsTo:         sparql.GetValue("main", results),
+		Subject:           sparql.GetValue("s", results),
+		Birthdaydate:      sparql.GetValue("Birthdaydate", results),
+		Firstname:         sparql.GetValue("Firstname", results),
+		Lastname:          sparql.GetValue("Lastname", results),
+		Email:             sparql.GetValue("Email", results),
+		HasProfilePicture: NewProfilePicture(results, sparql.GetValue("s", results)),
+		Telephone:         sparql.GetValue("Telephone", results),
+	}
+}
+
 func NewViewConfig(results []map[string]sparql.Binding) ViewConfig {
 	return ViewConfig{
-		Firstname:      FindObjectValueByPredicate("hasFirstname", results)["o"].Value,
-		Lastname:       FindObjectValueByPredicate("hasLastname", results)["o"].Value,
-		ContactEmail:   FindObjectValueByPredicate("hasContactEmail", results)["o"].Value,
-		Telephone:      FindObjectValueByPredicate("hasTelephone", results)["o"].Value,
-		ProfilePicture: FindObjectValueByPredicate("hasProfilePicture", results)["o"].Value,
-		Subject:        FindObjectValueByPredicate("hasFirstname", results)["s"].Value,
+		Firstname:         FindObjectValueByPredicate("hasFirstname", results)["o"].Value,
+		Lastname:          FindObjectValueByPredicate("hasLastname", results)["o"].Value,
+		ContactEmail:      FindObjectValueByPredicate("hasContactEmail", results)["o"].Value,
+		Telephone:         FindObjectValueByPredicate("hasTelephone", results)["o"].Value,
+		ProfilePicture:    FindObjectValueByPredicate("hasProfilePicture", results)["o"].Value,
+		Subject:           FindObjectValueByPredicate("hasFirstname", results)["s"].Value,
+		HasProfilePicture: NewProfilePicture(results, FindObjectValueByPredicate("hasFirstname", results)["s"].Value),
 	}
 }

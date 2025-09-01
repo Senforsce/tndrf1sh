@@ -1,0 +1,21 @@
+
+PREFIX :     <http://senforsce.com/o8/brain/>
+PREFIX mj:   <http://senforsce.com/o8/brain/coach-mj/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sen:  <http://senforsce.com/o8/brain/>
+
+
+INSERT DATA {
+<%s>  rdf:type   sen:PersonnalizedProgram , owl:NamedIndividual;
+
+        sen:hasTrainingMethod  <%s>;
+        sen:hasTrainingUser    <%s>;
+        sen:persoProgDate      "%s"^^xsd:dateTime;
+        sen:persoProgName      "%s" .
+
+}
+
+        #sen:hasCorpsDeSeance   <http://senforsce.com/o8/brain/Exercice/cbCmaT-ReIdrLM0t9wGak>;
+        #sen:hasEchauffement    <http://senforsce.com/o8/brain/Exercice/Q3T4XsqplnFCKj0Ojk3Pj>;
+        #sen:hasRetourAuCalme   <http://senforsce.com/o8/brain/Exercice/3e7nfuiz_zbhNtptid5LE>;

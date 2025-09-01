@@ -1,0 +1,140 @@
+PREFIX :     <http://senforsce.com/o8/brain/>
+PREFIX cls:  <http://senforsce.com/o8/brain/Class/>
+PREFIX clss: <http://senforsce.com/o8/brain/ClassSelector/>
+PREFIX hx:   <http://senforsce.com/o8/brain/HTMXAttribute/>
+PREFIX i18n: <http://senforsce.com/o8/brain/i18n/>
+PREFIX id:   <http://senforsce.com/o8/brain/Identifier/>
+PREFIX ids:  <http://senforsce.com/o8/brain/IdSelector/>
+PREFIX mj:   <http://senforsce.com/o8/brain/coach-mj/>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX role: <http://senforsce.com/o8/brain/AriaRole/>
+PREFIX sc:   <http://senforsce.com/o8/brain/SecureConfig/>
+PREFIX se:   <http://senforsce.com/o8/brain/SecureEnvironment/>
+PREFIX sen:  <http://senforsce.com/o8/brain/>
+PREFIX tid:  <http://senforsce.com/o8/brain/TestId/>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+INSERT DATA {
+    sen:Test_User_1  rdf:type     mj:User , <http://xmlns.com/foaf/0.1/Person> , owl:NamedIndividual;
+        rdfs:comment          "A test User, to test all functionalities.";
+        sen:hasEmail          "enauche+test-user1@eleastrategy.fr";
+        sen:hasPreferredMove  mj:MoveBurpees , mj:MoveDevilPress , mj:MoveDeveloppeCoucheALaBarre .
+
+    sen:test-user1-medical-uuid-123456
+            rdf:type                        sen:UserMedicalInformation , owl:NamedIndividual;
+            sen:belongsToUser               sen:Test_User_1;
+            sen:mjhasDoctorsEmail           "";
+            sen:mjhasDoctorsPhoneNumber     "";
+            sen:mjhasEmergencyContactEmail  "";
+            sen:mjhasEmergencyContactFullname
+                    "";
+            sen:mjhasGP                     "";
+            sen:mjhasLongTermPathologieName
+                    "";
+            sen:mjhasLongTermPathologies    false;
+            sen:mjhasSpecialistName         "";
+            sen:mjhasUserHeight             180;
+            sen:mjhasUserWeight             70 .
+    
+    mj:PR_a40858ee-1cde-4d4c-abb2-8fc27c17e519
+        rdf:type           sen:SportMovementPersonalRecord , owl:NamedIndividual;
+        rdfs:comment       "Personal record added by user"@en;
+        sen:hasComment     "yatta 40";
+        sen:hasDate        "2025-08-16";
+        sen:hasPRMovement  mj:MoveDevilPress;
+        sen:hasPRUser      sen:Test_User_1;
+        sen:hasUnit        "reps";
+        sen:hasValue       "40" .
+
+    sen:test-parameters-user1-uuid-123456
+        rdf:type                sen:UserParameter , owl:NamedIndividual;
+        sen:belongsToUser       sen:Test_User_1;
+        sen:userThemeBgColor    "#efefef";
+        sen:userThemeDarkMode   "light";
+        sen:userThemeTextColor  "#121212" .
+
+    sen:test-user1-objective-uuid-012356
+        rdf:type                        sen:UserObjective , owl:NamedIndividual;
+        sen:belongsToUser               sen:Test_User_1;
+        sen:hasObjectiveKPIInitialDate  "2025-05-14T10:10:10"^^xsd:dateTime;
+        sen:hasObjectiveKPIInitialValue
+                100;
+        sen:hasObjectiveKPIName         "mon poids";
+        sen:hasObjectiveKPITargetValue  80;
+        sen:hasObjectiveKPIUnit         "kg";
+        sen:hasObjectiveName            "Perdre 20 kilos en 6 mois";
+        sen:hasObjectiveTargetDate      "2025-07-14T10:10:10"^^xsd:dateTime;
+        sen:mjhasObjectiveName          "Perdre 20 kilos en 6 mois" .
+
+
+    sen:test-user1-objective3-kpi-uuid-0123456
+        rdf:type                    owl:NamedIndividual , sen:UserObjectiveKPI;
+        sen:belongsToObjective      sen:test-user1-objective-uuid-012356;
+        sen:belongsToUser           sen:Test_User_1;
+        sen:hasObjectiveKPIComment  "Je teste mes pompes";
+        sen:hasObjectiveKPIDate     "2025-07-16T14:30:00"^^xsd:dateTime;
+        sen:hasObjectiveKPIValue    24 .
+
+    sen:test-credits-user1-programme-perso-123456
+        rdf:type                     owl:NamedIndividual , sen:PayableCoachMJServiceCredit;
+        sen:creditsBelongToPayable   sen:test-payable-for-credits-programme-perso-123456;
+        sen:creditsBelongsToService  mj:ServiceProgrammePersonnalise;
+        sen:creditsBelongsToUser     sen:Test_User_1;
+        sen:hasCreditNumberValue     3;
+        sen:isValidFrom              "2025-06-06T17:10:00"^^xsd:dateTime;
+        sen:isValidUntil             "2025-12-12T17:09:00"^^xsd:dateTime .
+
+    sen:test-user1-uuid-123456789
+        rdf:type             sen:UserMainInfo , owl:NamedIndividual;
+        sen:belongsToUser    sen:Test_User_1;
+        mj:hasFirstname      "Marc" , "Test";
+        sen:hasBirthdaydate  "1987-04-01T16:52:00" , "1987-04-01T16:52:00"^^xsd:dateTime;
+        sen:hasEmail         "enauche+test-user1@eleastrategy.fr";
+        sen:hasLastname      "User1" , "Aurèle";
+        sen:hasTelephone     "0666101213" , 0666101213;
+        sen:joinedSince      "2024-12-08T20:58:00"^^xsd:dateTime , "2024-12-08T20:58:00" .
+
+    sen:test-payble-for-credits-user1-coaching-individuel-123456
+        rdf:type           mj:UserPayable , owl:NamedIndividual;
+        sen:belongsToUser  sen:Test_User_1 .
+
+    sen:test-credits-user1-coaching-individuel-123456
+        rdf:type                     owl:NamedIndividual , sen:PayableCoachMJServiceCredit;
+        sen:creditsBelongToPayable   sen:test-payble-for-credits-coaching-individuel-123456;
+        sen:creditsBelongsToService  mj:ServiceCoachingIndividuel;
+        sen:creditsBelongsToUser     sen:Test_User_1;
+        sen:hasCreditNumberValue     3;
+        sen:isValidFrom              "2025-06-12T17:05:00"^^xsd:dateTime;
+        sen:isValidUntil             "2025-12-12T17:04:00"^^xsd:dateTime .
+
+    sen:test-user1-address-uuid-123456
+        rdf:type             sen:UserAddress , owl:NamedIndividual;
+        sen:addressCity      "Paris";
+        sen:addressCountry   "France";
+        sen:addressLine1     "96 rue des Esquimaux";
+        sen:addressLine2     "Chez Soi";
+        sen:addressPostCode  "75020" , 75020;
+        sen:belongsToUser    sen:Test_User_1 .
+
+    sen:ProgramTestUserProgramme
+        rdf:type               sen:PersonnalizedProgram , owl:NamedIndividual;
+        sen:hasCorpsDeSeance   <http://senforsce.com/o8/brain/Exercice/WnAnNV2Z2chQmPlHGtnJV>;
+        sen:hasEchauffement    <http://senforsce.com/o8/brain/Exercice/jnnKYQcrBxz6OIiSZW9Ms>;
+        sen:hasRetourAuCalme   <http://senforsce.com/o8/brain/Exercice/hLXaZlQzb8G57cBiMmhfC>;
+        sen:hasTrainingMethod  sen:Cardio;
+        sen:hasTrainingUser    sen:Test_User_1;
+        sen:persoProgDate      "2025-06-04"^^xsd:dateTime;
+        sen:persoProgName      "Test User Programme" .
+
+    sen:Booking-Zr7s8yBBrayHviQU8aJx6
+        rdf:type                    sen:UserProgrammeBookingRequest , sen:UserBookingRequest;
+        sen:belongsToUser           sen:Test_User_1;
+        sen:hasBookingComment       ""@fr;
+        sen:hasBookingRequestDate   "2025-08-14";
+        sen:hasBookingStatusString  "DemandeEnvoyee";
+        sen:hasBookingType          "Programme" .
+}

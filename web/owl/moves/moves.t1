@@ -3,20 +3,43 @@ package moves
 import (
 	"github.com/senforsce/sparql"
 	"github.com/senforsce/tndr0cean/router"
+	"fmt"
 )
 
 t1 HTMX(b []map[string]sparql.Binding, _ []ViewConfig, c *router.Context) {
-	<ul data-testid="Moves">
+	<ul data-testid="Moves" style="background-color:#333;color:white;">
 		for _, v := range b {
 			if v["p"].Value == "http://senforsce.com/o8/brain/coach-mj/MoveExerciceName" {
 				<li>
-					<a hx-swap="innerHTML"
-			hx-get={ tr.Echo("/mj/movement/"+ v["s"].Value) }
-			hx-target="#movementView"
-			hx-trigger="click"
-			>{ v["o"].Value }</a>
+					<div style="display:flex;gap:0.5rem;">
+						<a hx-swap="innerHTML"
+							hx-get={ tr.Echo("/mj/movement/show/"+ v["s"].Value) }
+							hx-target="#movementView"
+							hx-trigger="click"
+							class="asidemoveinmovelist"
+							style="color:white;border-bottom:1px,solid,white;"
+							>{ v["o"].Value }</a>
+						<button hx-swap="innerHTML"
+							hx-get={ fmt.Sprintf("/mj/movement/edit/%s", v["s"].Value) }
+							hx-target="#formView"
+							class="btn"
+							style="width:2rem;"
+							style="background:transparent;border:none;"
+							hx-trigger="click">
+							+
+						</button>
+						<button hx-swap="innerHTML"
+							hx-get={ fmt.Sprintf("/mj/movement/delete/%s", v["s"].Value) }
+							hx-target="#formView"
+							class="btn"
+							style="width:2rem;"
+							style="background:transparent;border:none;"
+							hx-trigger="click">
+							x
+						</button>
+					</div>
+					<hr />
 				</li>
-
 			} 
 		}
 	</ul>

@@ -7,6 +7,31 @@
     margin-bottom: 0;
 }
 
+#closeDateModal {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    right: 100px;
+}
+
+.validationOptions {
+    position: fixed;
+    top: 60%;
+}
+
+input.biggg {
+    width: 23%;
+    margin: auto;
+    height: 8rem;
+    font-size: 5rem;
+}
+
+input.biggg::-webkit-calendar-picker-indicator {
+    width: 55px;
+    height: 55px;
+}
+
 .btn {
     padding: 8px 20px;
     border: none;
@@ -255,6 +280,55 @@
             font-weight: bold;
         }
     }
+}
+
+.BlockWrapperCarouselVertical .BlockWrapper--isDropzone.draggable-dropzone--occupied {
+    position: relative;
+    top: -100%;
+    transition: top 1s ease-in;
+    
+   
+}
+
+.BlockWrapperCarouselVertical {
+    & button:hover {
+        color: black;
+        background-color: white;
+    }
+
+    & button {
+        color: white;
+        font-size: 2rem;
+        z-index: 2;
+        background-color: #000;
+    }
+
+    & .indicator-img {
+        position:absolute;
+        z-index:20;
+        left: calc(50% - 50px);
+        top:10%;
+        width:100px;
+    }
+
+    & .indicator {
+        position: absolute;
+        z-index: 21;
+        top: calc(10% + 22px);
+        width: 100px;
+        font-size: 5rem;
+        font-weight: bold;
+        color: black;
+        filter: drop-shadow(2px 4px 6px black);
+        background-color: white;
+        width: 44px;
+        text-align: center;
+        border-radius: 50%;
+        left: calc(50% - 20px);
+
+    }
+
+
 }
 
 .secondary-nav {
@@ -3847,25 +3921,25 @@ a.NavLink:active {
 
 @media screen and (min-width: 768px) {
     .UniqueDropzone .BlockLayout--typeFlex .BlockContent {
-        min-height:13.6rem
+        min-height:6.0rem
     }
 }
 
 @media screen and (min-width: 1440px) {
     .UniqueDropzone .BlockLayout--typeFlex .BlockContent {
-        min-height:18.4rem
+        min-height:10.4rem
     }
 }
 
 @media screen and (min-width: 768px) {
     .UniqueDropzone .BlockLayout--typeGrid .BlockContent {
-        min-height:12.8rem
+        min-height:4.8rem
     }
 }
 
 @media screen and (min-width: 1440px) {
     .UniqueDropzone .BlockLayout--typeGrid .BlockContent {
-        min-height:17.6rem
+        min-height: 7.0rem;
     }
 }
 
@@ -4351,5 +4425,298 @@ a.NavLink:active {
         height:23.2rem
     }
 }
+
+.inputRow input 
+                {
+                    border: 1px solid yellowgreen;
+                    margin: 10px;
+                    width: 80%;
+                    height: 2rem;
+                    color: yellowgreen;
+                }
+
+                span.step {
+                    color: white;
+                    padding: 1rem;
+                    padding-top: 0.8rem;
+                    border-radius: 50%;
+                    border: 1px solid white;
+                    padding-bottom: 0.8rem;
+                    margin-right: 1rem;
+                }
+
+                .ProgressBarContainer {
+                    margin-top: 1.2rem;
+
+                    & progress {
+                        height: 1.2rem;
+                    }
+                }
+
+                button.hasExerciseId {
+                    background: black;
+                    color: white;
+                    border: 1px solid white;
+                    border-radius: 20px;
+                    width: 19%;
+                    min-width: 38px;
+                    margin: 1rem;
+                    padding-inline: 0.8rem;
+                    padding-block: 0.5rem;
+                }
+
+                .Echauffement_Time_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .Echauffement_Weight_ {
+                    display: none;
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                    
+                }
+
+                .Echauffement_NbReps_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .Echauffement_NbSets_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .RetourAuCalme_Time_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .RetourAuCalme_Weight_ {
+                    display: none;
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                    
+                }
+
+                .RetourAuCalme_NbReps_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .RetourAuCalme_NbSets_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .CorpsDeSeance_NbSets_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .CorpsDeSeance_Time_ {
+                    display: none;
+
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                }
+
+                .CorpsDeSeance_Weight_ {
+                    display: none;
+                    & input {
+                        border: 1px solid white;
+                        font-weight: bold;
+                        font-size: 2rem;
+                    }
+                    
+                }
+
+                
+
+                .UniqueDropzone .BlockWrapper--isDropzone:has(.image) {
+
+                    &>span>img {
+                        display: none;
+                    }
+
+                    & .image img {
+                        border-radius: 50%;
+                        border: 1px solid #5f5e5e;
+                        width: 50%;
+                        margin: auto;
+                        box-shadow: -5px 10px 5px 0px rgba(107,121,181,0.75);
+                        -webkit-box-shadow: -5px 10px 5px 0px rgba(107,121,181,0.75);
+                        -moz-box-shadow: -5px 10px 5px 0px rgba(107,121,181,0.75);
+                    }
+
+                    & .BlockContent {
+                        background-color: #9ca6f3;
+
+                    }
+                }
+
+                .moveOptionsInputs [type=radio] {
+                    appearance: auto;
+                    -webkit-appearance: auto;
+                }
+
+                .picto {
+                    position: relative;
+                    display: inline-block;
+                    width: 30px;
+                    height: 32px;
+                    top: 7px;
+                    margin-right: 1rem;
+                }
+            
+                .pictoxl {
+                    position: relative;
+                    display: inline-block;
+                    width: 50px;
+                    height: 50px;
+                    top: -7px;
+                    margin-right: 1rem;
+                }
+            
+                .moveOptions {
+                    display: inline-flex;
+                }
+            
+                .fieldInfo {
+            
+                    & .displayImg {
+                        border-radius: 50%;
+                        border: 1px solid gray;
+                    }
+            
+                    & .coachfullname {
+                        color: black;
+                        background: pink;
+                        position: absolute;
+                        bottom: 0;
+                        display: block;
+                        line-height: 2rem;
+                        padding: 0.2rem;
+                        font-weight: bold;
+                    }
+            
+                    & details.withPicture {
+                        summary {
+                            display: flex;
+                            gap: 1rem;
+                            /* width: 100%; */
+                            margin-top: 2rem;
+                            height: 3rem;
+                            line-height: 3rem;
+            
+                            &:after {
+                                height: 3rem;
+              
+                            }
+                        }
+                    }
+            
+                    & details.withColor {
+                        summary {
+                            display: flex;
+                            gap: 1rem;
+                            /* width: 100%; */
+                            margin-top: 2rem;
+                            height: 3rem;
+                            line-height: 3rem;
+            
+                            &:after {
+                                height: 3rem;
+              
+                            }
+                        }
+                    }
+                }
+            
+                .threeRows {
+                    display: flex;
+                    gap: 1rem;
+                }
+            
+                .zone {
+                    border: 2px dashed white;
+                }
+            
+                .third {
+                    width: 30%;
+                }
+            
+                .halfthird {
+                    width: 22%;
+                }
+            
+                .twothird {
+                    width: 56%;
+                }
+               /* datalist {
+                    position: absolute;
+                    max-height: 20em;
+                    border: 0 none;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                }
+            
+                datalist option {
+                    font-size: 0.8em;
+                    padding: 0.3em 1em;
+                    background-color: #ccc;
+                    cursor: pointer;
+                }
+               */
+                /* option active styles */
+               /* datalist option:hover, datalist option:focus {
+                    color: #fff;
+                    background-color: #036;
+                    outline: 0 none;
+                }*/
 
 /*# sourceMappingURL=examples-app.css.map */

@@ -15,6 +15,7 @@ regenup:
 
 genup:
 	@make -C ../../fh generate
+	@make -C ../../htmx generate
 
 	t1 generate
 	@make up

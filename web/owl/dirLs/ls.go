@@ -2,6 +2,7 @@ package dirls
 
 import (
 	"fmt"
+	"io/fs"
 	"log"
 	"net/url"
 	"os"
@@ -30,8 +31,6 @@ func Handler(c *router.Context) error {
 
 	u := Must(url.Parse(c.Request.URL.String()))
 
-	files := make(map[string]File, 0)
-
 	var root string
 	o8Root := c.Get("O8ROOT").(string)
 	// Replace 'filename' with the actual filename you want to use
@@ -41,17 +40,14 @@ func Handler(c *router.Context) error {
 	}
 
 	root = o8Root + u.Path // careful path comes from frontend
+	files := make(map[string]File, 0)
 
-	e := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-
+	e := filepath.WalkDir(root, func(currentPath string, info fs.DirEntry, err error) error {
 		if err != nil {
-			fmt.Println(err)
-			return nil
+			return err
 		}
-
 		file := File{info.IsDir(), info.Name()}
 		files[info.Name()] = file
-
 		return nil
 	})
 
@@ -63,6 +59,8 @@ func Handler(c *router.Context) error {
 	if err2 != nil {
 		log.Fatal(err2)
 	}
+	defer f.Close()
+
 	fx, err3 := f.Readdirnames(0)
 	if err2 != nil {
 		log.Fatal(err3)

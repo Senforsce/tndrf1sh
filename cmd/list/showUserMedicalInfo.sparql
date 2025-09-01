@@ -1,0 +1,22 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	BIND(<%s> AS ?user)
+	OPTIONAL{
+        ?med rdf:type :UserMedicalInformation .
+        ?med  :belongsToUser ?user .
+        OPTIONAL{ ?med :mjhasDoctorsPhoneNumber ?DoctorsPhoneNumber . }
+        OPTIONAL{ ?med :mjhasGP ?GP . }
+        OPTIONAL{ ?med :mjhasDoctorsEmail ?DoctorsEmail . }
+        OPTIONAL{ ?med :mjhasEmergencyContactEmail ?EmergencyContactEmail . }
+
+        OPTIONAL{ ?med :mjhasEmergencyContactFullname ?EmergencyContactFullname . }
+        OPTIONAL{ ?med :mjhasUserWeight ?UserWeight . }
+        OPTIONAL{ ?med :mjhasUserHeight ?UserHeight . }
+        OPTIONAL{ ?med :mjhasPrescription ?Prescription . }
+  	}
+			
+} LIMIT 1000

@@ -1,0 +1,13 @@
+package queryandtable
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/tndrf1sh/web/owl/query"
+import "github.com/senforsce/tndrf1sh/web/owl/table"
+import "github.com/senforsce/sparql"
+
+t1 HTMX(c *router.Context, qr string, res []map[string]sparql.Binding) {
+    <div id="queryandtable">
+        @query.HTMX(c, qr)
+        @table.HTMX(c, res)
+    </div>
+}

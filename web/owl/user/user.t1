@@ -70,7 +70,7 @@ t1 HTMX(c *router.Context) {
                 <p class="field"><span class="fieldTitle">Date de fin</span> 01/03/2025</p>
             </div>
             <div class="customisation">
-                <h5>Paramètres Utilisateur</h5>
+                <h5>Mes paramètres Utilisateur</h5>
 
                 <p class="field"><span class="fieldTitle">Animal Totem</span> Turtle</p>
                 <p class="field"><span class="fieldTitle">Template appliqué</span> #e41411</p>

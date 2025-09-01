@@ -1,0 +1,15 @@
+package query
+
+import "github.com/senforsce/tndr0cean/router"
+t1 HTMX(c *router.Context, query string) {
+    <div>
+        <h2 style="margin-top:100px;" class="WelcomeMessage">Nouvelle Requête SPARQL</h2>
+
+        <form id="queryForm">
+            <textarea cols="90" rows="15" style="background:#444;margin-top:3rem;border:3px,solid,black;font-size:24px;" placeholder={ tr.Echo("Votre Requete SPARQL") }>
+                { query }
+            </textarea>
+            <button class="btn" style="margin-block:3rem;">Envoyer</button>
+        </form>
+    </div>
+}

@@ -27,19 +27,12 @@ func Handler(c *router.Context) error {
 		panic("bad")
 	}
 
-	if err1 != nil {
-		panic("bad")
-	}
 	query := selectDetails
 	res, err := repo.Query(query)
 
 	if err != nil {
 		panic(fmt.Sprintf(panicMessage, query))
 	}
-
-	fmt.Println("++++++++++++++++++++++++++++")
-
-	fmt.Println(res.Results.Bindings)
 
 	liste := ListOfSubjects(res.Results.Bindings)
 	views := []ViewConfig{}

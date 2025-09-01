@@ -1,0 +1,17 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	BIND(<%s> AS ?user)
+    ?main rdf:type :UserMainInfo .
+    ?main :belongsToUser ?user .
+ 	OPTIONAL{ ?main :hasBirthdaydate ?Birthdaydate . }
+	OPTIONAL{ ?main mj:hasFirstname ?Firstname . }
+	OPTIONAL{ ?main :hasLastname ?Lastname . }
+	OPTIONAL{ ?main :hasEmail ?Email . }
+	OPTIONAL{ ?main :hasTelephone ?Telephone . }
+  	OPTIONAL{ ?main :joinedSince ?JoinedSince . }
+			
+} LIMIT 1000

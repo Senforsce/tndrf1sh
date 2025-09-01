@@ -1,0 +1,17 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	BIND(<%s> AS ?user) 
+    OPTIONAL {
+        ?address rdf:type :UserAddress .
+        ?address  :belongsToUser ?user .
+        OPTIONAL{ ?address :addressLine1 ?AddressLine1 . }
+        OPTIONAL{ ?address :addressLine2 ?AddressLine2 . }
+        OPTIONAL{ ?address :addressPostCode ?AddressPostCode . }
+        OPTIONAL{ ?address :addressCity ?AddressCity . }
+        OPTIONAL{ ?address :addressCountry ?AddressCountry . }
+    }
+			
+} LIMIT 1000

@@ -16,10 +16,21 @@ t1 Base(c *router.Context) {
 			<meta charset="utf-8"/>
 			<meta name="viewport" content={ tr.Echo("width=device-width, initial-scale=1.0") }/>
 			<title>§sen:Thunderf1shPageTitle!</title>
-			<link rel="stylesheet" href="/static/pico.classless.min.css" type="text/css"/>
-			<link rel="stylesheet" href="/static/tndrf1sh.css?v=2" type="text/css"/>
+			<link rel="stylesheet" href="/static/css/pico.classless.min.css" type="text/css"/>
+			<link rel="stylesheet" href="/static/css/critical.css" type="text/css"/>
 			<link rel="icon" href="/static/img/favicon.svg" type="text/css"/>
 			<script src=§se:HTMXUrl! defer></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+			<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+			<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css"
+			/>
+			<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+			<link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet" type="text/css" />
+			<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
 		</head>
 		<body>
 			@aside.HTMX(c)
@@ -46,9 +57,13 @@ t1 Base(c *router.Context) {
 						</div>
 					</div>
 				</div>
+				<div id="queryAndTableView"></div>
 				<div id="formView"></div>
+				<div id="editMoveListView"></div>
 				<div id="movelistview"></div>
+				<div id="editProgrammeView"></div>
 				<div id="programmeView"></div>
+				<div id="editUserView"></div>
 				<div id="userView"></div>
 				<div id="blogView"></div>
 				<div id="movementView"></div>
@@ -59,6 +74,33 @@ t1 Base(c *router.Context) {
 				@controls.HTMX(c)
 			</main>
 			@meta.HTMX(c)
+			<script>
+				if (annyang) {
+				console.log("annyang!")
+				// Add our commands to annyang
+				annyang.addCommands({
+					'hello': function() { alert('Hello world!'); }
+				});
+
+				// Tell KITT to use annyang
+				SpeechKITT.annyang();
+
+				// Define a stylesheet for KITT to use
+				SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
+
+				// Render KITT's interface
+				SpeechKITT.vroom();
+				}
+			</script>
+			<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+			<script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+
+			<style>
+			#skitt-ui {
+				left: 260px !important;
+			}
+			
+			</style>
 		</body>
 	</html>
 }

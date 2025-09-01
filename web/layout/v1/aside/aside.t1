@@ -4,8 +4,6 @@ import (
 	"github.com/senforsce/tndrf1sh/web/layout/v1/nav"
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/layout/i"
-
-	"fmt"
 )
 
 t1 HTMX(c *router.Context) {
@@ -21,114 +19,107 @@ t1 HTMX(c *router.Context) {
 		<hr/>
 		<hr/>
 		<div class="aside-users">
-			<h5>Administrateurs</h5>
-			<ul class="admins">
-				<li>
-					<a hx-swap="innerHTML"
-						hx-get="/mj/user/enauche"
-						hx-target="#userView"
-						hx-trigger="click"
-					>
-					<span class="image">
-						<img src="/static/img/team-3.png" width="30px" height="30px" />
-					</span>
-					<span class="userfullname">
-						{ fmt.Sprintf("@%s", "ENauche") }
-					</span>
-					</a>
-				</li>
-				<li>
-					<a hx-swap="innerHTML"
-						hx-get="/mj/user/asy"
-						hx-target="#userView"
-						hx-trigger="click"
-					>
-					<span class="image">
-						<img src="/static/img/team-2.png" width="30px" height="30px" />
-					</span>
-					<span class="userfullname">
-						{ fmt.Sprintf("@%s", "ASy") }
-					</span>
-					</a>
-				</li>
-			</ul>
-
 			<div
 			hx-swap="innerHTML"
 			hx-get="/mj/userlist"
 			hx-trigger=§hx:load!>
-		Users
+				<progress />
 			</div>
-			<button hx-swap="innerHTML"
-			hx-get="/forms/newUser"
-			hx-target="#formView"
-			hx-trigger="click">Ajouter</button>
 		</div>
 		
 		<hr/>
 		<h3>Contenu</h3>
-		<div>Bblt. de Mouvements</div>
+		<div>Bibliothèque. de Mouvements</div>
 		<button hx-swap="innerHTML"
 			hx-get="/mj/movelist"
 			hx-target="#movelistview"
+			style="margin-block:1rem;"
+			class="btn"
 			hx-trigger="click">Voir tous</button>
 		<button hx-swap="innerHTML"
 			hx-get="/forms/newMovement"
 			hx-target="#formView"
+			style="margin-bottom:1rem;"
+			class="btn"
 			hx-trigger="click">Ajouter</button>
-		<div
-			hx-swap="innerHTML"
-			hx-get="/mj/moves"
-			hx-trigger=§hx:load!>
-		Bibl. Moves
-		</div>
+		<details>
+			<summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">Liste</summary>
+			<div
+				hx-swap="innerHTML"
+				hx-get="/mj/moves"
+				hx-trigger=§hx:load!>
+				<progress />
+			</div>
+		</details>
+		
 		<hr/>
 		<div>Services & Prestations</div>
-		<ul class="services">
-			<li><a hx-swap="innerHTML"
-						hx-get="/mj/service/collectiveCourse"
-						hx-target="#serviceView"
-						hx-trigger="click"
-					><span class="image">
-						<img src="/static/img/cours-collectifs.svg" width="30px" height="30px" />
-					</span><span>Cours Collectifs</span></a></li>
-			<li><a hx-swap="innerHTML"
-						hx-get="/mj/service/collectiveCourse"
-						hx-target="#serviceView"
-						hx-trigger="click"
-					><span class="image">
-						<img src="/static/img/coaching-individuel.svg" width="30px" height="30px" />
-					</span><span>Cours Individuels En Présentiel</span></a></li>
-			<li><a hx-swap="innerHTML"
-						hx-get="/mj/service/collectiveCourse"
-						hx-target="#serviceView"
-						hx-trigger="click"
-					><span class="image">
-						<img src="/static/img/consulting.svg" width="30px" height="30px" />
-					</span><span>Consulting Sportif</span></a></li>
-			<li><a hx-swap="innerHTML"
-						hx-get="/mj/service/collectiveCourse"
-						hx-target="#serviceView"
-						hx-trigger="click"
-					><span class="image">
-						<img src="/static/img/suivi-nutritionnel.svg" width="30px" height="30px" />
-					</span><span>Services Nutritionels</span></a></li>
-			<li><a hx-swap="innerHTML"
-						hx-get="/mj/service/collectiveCourse"
-						hx-target="#serviceView"
-						hx-trigger="click"
-					><span class="image">
-						<img src="/static/img/accompagnement-adapte.svg" width="30px" height="30px" />
-					</span><span>Accompagnement Physique Adapté</span></a></li>
-		</ul>
+		<details>
+			<summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">Voir Tous les payable</summary>
+				<ul class="services" style="background-color:#333;color:white;">
+					<li><a hx-swap="innerHTML"
+								hx-get="/mj/service/collectiveCourse"
+								hx-target="#serviceView"
+								style="color:white;border-bottom:1px,solid,white;"
+								hx-trigger="click"
+							><span class="image">
+								<img src="/static/img/cours-collectifs.svg" width="30px" height="30px" />
+							</span><span>Cours Collectifs</span></a>
+					 <hr />
+					</li>
+					<li><a hx-swap="innerHTML"
+								hx-get="/mj/service/collectiveCourse"
+								hx-target="#serviceView"
+								style="color:white;border-bottom:1px,solid,white;"
+								hx-trigger="click"
+							><span class="image">
+								<img src="/static/img/coaching-individuel.svg" width="30px" height="30px" />
+							</span><span>Cours Individuels En Présentiel</span></a>
+							
+					 <hr />
+					</li>
+					<li><a hx-swap="innerHTML"
+								hx-get="/mj/service/collectiveCourse"
+								hx-target="#serviceView"
+								style="color:white;border-bottom:1px,solid,white;"
+								hx-trigger="click"
+							><span class="image">
+								<img src="/static/img/consulting.svg" width="30px" height="30px" />
+							</span><span>Consulting Sportif</span></a> <hr />
+						</li>
+					<li><a hx-swap="innerHTML"
+								hx-get="/mj/service/collectiveCourse"
+								hx-target="#serviceView"
+								style="color:white;border-bottom:1px,solid,white;"
+								hx-trigger="click"
+							><span class="image">
+								<img src="/static/img/suivi-nutritionnel.svg" width="30px" height="30px" />
+							</span><span>Services Nutritionels</span></a> <hr />
+						</li>
+					<li><a hx-swap="innerHTML"
+								hx-get="/mj/service/collectiveCourse"
+								hx-target="#serviceView"
+								style="color:white;border-bottom:1px,solid,white;"
+								hx-trigger="click"
+							><span class="image">
+								<img src="/static/img/accompagnement-adapte.svg" width="30px" height="30px" />
+							</span><span>Accompagnement Physique Adapté</span></a> <hr />
+						</li>
+				</ul>
+		</details>
+
 		<hr />
-		<h4>Programme Perso.</h4>
-		<div
-			hx-swap="innerHTML"
-			hx-get="/mj/programmes"
-			hx-trigger=§hx:load!>
-		Récents programmes
-		</div>
+		<h4>Programme Personalisés.</h4>
+		<details>
+			<summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">Liste des programmes</summary>
+			<div
+				hx-swap="innerHTML"
+				hx-get="/mj/programmes"
+				hx-trigger=§hx:load!>
+			<progress />
+			</div>
+		</details>
+		
 		<button class="btn" hx-swap="innerHTML"
 			hx-get="/programme/new"
 			hx-target="#programmeView"

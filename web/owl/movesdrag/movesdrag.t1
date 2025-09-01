@@ -3,20 +3,43 @@ package movesdrag
 import (
 	"fmt"
 	"github.com/senforsce/tndr0cean/router"
+    "github.com/senforsce/htmx/hx"
+
 )
 
-t1 HTMX(vc []ViewConfig, c *router.Context) {
+t1 HTMXWithParamsOnLoad(c *router.Context, index uint16) {
+    @hx.GetInnerHTMLOnLoad(c, hx.GET{Path: fmt.Sprintf("/mj/movesdrag/%d", index)}, "")
+}
+
+t1 HTMX(vc []ViewConfig, c *router.Context, skipValue int) {
 	<div class={ tr.Echo("")} >
-        <ul class={ tr.Echo("step1 ") } >
+        <ul style="display:flex;flex-wrap:wrap;" class={ tr.Echo("step1 ") } >
             for _, v := range vc {
-                <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied mxZone") }  data-dropzone="6">
+
+                <li style="width:31%;" class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied mxZone") }  data-dropzone={ fmt.Sprintf("%d", (skipValue)) }>
                     <span class={ tr.Echo("Block Block--item6 Block--isDraggable")}
-                        data-item={ tr.Echo(`{  "MoveExerciceName": "`+ v.MoveExerciceName +`", "MJMoveGifMediaDescription": "`+ v.MJMoveGifMediaDescription +`", "type": "moveexercise", "Subject": "`+ v.Subject +`"}`)}
+                        data-item={ tr.Echo(`{ "ExerciceId": "`+ v.NewId +`", "MoveExerciceLastTimeDate": "`+ "2025-07-02" +`", "MoveExercicePRLast": "`+ "0" +`", "MoveExercicePRBest": "`+ "0" +`", "MoveExercicePRUnit": "`+ "reps" +`", "MoveExercicePRMin": "`+ "0" +`", "MoveExerciceTimeUnit": "`+ "minutes" +`", "MoveExerciceWeightUnit": "`+ "kg" +`", "MoveExerciceWeight": "`+ "0" +`", "MoveExerciceReps": "`+ "0" + `", "MoveExerciceSets": "`+ "1" +`", "MoveExerciseTime": "`+ "0" +`", "MoveExerciceName": "Exercice `+ v.MoveExerciceName +`", "MoveName": "`+ v.MoveExerciceName +`", "MJMoveGifMediaDescription": "`+ v.MJMoveGifMediaDescription +`", "type": "moveexercise", "Subject": "`+ v.Subject +`", "MovePoster": "`+ v.MovePoster +`"}`)}
                         title={ tr.Echo("Click to drag")} tabindex="0" style="">
                         <div class="BlockContent">
                             <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
+                                <p style="display:none;" class={ tr.Echo("ExerciseIndicatorType ExerciseIndicatorType-"+ v.NewId) }>
+                                    
+                                </p>
+                                <p style="display:none;" class={ tr.Echo("ExerciseIndicatorReps ExerciseIndicatorReps-"+ v.NewId) }>
+                                    <span class="value">50</span><span class="unit">Reps</span>
+                                </p>
+
+                                <p style="display:none;" class={ tr.Echo("ExerciseIndicatorSets ExerciseIndicatorSets-"+ v.NewId) }>
+                                    <span class="value">1</span><span class="unit">Sets</span>
+                                </p>
+                                <p style="display:none;" class={ tr.Echo("ExerciseIndicatorTime ExerciseIndicatorTime-"+ v.NewId) }>
+                                    <span class="value">40</span><span class="unit">s</span>
+                                </p>
+                                <p style="display:none;" class={ tr.Echo("ExerciseIndicatorWeight ExerciseIndicatorWeight-"+ v.NewId) }>
+                                    <span class="value">30</span><span class="unit">kg</span>
+                                </p>
                                 <span class="image">
-                                    <img src="/static/img/team-2.png" width="30px" height="30px" />
+                                    <img src={ fmt.Sprintf("/static/img/o/g/%s", v.MJMoveGifMediaDescription) } width="30px" height="30px" />
                                 </span>
                                 <span class="moveName">
                                     { fmt.Sprintf("%s", v.MoveExerciceName) }

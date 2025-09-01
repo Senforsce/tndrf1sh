@@ -7,3 +7,15 @@ func Handler(c *router.Context) error {
 
 	return nil
 }
+
+func EditHandler(c *router.Context) error {
+	c.Render(HTMX(c))
+
+	return nil
+}
+
+func DeleteHandler(c *router.Context) error {
+	c.Render(HTMX(c))
+
+	return nil
+}

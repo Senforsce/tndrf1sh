@@ -37,7 +37,7 @@ t1 HTMX(c *router.Context, em *ExerciseMove) {
 							        <h6 class={ tr.Echo("c-grey-900") }>{ em.Name }</h6>
 
 								<div>
-                                    <img src={ fmt.Sprintf("/static/img/%s", em.GifPath) } />
+                                    <img src={ fmt.Sprintf("/static/img/o/g/%s", em.GifPath) } />
 									<small>{ em.Credit }</small>
                                 </div>
                             </article>

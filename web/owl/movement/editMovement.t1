@@ -1,0 +1,107 @@
+package movement
+
+import "fmt"
+import "github.com/senforsce/tndr0cean/router"
+
+t1 Edit(c *router.Context, em *ExerciseMove) {
+    <div class="movementview">
+    		<main class={ tr.Echo("main-content bgc-grey-100") }>
+			<div id="mainContent">
+				<form  hx-post="/process/editMove" hx-encoding="application/x-www-form-urlencoded">
+					<input type="hidden" name="moveSubject" value={ em.Subject } />
+					<input type="hidden" name="moveName" id="moveName" value={ em.Name } />
+					<input type="hidden" name="moveGifURL" id="moveGifURLInput" value={ em.GifPath } />
+					<input type="hidden" name="moveMuscleGroups" value={ em.Groupes } />
+					<input type="hidden" name="moveGifCredits" value={ em.Credit } />
+					<input type="hidden" name="moveGifPath" id="moveGifPathInput" value={ em.GifPath } />
+				<div class={ tr.Echo("row gap-20 masonry pos-r") }>
+					<div class={ tr.Echo("masonry-sizer col-md-6 pos-a") }></div>
+
+					<div class={ tr.Echo("masonry-item col-md-6") }>
+						<div class={ tr.Echo("bgc-white p-20 bd") }>
+							<article>
+								<h6 class={ tr.Echo("c-grey-900") }>Tips de Coach-MJ</h6>
+								<textarea id="editTips" name="moveTips">{ em.Tips }</textarea>
+							</article>
+						</div>
+					</div>
+					<div class={ tr.Echo("masonry-item col-md-6") }>
+						<div class={ tr.Echo("bgc-white p-20 bd") }>
+							<div class={ tr.Echo("mT-30") }>
+								<div id="area-chart" style="height:220px">
+                                  <article>
+									<h6 class={ tr.Echo("c-grey-900") }>Description du Movement</h6>
+									<textarea id="editDescription" name="moveDescription">{ em.Description }</textarea>
+
+									</article>
+                                </div>
+							</div>
+						</div>
+					</div>
+					<div class={ tr.Echo("masonry-item col-md-6") }>
+						<div class={ tr.Echo("bgc-white p-20 bd") }>
+							<div class={ tr.Echo("mT-30") }>
+                             <article>
+							        <h6 class={ tr.Echo("c-grey-900") }>{ em.Name }</h6>
+
+								<div>
+                                    <img src={ fmt.Sprintf("/static/img/o/g/%s", em.GifPath) } />
+									<small>{ em.Credit }</small>
+                                </div>
+                            </article>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<button type="sumbit" class="btn" style="position:fixed;bottom:0;height:8rem;font-size:5rem;text-align:center;width:80%;">Enregistrer</button>
+				</form>
+			</div>
+		</main>
+		<style>
+			.editor-toolbar {
+				display: flex;
+			}
+			.movementCarousel {
+				width: 88vw;
+				margin: auto;
+				overflow-x: scroll;
+				& ul {
+					margin: 0;
+					padding: 0;
+					display: flex;
+					gap: 1rem;
+					& li {
+						list-style-type: none
+					}
+				}
+			}
+		</style>
+    </div>
+
+	<script>
+
+	$(document).ready(() => {
+		(function loop () {
+			if (window?.EasyMDE) {
+				console.log( document.getElementById('editTips'))
+				const easymde = new EasyMDE({
+					element: document.getElementById('editTips'),
+					forceSync: true,
+				});
+				const easymde2 = new EasyMDE({
+					element: document.getElementById('editDescription'),
+					forceSync: true,
+				});
+				
+				
+			return;
+			}
+
+			setTimeout(loop, 1000);
+		})()
+	})
+
+ 
+</script>
+}

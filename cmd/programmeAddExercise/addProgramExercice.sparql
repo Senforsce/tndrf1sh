@@ -1,0 +1,25 @@
+
+PREFIX :     <http://senforsce.com/o8/brain/>
+PREFIX mj:   <http://senforsce.com/o8/brain/coach-mj/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sen:  <http://senforsce.com/o8/brain/>
+
+
+INSERT DATA {
+    <%s>
+        rdf:type                      owl:NamedIndividual , sen:SportMovementExercise;
+        sen:ExerciseName              "%s";
+        sen:MoveExerciceLastTimeDate  "2025-07-02";
+        sen:MoveExercicePRBest        "%s"^^xsd:decimal;
+        sen:MoveExercicePRLast        "%s"^^xsd:decimal;
+        sen:MoveExercicePRMin         "%s"^^xsd:decimal;
+        sen:MoveExercicePRUnit        "%s";
+        sen:MoveExerciceReps          "%s"^^xsd:decimal;
+        sen:MoveExerciceSets          "%s"^^xsd:decimal;
+        sen:MoveExerciceTimeUnit      "%s";
+        sen:MoveExerciceWeight        "%s"^^xsd:decimal;
+        sen:MoveExerciceWeightUnit    "%s";
+        sen:MoveExerciseTime          "%s"^^xsd:decimal;
+        sen:hasSportMovement          <%s> .
+}

@@ -1,10 +1,10 @@
 module github.com/senforsce/tndrf1sh
 
-go 1.23
-
-toolchain go1.23.3
+go 1.25.0
 
 replace github.com/senforsce/tndr0cean => ../tndr0cean
+
+replace github.com/senforsce/htmx => ../htmx
 
 replace github.com/senforsce/tndr => ../tndr
 

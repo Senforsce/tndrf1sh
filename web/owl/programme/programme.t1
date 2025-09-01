@@ -1,230 +1,16 @@
 package programme
 
 import "github.com/senforsce/tndr0cean/router"
+
+import "github.com/senforsce/tndrf1sh/web/owl/userlistdrag"
+import "github.com/senforsce/tndrf1sh/web/owl/programmetypedrag"
+import "github.com/senforsce/tndrf1sh/web/owl/movesdrag"
+
 import "fmt"
 
 t1 HTMX(c *router.Context) {
-    <script src="https://cdn.jsdelivr.net/npm/datalist-css/dist/datalist-css.min.js"></script>
-    <script type="module">
-    import {
-        Draggable,
-        Sortable,
-        Droppable,
-        Swappable,
-    } from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/index.mjs';
-
-    const mod = (function mod() {
-        const containers = document.querySelectorAll('#UniqueDropzone .BlockLayout');
-
-        if (containers.length === 0) {
-            return false;
-        }
-
-        const droppable = new Droppable(containers, {
-            draggable: '.Block--isDraggable',
-            dropzone: '.BlockWrapper--isDropzone',
-            mirror: {
-            constrainDimensions: true,
-            },
-        });
-
-        let droppableOrigin;
-        let len = 0;
-
-        // --- Draggable events --- //
-        droppable.on('drag:start', (evt) => {
-            droppableOrigin = evt.originalSource.parentNode.dataset.dropzone;
-        });
-
-        let hasModifiedName = false;
-
-        document.querySelector("#programme-name").addEventListener("change", (e) => {
-            document.querySelector("#tempProgrammeName").innerHTML = document.querySelector("#programme-name").value;
-            
-            document.querySelector("#tempProgrammeName").classList.add("WelcomeMessage");
-            document.querySelector("#ProgrammeName-input").value = document.querySelector("#programme-name").value;
-            if (!hasModifiedName) {
-                const progress = document.querySelector(`#formprogress`);
-                progress.value += 1;
-                progress.innerHTML = (8 / progress.value) +"%";
-                hasModifiedName = true;
-            }
-            document.querySelector("#NameModified").style.opacity = 0.4;
-            document.querySelector("#NameModified").style.pointerEvents = "none;"
-        })
-
-        droppable.on('droppable:dropped', (evt) => {
-            if (droppableOrigin !== evt.dropzone.dataset.dropzone) {
-                evt.cancel();
-            } else {
-                const sourceFromEvt = evt?.data?.dragEvent?.data?.source;
-                const itemData = JSON.parse(sourceFromEvt?.dataset?.item);
-
-                setTimeout(() => {
-                    const toCloseAndHide = document.querySelector(`#details_step-${droppableOrigin}`)
-                        toCloseAndHide.open = false;
-                        toCloseAndHide.style.opacity = 0.4;
-                        toCloseAndHide.style.pointerEvents = "none";
-                    const progress = document.querySelector(`#formprogress`);
-                    progress.value += 1;
-                    progress.innerHTML = (8 / progress.value) +"%"
-                },1000);
-
-                
-
-                switch(itemData.type) {
-                    case "user":
-                        const ur = window.document.getElementById("trainingSubject-input");
-                        const aur =  window.document.getElementById("trainingSubject");
-                        ur.value = itemData.Subject;
-                        const profilePicture = aur.querySelector(".image img");
-                        const fullNameContainer = aur.querySelector(".userfullname");
-                        profilePicture.src = itemData.ProfilePicture;
-                        fullNameContainer.innerHTML = `${itemData.Firstname} ${itemData.Lastname}`;
-                        document.querySelector("#trainingCoach").style.display = "block";
-                        aur.style.display = "block";
-                        break;
-                    case "programmetype":
-                        const pr = window.document.getElementById("trainingProgramme-input");
-                        const ar =  window.document.getElementById("trainingProgramme");
-                        pr.value = itemData.Subject;
-                        ar.querySelector('.programmetypename').innerHTML = itemData.ProgramTypeName;
-                        ar.querySelector('.programmetypecomment').innerHTML = itemData.Comment;
-
-                        ar.style.display = "block";
-                        break;
-                    case "moveexercise":
-                        if(len ===0) {
-                            const iii = window.document.getElementById("trainingExerciseEchauffement-input");
-                            const aaa =  window.document.getElementById("trainingExerciseEchauffement");
-                            iii.value = itemData.Subject;
-                            aaa.style.display = "block";
-                            aaa.querySelector(".moveimgwrapper img").src = "/static/img/"+itemData.MJMoveGifMediaDescription;
-                            aaa.querySelector(".movename").innerHTML = itemData.MoveExerciceName;
-                            //aaa.querySelector(".movedesc").innerHTML = itemData.MoveDescription;
-
-
-                            const zones = window.document.querySelectorAll('.mxZone');
-                            const val = zones[0].dataset["dropzone"];
-                            const dne = parseInt(val, 10) + 1;
-                            zones.forEach((item) => {
-                                item.dataset["dropzone"] = dne;
-                            })
-                            len++;
-                            break;
-                        }
-                        if(len ===1) {
-                            const ii2 = window.document.getElementById("trainingExercisePrincipal-input");
-                            const aa2 =  window.document.getElementById("trainingExercisePrincipal");
-
-                            ii2.value = itemData.Subject;
-                            aa2.style.display = "block";
-                            aa2.querySelector(".moveimgwrapper img").src = "/static/img/"+itemData.MJMoveGifMediaDescription;
-                            aa2.querySelector(".movename").innerHTML = itemData.MoveExerciceName;
-                            //aa2.querySelector(".movedesc").innerHTML = itemData.MoveDescription;
-                            const zones = window.document.querySelectorAll('.mxZone');
-                            const val = zones[0].dataset["dropzone"];
-                            const dne = parseInt(val, 10) + 1;
-                            zones.forEach((item) => {
-                                item.dataset["dropzone"] = dne;
-                            })
-                            len++;
-                            break;
-
-                        }
-                        if(len ===2) {
-                            const ii3 = window.document.getElementById("trainingExerciseCooling-input");
-                            const aa3 =  window.document.getElementById("trainingExerciseCooling");
-
-                            ii3.value = itemData.Subject;
-                            aa3.style.display = "block";
-                            aa3.querySelector(".moveimgwrapper img").src = "/static/img/"+itemData.MJMoveGifMediaDescription;
-                            aa3.querySelector(".movename").innerHTML = itemData.MoveExerciceName;
-                            //aa3.querySelector(".movedesc").innerHTML = itemData.MoveDescription
-                            len++;
-                            break;
-
-                        }
-                    break;
-                    default:
-                }
-            }
-
-        });
-
-
-
-
-
-
-            const prev = document.querySelector('.demo-prev');
-            const next = document.querySelector('.demo-next');
-            const today = document.querySelector('.demo-today');
-            const picked = document.querySelector('.demo-picked');
-            const last = document.querySelector('.demo-last');
-
-            function updateInfo() {
-                if (this.today) {
-                    today.innerHTML = '';
-                    var li = document.createElement('li');
-                    li.innerHTML = this.today;
-                    today.appendChild(li);
-                }
-
-                if (this.lastSelectedDay) {
-
-                    picked.innerHTML = '';
-                    for (days of this.selectedDays) {
-                        var li = document.createElement('li');
-                        li.innerHTML = days;
-                        picked.appendChild(li);
-                    }
-
-                    last.innerHTML = '';
-                    var li = document.createElement('li');
-                    li.innerHTML = this.lastSelectedDay;
-                    last.appendChild(li);
-                }
-            }
-
-
-
-
-
-
-            document.querySelector("#selectDate").addEventListener("click", () => {
-                document.querySelector("#calendarWrapper").open = true;
-                const prev = document.querySelector('.demo-prev');
-                const next = document.querySelector('.demo-next');
-                const myCalendar = new HelloWeek({
-                    selector: '.hello-week',
-                    lang: 'en',
-                    format: 'DD/MM/YYYY',
-                    monthShort: true,
-                    weekShort: true,
-                    disablePastDays: true,
-                    multiplePick: false,
-                    // minDate: 1520696057,
-                    // maxDate: 1522519829,
-                    onLoad: updateInfo,
-                    onChange: updateInfo,
-                    onSelect: updateInfo
-                });
-
-                // prev.addEventListener('click', () => myCalendar.prev());
-                // next.addEventListener('click', () => myCalendar.next());
-
-
-            })
-
-
-
-
-    });
-
-    setTimeout(mod, 1500)
-    
-    </script>
+    @Scripts(c)
+    @Templates(c)
     <h2 style="margin-top:100px;" class="WelcomeMessage">Création D'un nouveau Programme</h2>
     <div class="ProgressBarContainer">
         <progress id="formprogress" value="0" max="8"> 0% </progress>
@@ -234,127 +20,88 @@ t1 HTMX(c *router.Context) {
             <details class="details_step" id="details_step-2" open>
                 <summary><span class="step">1</span>Ajoute Un Coaché</summary>
                 <input name="users" id="users" placeholder={ tr.Echo("Cherche un Utilisateur") } />
-                <div
-                    hx-swap="innerHTML"
-                    hx-get="/mj/userlistdrag"
-                    hx-trigger=§hx:load!>
-                Chargement...
-                </div>
-        </details>
-        <details class="details_step" id="details_step-4">
-            <summary><span class="step">2</span>Ajoute Un Type De Programme</summary>
-            <div
-                hx-swap="innerHTML"
-                hx-get="/mj/programmetypedrag"
-                hx-trigger=§hx:load!>
-            Chargement...
-            </div> 
-        </details>
-        <details class="details_step" id="details_step-6">
-            <summary><span class="step">3</span>Ajoute Un Mouvement D'Echauffement</summary>
-            <input name="moves-echauffement" id="moves-echauffement" placeholder={ tr.Echo("Cherche un Mouvement") } />
-            <div
-            hx-swap="innerHTML"
-            hx-get="/mj/movesdrag"
-            hx-trigger=§hx:load!>
-        Chargement...
-        </div>
-        </details>
-        <details class="details_step" id="details_step-7">
-            <summary><span class="step">4</span>Ajoute Un Mouvement de corps de séance</summary>
-            <input name="moves-corps-seance" id="moves-corps-seance" placeholder={ tr.Echo("Cherche un Mouvement") } />
-                    <div
-			hx-swap="innerHTML"
-			hx-get="/mj/movesdrag"
-			hx-trigger=§hx:load!>
-		Chargement...
-		</div>
-        </details>
-         <details class="details_step" id="details_step-8">
-                <summary><span class="step">5</span>Ajoute Un Mouvement D'exercice</summary>
-            <input name="moves-retour" id="moves-retour" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @userlistdrag.HTMXOnLoad(c)
+            </details>
+            <details class="details_step" id="details_step-4">
+                <summary><span class="step">2</span>Ajoute Un Type De Programme</summary>
+                @programmetypedrag.HTMXOnLoad(c)
+            </details>
+            <details class="details_step" id="details_step-60">
+                <summary><span class="step">3</span>Ajoute Un Mouvement D'Echauffement</summary>
+                <input name="moves-echauffement" id="moves-echauffement" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 60)
+            </details>
+            <details class="details_step" id="details_step-700">
+                <summary><span class="step">4</span>Ajoute Un Mouvement de corps de séance</summary>
+                <input name="moves-corps-seance" id="moves-corps-seance" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 700)
 
-          <div
-			hx-swap="innerHTML"
-			hx-get="/mj/movesdrag"
-			hx-trigger=§hx:load!>
-		Chargement...
-		</div>
-        </details>
-        <details class="details_step" id="NameModified">
-                <summary><span class="step">6</span>Donnes un nom à ton programme</summary>
-        </details>
-        <style>
-            .inputRow input 
-             {
-                border: 1px solid yellowgreen;
-                margin: 10px;
-                width: 80%;
-                height: 2rem;
-                color: yellowgreen;
-            }
+            </details>
+            <details class="details_step" id="details_step-8000">
+                <summary><span class="step">5</span>Ajoute Un Mouvement De Retour au calme</summary>
+                <input name="moves-retour" id="moves-retour" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 8000)
+            </details>
+            <details class="details_step" id="details_step-61">
+                <summary><span class="step">3.2</span>Ajoute Un Mouvement D'Echauffement</summary>
+                <input name="moves-echauffement" id="moves-echauffement" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 61)
 
-            span.step {
-                color: white;
-                padding: 1rem;
-                padding-top: 0.8rem;
-                border-radius: 50%;
-                border: 1px solid white;
-                padding-bottom: 0.8rem;
-                margin-right: 1rem;
-            }
+            </details>
+            <details class="details_step" id="details_step-701">
+                <summary><span class="step">4.2</span>Ajoute Un Mouvement de corps de séance</summary>
+                <input name="moves-corps-seance" id="moves-corps-seance" placeholder={ tr.Echo("Cherche un Mouvement") } /> 
+                @movesdrag.HTMXWithParamsOnLoad(c, 701)
+            </details>
 
-            .ProgressBarContainer {
-                margin-top: 1.2rem;
+            <details class="details_step" id="details_step-8001">
+                <summary><span class="step">5.2</span>Ajoute Un Mouvement De Retour au calme</summary>
+                <input name="moves-retour" id="moves-retour" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 8001)
 
-                & progress {
-                    height: 1.2rem;
-                }
-            }
+            </details>
+            <details class="details_step" id="details_step-62">
+                <summary><span class="step">3.3</span>Ajoute Un Mouvement D'Echauffement</summary>
+                <input name="moves-echauffement" id="moves-echauffement" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 62)
+            </details>
+            <details class="details_step" id="details_step-702">
+                <summary><span class="step">4.3</span>Ajoute Un Mouvement de corps de séance</summary>
+                <input name="moves-corps-seance" id="moves-corps-seance" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 702)
 
-            .UniqueDropzone .BlockWrapper--isDropzone:has(.image) {
+            </details>
+            <details class="details_step" id="details_step-8002">
+                <summary><span class="step">5.3</span>Ajoute Un Mouvement De Retour au calme</summary>
+                <input name="moves-retour" id="moves-retour" placeholder={ tr.Echo("Cherche un Mouvement") } />
+                @movesdrag.HTMXWithParamsOnLoad(c, 8002)
 
-                &>span>img {
-                    display: none;
-                }
-
-                & .image img {
-                    border-radius: 50%;
-                    border: 1px solid #5f5e5e;
-                    width: 50%;
-                    margin: auto;
-                    box-shadow: -5px 10px 5px 0px rgba(107,121,181,0.75);
-                    -webkit-box-shadow: -5px 10px 5px 0px rgba(107,121,181,0.75);
-                    -moz-box-shadow: -5px 10px 5px 0px rgba(107,121,181,0.75);
-                }
-
-                & .BlockContent {
-                    background-color: #9ca6f3;
-
-                }
-            }
-        
-        </style>
+            </details>
+            <details class="details_step" id="NameModified">
+                    <summary><span class="step">6</span>Donnes un nom à ton programme</summary>
+            </details>
         </div>
     
         <div data-dropzone="1" class={ tr.Echo(" zone twothird ") } id="programmeZone">
             <dialog id="calendarWrapper">
-                <input type="date" name="time" focus />
+                <input type="date" name="mjDate" id="ProgrammeDate-modal" class={ tr.Echo("biggg exerciceDateTime") } focus />
+                <button id="closeDateModal"><img src="/static/img/negatif.svg" width="50" height="50" /></button>
+                <div class="DateInstructions" style="position:fixed;top:30%;margin:auto;text-align:center;">
+                    <p style="font-size:3rem;">Séléctionnez une date pour votre programme: </p>
+                </div>
+                <div class="validationOptions">
+                    <button id="validateDateModal"  type="button"><img src="/static/img/validation.svg" width="50" height="50" /> valider</button>
+                </div>
             </dialog>
-
-            <input type="text" placeholder={ tr.Echo("Saisis Le Nom du programme") } style="font-size:2rem;" name="programme-name" id="programme-name" />
-       
-
-            <section  class="UniqueDropzone">
-
-            
+            <input type="text" placeholder={ tr.Echo("Saisis Le Nom du programme") } style="font-size:2rem;" name="programme-name" required id="programme-name" />
+            <section  class="UniqueDropzone">            
                 <article class={ tr.Echo("BlockLayout BlockLayout--typeGrid")} tabindex="0">
                     <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied")} data-dropzone="1">
                         <span class={ tr.Echo("Block Block--typeStripes")}>
                             <div class="BlockContent"></div>
                         </span>
                         <span class={ tr.Echo("Block Block--item1 Block--isDraggable")} title="Click to drag" tabindex="0" style="">
-                            <div class="BlockContent" style="background-image:url(/static/img/o/reg/ACCUEIL_Ensemble_nous.jpg);background-size:cover;">
+                            <div class="BlockContent" style="background-image:url(/static/img/o/reg/ACCUEIL_Ensemble_nous2.jpg);background-size:cover;">
                                 <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>Coach</h3>
                                 <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
                                 <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
@@ -370,7 +117,8 @@ t1 HTMX(c *router.Context) {
                     <div class="BlockWrapper">
                         <span class={ tr.Echo("Block Block--typeShell Block--item3")}>
                             <div class="BlockContent" id="selectDate">
-                                <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>Date</h3>
+                                <h3 id="displayDate" class={ tr.Echo("Heading Heading--size2 text-no-select")}>Date</h3>
+                                
                             </div>
                         </span>
                     </div>
@@ -386,24 +134,123 @@ t1 HTMX(c *router.Context) {
                             </div>
                         </span>
                     </div>
-                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="6">
-                        <span class={ tr.Echo("Block Block--typeStripes Block--item6")}>
-                            <img src="/static/img/echauffement.svg" width="50" height="50" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                            <div class="BlockContent"></div>
-                        </span>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapperCarouselVertical BlockWrapperCarousel_ECHAUFFEMENT")} data-top="0" style="overflow:hidden;max-height:62rem;">
+                        <button type="button" class={ tr.Echo("increment")}  style="position:absolute;height:2rem;line-height:1.9rem;top:0;">v</button>
+                        <div class="slider" style="position:relative;height:100%;">
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="60" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item6")}>
+                                    <img class="indicator-img" src="/static/img/echauffement.svg" width="50" height="50" alt="echauffement"  />
+                                    <small class="indicator">1</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="61" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item6")}>
+                                    <img class="indicator-img" src="/static/img/echauffement.svg" width="50" height="50" alt="echauffement"  />
+                                    <small class="indicator">2</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="62" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item6")}>
+                                    <img class="indicator-img" src="/static/img/echauffement.svg" width="50" height="50" alt="echauffement"  />
+                                    <small class="indicator">3</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <button  type="button" class={ tr.Echo("decrement")} style="position:absolute;height:2rem;line-height:1.9rem;bottom:0;">^</button>
                     </div>
-                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="7">
-                        <span class={ tr.Echo("Block Block--typeStripes Block--item7")}>
-                            <img src="/static/img/corps-seance.svg" width="50" height="50" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                            <div class="BlockContent"></div>
-                        </span>
+                    <div class={ tr.Echo("BlockWrapper BlockWrapperCarouselVertical BlockWrapperCarousel_CORPSDESEANCE")} data-top="0" style="overflow:hidden;max-height:62rem;">
+                        
+                        <button type="button" class={ tr.Echo("increment")}  style="position:absolute;height:2rem;line-height:1.9rem;top:0;">v</button>
+                        <div class="slider" style="position:relative;height:100%;">
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="700" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item7")}>
+                                    <img class="indicator-img" src="/static/img/corps-seance.svg" width="50" height="50" alt="corps de séance"  />
+                                    <small class="indicator">1</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="701" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item7")}>
+                                    <img class="indicator-img" src="/static/img/corps-seance.svg" width="50" height="50" alt="corps de séance"  />
+                                    <small class="indicator">2</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="702" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item7")}>
+                                    <img class="indicator-img" src="/static/img/corps-seance.svg" width="50" height="50" alt="corps de séance"  />
+                                    <small class="indicator">3</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <button  type="button" class={ tr.Echo("decrement")} style="position:absolute;height:2rem;line-height:1.9rem;bottom:0;">^</button>
+
+
+
                     </div>
-                    <div class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone")} data-dropzone="8">
-                        <span class={ tr.Echo("Block Block--typeStripes")}>
-                            <img src="/static/img/retour-calme.svg" width="50" height="50" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                            <div class="BlockContent"></div>
-                        </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class={ tr.Echo("BlockWrapper BlockWrapperCarouselVertical BlockWrapperCarousel_RETOURAUCALME")} data-top="0" style="overflow:hidden;max-height:62rem;">
+                        
+                        <button type="button" class={ tr.Echo("increment")}  style="position:absolute;height:2rem;line-height:1.9rem;top:0;">v</button>
+                        <div class="slider" style="position:relative;height:100%;">
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="8000" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item8")}>
+                                    <img class="indicator-img" src="/static/img/retour-calme.svg" width="50" height="50" alt="retour au calme"  />
+                                    <small class="indicator">1</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="8001" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item8")}>
+                                    <img class="indicator-img" src="/static/img/retour-calme.svg" width="50" height="50" alt="retour au calme"  />
+                                    <small class="indicator">2</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+
+                            <div class={ tr.Echo("BlockWrapper--isDropzone")} data-dropzone="8002" style="height:100%;">
+                                <span class={ tr.Echo("Block Block--typeStripes Block--item8")}>
+                                    <img class="indicator-img" src="/static/img/retour-calme.svg" width="50" height="50" alt="retour au calme"  />
+                                    <small class="indicator">3</small>
+                                    <div class="BlockContent"></div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <button  type="button" class={ tr.Echo("decrement")} style="position:absolute;height:2rem;line-height:1.9rem;bottom:0;">^</button>
+
+
+
                     </div>
+
+
+
+
+
+
+
+
+                    
+                    
                 </article>
         </section>
 
@@ -413,7 +260,12 @@ t1 HTMX(c *router.Context) {
             <h6><span id="tempProgrammeName">Sans Nom</span>  <br />Avec</h6>
             <hr />
             <form action="/programme/process" hx-post="/programme/process" hx-encoding="application/x-www-form-urlencoded">
-                <input type="hidden" name="PersoProgName" id="ProgrammeName-input" value="" />
+                <input type="hidden" name="PersoProgName" id="ProgrammeName-input" value="" required />
+                <input type="hidden" name="PersoProgDate" id="ProgrammeDate-input" required />
+                <input type="hidden" name="echauffementTime" id="echauffementTimeButton-input" required />
+                <input type="hidden" name="corpsSeanceTime" id="corpsSeanceTimeButton-input" required />
+                <input type="hidden" name="retourAuCalmeTime" id="retourAuCalmeTimeButton-input" required />
+
                 <div style="display:none;" id="trainingCoach" class="fieldInfo">
                     <input type="hidden" name="trainingCoach" id="trainingCoach-input" value="" />
                     <details>
@@ -424,14 +276,18 @@ t1 HTMX(c *router.Context) {
                         </summary>
                     </details>
                 </div>
-
+                <h6> 
+                    <span class="picto">
+                        <img src="/static/img/nom.svg" width="20" height="20" alt="nom" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
+                    </span>
+                            Coaché: 
+                </h6>
+                <hr />
                 <div style="display:none;" id="trainingSubject" class="fieldInfo">
                     <input type="hidden" name="TrainingUser" id="trainingSubject-input" value="" />
                     <details class="withPicture">
                         <summary>
-                            <span class="picto">
-                                <img src="/static/img/nom.svg" width="30" height="30" alt="nom" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                            </span>
+                           
                             <span class="image">
                                 <img src="/static/img/team-1.png" width="30px" height="30px" class="displayImg" />
                             </span>
@@ -442,77 +298,82 @@ t1 HTMX(c *router.Context) {
 
                     </details>
                 </div>
-
+            <h6>
+             <span class="picto">
+                <img src="/static/img/base-donnees.svg" width="20" height="20" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
+            </span>
+            Type : <span class="programmetypename-short"></span>
+            </h6>
+            <hr />
             <div style="display:none;" id="trainingProgramme" class="fieldInfo" style="background-color:rebeccapurple;">
                 <input type="hidden" name="PersoProgType" id="trainingProgramme-input" value="" />
                 <details class="withColor" style="background-color:rebeccapurple;color:black;padding:1rem;">
                     
                     <summary>
-                        <span class="picto">
-                            <img src="/static/img/base-donnees.svg" width="30" height="30" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                        </span>
+                       
                         <span class="programmetypename"></span>
                     </summary>
                     <span class="programmetypecomment"></span>
                 </details>
             </div>
 
+            <h6>
+                <span class="picto">
+                    <img src="/static/img/echauffement.svg" width="20" height="20" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:50px;" />
+                </span>
+                Echauffement: <button id="echauffementTimeButton" class="timeButton" type="button" style="border:1px,solid:#EEE;">Temps ?</button>
+                <input type="numeric" name="echauffementTimeButton_exerciceTime"  id="echauffementTimeButton_exerciceTime" class="echauffementTimeButton_toReveal"  placeholder="valeur" style="display:none;border:1px,solid:#EEE;" />
+                <select name="echauffementTimeButton_exerciceTimeUnit" id="echauffementTimeButton_exerciceTimeUnit" class="echauffementTimeButton_toReveal"  placeholder="unité" style="display:none;border:1px,solid:#EEE;">
+                    <option value="minutes">minutes</option>
+                    <option value="seconds">secondes</option>
+                    <option value="heures">heures</option>
+                </select>
+                <button id="echauffementTimeButton-ok"  class="echauffementTimeButton_toReveal" style="display:none;border:1px,solid:#EEE;">
+                ok
+                </button>
+            </h6>
+            <hr />
             <div style="display:none;" id="trainingExerciseEchauffement" class="fieldInfo">
-                 <input type="hidden" name="Echauffement" id="trainingExerciseEchauffement-input" value="" />
-                <hr />
-                <details class="withColor">
-                    <summary>
-                        <span class="picto">
-                            <img src="/static/img/echauffement.svg" width="50" height="50" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                        </span>
-                        <span class="movename">
-                            { fmt.Sprintf("%s", "Squat") }
-                        </span>
-                    </summary>
-                    <span class="moveimgwrapper">
-                        <img src="" alt="" width="100%" />
-                    </span>
 
-                    <span class="movedesc"></span>
-                </details>
             </div>
+            <h6>
+                <span class="picto">
+                    <img src="/static/img/corps-seance.svg" width="20" height="20" alt="corps séance" style="position:absolute;z-index:20;left:23%;top:10%;width:50px;" />
+                </span>
+                Corps de Séance : <button id="corpsSeanceTimeButton" type="button" style="border:1px,solid:#EEE;">Temps ?</button>
+                <input type="numeric" id="corpsSeanceTimeButton_exerciceTime" name="corpsSeanceTimeButton_exerciceTime" class="corpsSeanceTimeButton_toReveal" placeholder="valeur" style="display:none;border:1px,solid:#EEE;" />
+                <select name="corpsSeanceTimeButton_exerciceTimeUnit" id="corpsSeanceTimeButton_exerciceTimeUnit" class="corpsSeanceTimeButton_toReveal" placeholder="unité" style="display:none;border:1px,solid:#EEE;">
+                    <option value="minutes">minutes</option>
+                    <option value="seconds">secondes</option>
+                    <option value="heures">heures</option>
+                </select>
+                <button id="corpsSeanceTimeButton-ok"  class="echauffementTimeButton_toReveal"  style="display:none;border:1px,solid:#EEE;">
+                ok
+                </button>
+            </h6>
+            <hr />
             <div style="display:none;" id="trainingExercisePrincipal" class="fieldInfo">
-                 <input type="hidden" name="CorpsDeSeance" id="trainingExercisePrincipal-input" value="" />
-                <hr />
-                <details class="withColor">
-                    <summary>
-                        <span class="picto">
-                            <img src="/static/img/corps-seance.svg" width="30" height="30" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                        </span>
-                        <span class="movename">
-                            { fmt.Sprintf("%s", "Squat") }
-                        </span>
-                    </summary>
-                    <span class="moveimgwrapper">
-                        <img src="" alt="" width="100%" />
-                    </span>
-
-                    <span class="movedesc"></span>
-                </details>
+                
             </div>
-            <div style="display:none;" id="trainingExerciseCooling" class="fieldInfo">
-                 <input type="hidden" name="RetourAuCalme" id="trainingExerciseCooling-input" value="" />
-                <hr />
-                <details class="withColor">
-                   <summary>
-                        <span class="picto">
-                            <img src="/static/img/retour-calme.svg" width="30" height="30" alt="echauffement" style="position:absolute;z-index:20;left:23%;top:10%;width:100px;" />
-                        </span>
-                        <span class="movename">
-                            { fmt.Sprintf("%s", "Squat") }
-                        </span>
-                    </summary>
-                    <span class="moveimgwrapper">
-                        <img src="" alt="" width="100%" />
-                    </span>
 
-                    <span class="movedesc"></span>
-                </details>
+            <h6>
+                <span class="picto">
+                    <img src="/static/img/retour-calme.svg" width="20" height="20" alt="retour calme" style="position:absolute;z-index:20;left:23%;top:10%;width:50px;" />
+                </span>
+                Retour au calme: <button id="retourAuCalmeTimeButton" type="button" style="border:1px,solid:#EEE;">Temps ?</button>
+                <input type="numeric" name="retourAuCalmeTimeButton_exerciceTime" id="retourAuCalmeTimeButton_exerciceTime" class="retourAuCalmeTimeButton_toReveal" placeholder="valeur" style="display:none;border:1px,solid:#EEE;" />
+                <select name="retourAuCalmeTimeButton_exerciceTimeUnit" id="retourAuCalmeTimeButton_exerciceTimeUnit" class="retourAuCalmeTimeButton_toReveal" placeholder="unité" style="display:none;border:1px,solid:#EEE;">
+                    <option value="minutes">minutes</option>
+                    <option value="seconds">secondes</option>
+                    <option value="heures">heures</option>
+                </select>
+                <button id="retourAuCalmeTimeButton-ok"  class="echauffementTimeButton_toReveal" style="display:none;border:1px,solid:#EEE;">
+                ok
+                </button>
+            </h6>
+            <hr />
+            <div style="display:none;" id="trainingExerciseCooling" class="fieldInfo">
+                
             </div>
                 <button type="submit" class="btn">
                 Créer Le Programme
@@ -521,107 +382,4 @@ t1 HTMX(c *router.Context) {
             </form>
         </div>
     </div>
-    <style>
-
-    .picto {
-        position: relative;
-        width: 40px;
-        height: 40px;
-        top: -8px;
-        margin-right: 2rem;
-
-    }
-    .fieldInfo {
-
-        & .displayImg {
-            border-radius: 50%;
-            border: 1px solid gray;
-        }
-
-        & .coachfullname {
-            color: black;
-            background: pink;
-            position: absolute;
-            bottom: 0;
-            display: block;
-            line-height: 2rem;
-            padding: 0.2rem;
-            font-weight: bold;
-        }
-
-        & details.withPicture {
-            summary {
-                display: flex;
-                gap: 1rem;
-                /* width: 100%; */
-                margin-top: 2rem;
-                height: 3rem;
-                line-height: 3rem;
-
-                &:after {
-                    height: 3rem;
-  
-                }
-            }
-        }
-
-        & details.withColor {
-            summary {
-                display: flex;
-                gap: 1rem;
-                /* width: 100%; */
-                margin-top: 2rem;
-                height: 3rem;
-                line-height: 3rem;
-
-                &:after {
-                    height: 3rem;
-  
-                }
-            }
-        }
-    }
-
-    .threeRows {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .zone {
-        border: 2px dashed white;
-    }
-
-    .third {
-        width: 30%;
-    }
-
-    .halfthird {
-        width: 22%;
-    }
-
-    .twothird {
-        width: 56%;
-    }
-   /* datalist {
-        position: absolute;
-        max-height: 20em;
-        border: 0 none;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-
-    datalist option {
-        font-size: 0.8em;
-        padding: 0.3em 1em;
-        background-color: #ccc;
-        cursor: pointer;
-    }
-   */
-    /* option active styles */
-   /* datalist option:hover, datalist option:focus {
-        color: #fff;
-        background-color: #036;
-        outline: 0 none;
-    }*/
-    </style>
 }

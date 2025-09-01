@@ -1,0 +1,36 @@
+package table
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/sparql"
+import "fmt"
+
+t1 HTMX(c *router.Context, res []map[string]sparql.Binding) {
+    <div class="table-wrapper">
+        <table id="queryResponse">
+            <thead>
+                <th>Subject</th>
+                <th>Predicate</th>
+                <th>Object</th>
+            </thead>
+            <tbody>
+                for _, triple := range(res) {
+                    <tr>
+                        <td>{ triple["s"].Value }</td>
+                        <td>{ triple["p"].Value }</td>
+                        <td>{ triple["o"].Value }</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">{ fmt.Sprintf("Trouvé %d Triples", len(res)) } </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        $(() => {
+            let table = new DataTable('#queryResponse');
+        })
+    </script>
+}

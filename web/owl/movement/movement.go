@@ -38,7 +38,69 @@ func Handler(c *router.Context) error {
 	fmt.Println(query)
 
 	fmt.Println(res.Results.Bindings)
-	em := NewExerciseMove(res.Results.Bindings)
+	em := NewExerciseMove(res.Results.Bindings, moveId)
+	c.Render(HTMX(c, em))
+	return nil
+
+}
+
+func EditHandler(c *router.Context) error {
+	repo, err1 := sparql.NewRepo("http://localhost:3030/ds",
+		sparql.DigestAuth("dba", "dba"),
+		sparql.Timeout(time.Millisecond*1500),
+	)
+	if err1 != nil {
+		panic("bad")
+	}
+
+	fmt.Println("a", c.Query("moveId"))
+	fmt.Println("b", c.Param("moveId"))
+	fmt.Println("c", c.FormValue("moveId"))
+	fmt.Println("d", c.Request.PathValue("moveId"))
+
+	moveId := strings.Replace(c.Param("moveId"), "/", "", 1)
+
+	query := fmt.Sprintf(selectDetails, fmt.Sprintf(term, moveId))
+	res, err := repo.Query(query)
+
+	if err != nil {
+		panic(fmt.Sprintf("bad", query))
+	}
+	fmt.Println(query)
+
+	fmt.Println(res.Results.Bindings)
+	em := NewExerciseMove(res.Results.Bindings, moveId)
+	c.Render(Edit(c, em))
+	return nil
+
+}
+
+func DeleteHandler(c *router.Context) error {
+	repo, err1 := sparql.NewRepo("http://localhost:3030/ds",
+		sparql.DigestAuth("dba", "dba"),
+		sparql.Timeout(time.Millisecond*1500),
+	)
+	if err1 != nil {
+		panic("bad")
+	}
+
+	fmt.Println("a", c.Query("moveId"))
+	fmt.Println("b", c.Param("moveId"))
+	fmt.Println("c", c.FormValue("moveId"))
+	fmt.Println("d", c.Request.PathValue("moveId"))
+
+	moveId := strings.Replace(c.Param("moveId"), "/", "", 1)
+
+	query := fmt.Sprintf(selectDetails, fmt.Sprintf(term, moveId))
+	res, err := repo.Query(query)
+
+	if err != nil {
+		panic(fmt.Sprintf("bad", query))
+	}
+	fmt.Println(query)
+
+	fmt.Println(res.Results.Bindings)
+	em := NewExerciseMove(res.Results.Bindings, moveId)
 	c.Render(HTMX(c, em))
 	return nil
 
@@ -51,16 +113,18 @@ type ExerciseMove struct {
 	Tips        string
 	Groupes     string
 	Credit      string
+	Subject     string
 }
 
-func NewExerciseMove(results []map[string]sparql.Binding) *ExerciseMove {
+func NewExerciseMove(results []map[string]sparql.Binding, subject string) *ExerciseMove {
 	return &ExerciseMove{
 		Name:        FindObjectValueByPredicate("MoveExerciceName", results)["o"].Value,
 		Description: FindObjectValueByPredicate("MoveDescription", results)["o"].Value,
 		GifPath:     FindObjectValueByPredicate("MJMoveGifMediaDescription", results)["o"].Value,
 		Tips:        FindObjectValueByPredicate("MoveTipsFlattened", results)["o"].Value,
-		Groupes:     FindObjectValueByPredicate("WorksMuscularGroupsFlattened ", results)["o"].Value,
+		Groupes:     FindObjectValueByPredicate("WorksMuscularGroupsFlattened", results)["o"].Value,
 		Credit:      FindObjectValueByPredicate("MoveGifDescriptionCredits", results)["o"].Value,
+		Subject:     subject,
 	}
 }
 

@@ -1,21 +1,26 @@
 package main
 
 import (
+	"embed"
 	"fmt"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"log"
 	"os"
 	"time"
 
 	jira "github.com/andygrunwald/go-jira"
 	"github.com/joho/godotenv"
-	"github.com/senforsce/coachmj/web/owl/movelist"
 	"github.com/senforsce/fh/handlers"
+	"github.com/senforsce/owl/connected/movelist"
 	"github.com/senforsce/sparql"
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/layout"
 	"github.com/senforsce/tndrf1sh/web/owl/abonnement"
 	"github.com/senforsce/tndrf1sh/web/owl/blogtexteditor"
 	"github.com/senforsce/tndrf1sh/web/owl/programme"
+	"github.com/senforsce/tndrf1sh/web/owl/queryandtable"
 
 	"github.com/senforsce/tndrf1sh/web/owl/movement"
 	"github.com/senforsce/tndrf1sh/web/owl/moves"
@@ -29,12 +34,24 @@ import (
 	"github.com/senforsce/userconfig"
 )
 
+//go:embed static/*
+//go:embed static/js/*
+//go:embed static/css/*
+//go:embed static/img/*
+var staticDir embed.FS
+
 func main() {
 	app := router.New()
 	Plugs(app)
 	userConfig := userconfig.NewUserConfig()
-
-	log.Fatal(app.Start(userConfig.StaticRoot))
+	//	roots := []string{userConfig.StaticRoot, userConfig.SubjectStaticRoot}
+	roots := []string{userConfig.StaticRoot, userConfig.SubjectStaticRoot}
+	o := router.Options{
+		Embedded:    true,
+		EmbeddedDir: staticDir,
+		StaticRoot:  roots,
+	}
+	log.Fatal(app.Start(o))
 
 }
 
@@ -71,14 +88,28 @@ func WithHTMXServer(app *router.Tndr0cean) func(h router.Handler) {
 	app.Post("/process/newUser", handlers.HandleCreateNewUser)
 	app.Get("/mj/moves", moves.Handler)
 	app.Get("/mj/movelist", movelist.ListHandler)
+
 	app.Get("/mj/programmes", programme.ListHandler)
+	app.Get("/mj/programmetable", programme.ListHandler)
+	app.Put("/mj/programme/*programmeName", programme.ListHandler)
+	app.Delete("/mj/programme/*programmeName", programme.ListHandler)
+
+	app.Get("/mj/queryandtable", queryandtable.Handler)
 
 	app.Get("/mj/userlist", userlist.Handler)
-	app.Get("/mj/user/*userName", user.Handler)
-	app.Get("/mj/movement/*moveId", movement.Handler)
+
+	app.Get("/mj/user/*userIRI", user.Handler)
+	app.Put("/mj/user/*userIRI", user.EditHandler)
+	app.Delete("/mj/user/*userIRI", user.DeleteHandler)
+
+	app.Get("/mj/movement/show/*moveId", movement.Handler)
+	app.Get("/mj/movement/edit/*moveId", movement.EditHandler)
+	app.Post("/process/editMove", handlers.HandleEditMovement)
+	app.Get("/mj/movement/delete/*moveId", movement.DeleteHandler)
+
 	app.Get("/mj/abonnement/*abonnementName", abonnement.Handler)
 	app.Get("/mj/service/*serviceName", service.Handler)
-	app.Get("/mj/movesdrag", movesdrag.Handler)
+	app.Get("/mj/movesdrag/*skip", movesdrag.Handler)
 	app.Get("/mj/userlistdrag", userlistdrag.Handler)
 	app.Get("/mj/programmetypedrag", programmetypedrag.Handler)
 	// Other routes will be injected with tree-shaking on build inside ./injected_routes.go

@@ -14,8 +14,9 @@ type ViewConfig struct {
 	MoveTipsFlattened            string
 	MoveExerciceName             string
 	Subject                      string
-	MovePicture                  string
+	MovePoster                   string
 	MoveIcon                     string
+	NewId                        string
 }
 
 //naive find triple
@@ -52,7 +53,7 @@ func ListOfSubjects(results []map[string]sparql.Binding) map[string][]map[string
 	return toReturn
 }
 
-func NewViewConfig(results []map[string]sparql.Binding) ViewConfig {
+func NewViewConfig(results []map[string]sparql.Binding, tempId string) ViewConfig {
 	return ViewConfig{
 		MoveDescription:              FindObjectValueByPredicate("MoveDescription", results)["o"].Value,
 		MoveGifDescriptionCredits:    FindObjectValueByPredicate("MoveGifDescriptionCredits", results)["o"].Value,
@@ -60,9 +61,9 @@ func NewViewConfig(results []map[string]sparql.Binding) ViewConfig {
 		MJMoveGifMediaDescription:    FindObjectValueByPredicate("MJMoveGifMediaDescription", results)["o"].Value,
 		MoveTipsFlattened:            FindObjectValueByPredicate("MoveTipsFlattened", results)["o"].Value,
 		MoveExerciceName:             FindObjectValueByPredicate("MoveExerciceName", results)["o"].Value,
-		MovePicture:                  FindObjectValueByPredicate("MovePicture", results)["o"].Value,
+		MovePoster:                   FindObjectValueByPredicate("MovePosterPicture", results)["o"].Value,
 		MoveIcon:                     FindObjectValueByPredicate("MoveIcon", results)["o"].Value,
-
-		Subject: FindObjectValueByPredicate("MoveExerciceName", results)["s"].Value,
+		NewId:                        tempId,
+		Subject:                      FindObjectValueByPredicate("MoveExerciceName", results)["s"].Value,
 	}
 }

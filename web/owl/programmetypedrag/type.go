@@ -10,6 +10,9 @@ type ViewConfig struct {
 	ProgramTypeName string
 	Comment         string
 	Subject         string
+	Illustration    string
+	BgColor         string
+	ShortDefinition string
 }
 
 //naive find triple
@@ -51,5 +54,8 @@ func NewViewConfig(results []map[string]sparql.Binding) ViewConfig {
 		ProgramTypeName: FindObjectValueByPredicate("ProgramTypeName", results)["o"].Value,
 		Comment:         FindObjectValueByPredicate("comment", results)["o"].Value,
 		Subject:         FindObjectValueByPredicate("ProgramTypeName", results)["s"].Value,
+		Illustration:    FindObjectValueByPredicate("ProgramTypePictureIllustration", results)["o"].Value,
+		BgColor:         FindObjectValueByPredicate("ProgramTypeColor", results)["o"].Value,
+		ShortDefinition: FindObjectValueByPredicate("ProgramTypeShortDefinition", results)["o"].Value,
 	}
 }

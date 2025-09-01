@@ -1,0 +1,532 @@
+package programme
+
+import "github.com/senforsce/tndr0cean/router"
+t1 Scripts(c *router.Context) {
+        <script src="https://cdn.jsdelivr.net/npm/datalist-css/dist/datalist-css.min.js"></script>
+    <script type="module">
+    import {
+        Draggable,
+        Sortable,
+        Droppable,
+        Swappable,
+    } from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/index.mjs';
+
+    const mod = (function mod() {
+        const containers = document.querySelectorAll('#UniqueDropzone .BlockLayout');
+
+        if (containers.length === 0) {
+            return false;
+        }
+
+        const droppable = new Droppable(containers, {
+            draggable: '.Block--isDraggable',
+            dropzone: '.BlockWrapper--isDropzone',
+            mirror: {
+            constrainDimensions: true,
+            },
+        });
+
+        let droppableOrigin;
+        let len = 0;
+        let exercices = {};
+
+        // --- Draggable events --- //
+        droppable.on('drag:start', (evt) => {
+            droppableOrigin = evt.originalSource.parentNode.dataset.dropzone;
+        });
+
+        let hasModifiedName = false;
+
+        document.querySelector("#programme-name").addEventListener("change", (e) => {
+            document.querySelector("#tempProgrammeName").innerHTML = document.querySelector("#programme-name").value;
+            
+            document.querySelector("#tempProgrammeName").classList.add("WelcomeMessage");
+            document.querySelector("#ProgrammeName-input").value = document.querySelector("#programme-name").value;
+            if (!hasModifiedName) {
+                const progress = document.querySelector(`#formprogress`);
+                progress.value += 1;
+                progress.innerHTML = (8 / progress.value) +"%";
+                hasModifiedName = true;
+            }
+            document.querySelector("#NameModified").style.opacity = 0.4;
+            document.querySelector("#NameModified").style.pointerEvents = "none;"
+        })
+
+        droppable.on('droppable:dropped', (evt) => {
+            if (droppableOrigin !== evt.dropzone.dataset.dropzone) {
+                evt.cancel();
+            } else {
+                const sourceFromEvt = evt?.data?.dragEvent?.data?.source;
+                const itemString = sourceFromEvt?.dataset?.item;
+                console.log({itemString})
+                const repl = itemString.replaceAll("»", "'").replaceAll("«", "'")
+                console.log({repl})
+                const itemData = JSON.parse(repl);
+
+                setTimeout(() => {
+                    const toCloseAndHide = document.querySelector(`#details_step-${droppableOrigin}`)
+                        toCloseAndHide.open = false;
+                        toCloseAndHide.style.opacity = 0.4;
+                        toCloseAndHide.style.pointerEvents = "none";
+                    const progress = document.querySelector(`#formprogress`);
+                    progress.value += 1;
+                    progress.innerHTML = (8 / progress.value) +"%"
+                },2000);
+
+                
+
+                switch(itemData.type) {
+                    case "user":
+                        const ur = window.document.getElementById("trainingSubject-input");
+                        const aur =  window.document.getElementById("trainingSubject");
+                        ur.value = itemData.Subject;
+                        const profilePicture = aur.querySelector(".image img");
+                        const fullNameContainer = aur.querySelector(".userfullname");
+                        profilePicture.src = itemData.ProfilePicture;
+                        fullNameContainer.innerHTML = `${itemData.Firstname} ${itemData.Lastname}`;
+                        document.querySelector("#trainingCoach").style.display = "block";
+                        aur.style.display = "block";
+                        break;
+                    case "programmetype":
+                        const pr = window.document.getElementById("trainingProgramme-input");
+                        const ar =  window.document.getElementById("trainingProgramme");
+                        pr.value = itemData.Subject;
+                        ar.querySelector('.programmetypename').innerHTML = itemData.ProgramTypeName;
+                        document.querySelector('.programmetypename-short').innerHTML = itemData.ProgramTypeName;
+
+                        ar.querySelector('.programmetypecomment').innerHTML = itemData.Comment;
+
+                        ar.style.display = "block";
+                        break;
+                    case "moveexercise":
+                        if(itemData.ExerciceId) {
+                            exercices[itemData.ExerciceId] = itemData;
+                        }
+                        if(droppableOrigin <700) {
+                            exercices[itemData.ExerciceId]["Predicate"] = "http://senforsce.com/o8/brain/hasEchauffement";
+
+                            const tmpl = document.getElementById("trainingExerciseEchauffementTemplate");
+                            let clon = tmpl.content.cloneNode(true);
+                            clon.querySelectorAll(".hasExerciseId").forEach((item) => {
+                                item.dataset.ExerciceId = itemData.ExerciceId;
+
+                            })
+
+                            clon.querySelectorAll(".Echauffement_").forEach((item) => {
+                                item.addEventListener("click", (event) => {
+                                    const target = event.currentTarget.dataset.target;
+                                    const id = event.currentTarget.dataset.ExerciceId;
+
+                                    document.querySelector(`.${target}[data--exercice-id="${id}"]`).style.display = "flex";
+                                    const a = document.querySelector(`.${target}Button[data--exercice-id="${id}"]`);
+                                    a.style.display = "block";
+
+                                })
+
+                            })
+                            
+                            clon.querySelectorAll(".formControl").forEach((item) => {
+                                item.dataset.ExerciceId = itemData.ExerciceId;
+                            })
+                            clon.querySelector("input.payload").value = JSON.stringify(exercices[itemData.ExerciceId])
+                            let inputEchauffement = clon.querySelector(".hidden");
+                            inputEchauffement.value = itemData.Subject;
+                            let imgGif = clon.querySelector(".moveimgwrapper img");
+                            imgGif.src = "/static/img/o/g/"+itemData.MJMoveGifMediaDescription;
+                            let imgPoster = clon.querySelector(".pictoxl img");
+                            imgPoster.src = "/static/img/o/g/"+itemData.MJMoveGifMediaDescription;
+                            let moveNameEchauffement = clon.querySelector(".movename");
+                            moveNameEchauffement.innerHTML = itemData.MoveExerciceName;
+                            const aaa =  window.document.getElementById("trainingExerciseEchauffement");
+                            aaa.style.display = "block";
+                            aaa.appendChild(clon);
+
+
+                            // const zones = window.document.querySelectorAll('.mxZone');
+                            // const val = zones[0].dataset["dropzone"];
+                            // const dne = parseInt(val, 10) + 1;
+                            // zones.forEach((item) => {
+                            //     item.dataset["dropzone"] = dne;
+                            // })
+                            // len++;
+                            break;
+                        }
+                        if(droppableOrigin >= 700 && droppableOrigin < 8000) {
+                            const tmpl = document.getElementById("trainingExercisePrincipalTemplate");
+                            exercices[itemData.ExerciceId]["Predicate"] = "http://senforsce.com/o8/brain/hasCorpsDeSeance";
+                            let clon = tmpl.content.cloneNode(true);
+                            clon.querySelectorAll(".hasExerciseId").forEach((item) => {
+                                item.dataset.ExerciceId = itemData.ExerciceId;
+
+                            })
+
+                            clon.querySelectorAll(".CorpsDeSeance_").forEach((item) => {
+                                item.addEventListener("click", (event) => {
+                                    const target = event.currentTarget.dataset.target;
+                                    const id = event.currentTarget.dataset.ExerciceId;
+
+                                    document.querySelector(`.${target}[data--exercice-id="${id}"]`).style.display = "flex";
+                                    document.querySelector(`.${target}Button[data--exercice-id="${id}"]`).style.display = "block";
+
+                                })
+                            })
+
+                            clon.querySelectorAll(".formControl").forEach((item) => {
+                                item.dataset.ExerciceId = itemData.ExerciceId;
+                            })
+                            clon.querySelector("input.payload").value = JSON.stringify(exercices[itemData.ExerciceId])
+                            let inputEchauffement = clon.querySelector(".hidden");
+                            inputEchauffement.value = itemData.Subject;
+                            let imgGif = clon.querySelector(".moveimgwrapper img");
+                            imgGif.src = "/static/img/o/g/"+itemData.MJMoveGifMediaDescription;
+                            let imgPoster = clon.querySelector(".pictoxl img");
+                            imgPoster.src = "/static/img/o/g/"+itemData.MJMoveGifMediaDescription;
+                            let moveNameEchauffement = clon.querySelector(".movename");
+                            moveNameEchauffement.innerHTML = itemData.MoveExerciceName;
+                            const aaa =  window.document.getElementById("trainingExercisePrincipal");
+                            aaa.style.display = "block";
+                            aaa.appendChild(clon);
+
+                        }
+                        if(droppableOrigin >= 8000 ) {
+                            const tmpl = document.getElementById("trainingExerciseCoolingTemplate");
+                            exercices[itemData.ExerciceId]["Predicate"] = "http://senforsce.com/o8/brain/hasRetourAuCalme";
+                            let clon = tmpl.content.cloneNode(true);
+                            clon.querySelectorAll(".hasExerciseId").forEach((item) => {
+                                item.dataset.ExerciceId = itemData.ExerciceId;
+
+                            })
+
+                            clon.querySelectorAll(".RetourAuCalme_").forEach((item) => {
+                                item.addEventListener("click", (event) => {
+                                    const target = event.currentTarget.dataset.target;
+                                    const id = event.currentTarget.dataset.ExerciceId;
+
+                                    document.querySelector(`.${target}[data--exercice-id="${id}"]`).style.display = "flex";
+                                    document.querySelector(`.${target}Button[data--exercice-id="${id}"]`).style.display = "block";
+
+                                })
+                            })
+
+                            clon.querySelectorAll(".formControl").forEach((item) => {
+                                item.dataset.ExerciceId = itemData.ExerciceId;
+                            })
+                            clon.querySelector("input.payload").value = JSON.stringify(exercices[itemData.ExerciceId])
+
+
+                            let inputEchauffement = clon.querySelector(".hidden");
+                            inputEchauffement.value = itemData.Subject;
+                            let imgGif = clon.querySelector(".moveimgwrapper img");
+                            imgGif.src = "/static/img/o/g/"+itemData.MJMoveGifMediaDescription;
+                            let imgPoster = clon.querySelector(".pictoxl img");
+                            imgPoster.src = "/static/img/o/g/"+itemData.MJMoveGifMediaDescription;
+                            let moveNameEchauffement = clon.querySelector(".movename");
+                            moveNameEchauffement.innerHTML = itemData.MoveExerciceName;
+                            const aaa =  window.document.getElementById("trainingExerciseCooling");
+                            aaa.style.display = "block";
+                            aaa.appendChild(clon);
+
+                        }
+
+                         document.querySelectorAll(".formExtra").forEach((item) => {
+                            item.dataset.ExerciceId = itemData.ExerciceId;
+                        })
+                    break;
+                    default:
+                }
+            }
+
+        });
+
+
+
+
+
+
+            const prev = document.querySelector('.demo-prev');
+            const next = document.querySelector('.demo-next');
+            const today = document.querySelector('.demo-today');
+            const picked = document.querySelector('.demo-picked');
+            const last = document.querySelector('.demo-last');
+
+            function updateInfo() {
+                if (this.today) {
+                    today.innerHTML = '';
+                    var li = document.createElement('li');
+                    li.innerHTML = this.today;
+                    today.appendChild(li);
+                }
+
+                if (this.lastSelectedDay) {
+
+                    picked.innerHTML = '';
+                    for (days of this.selectedDays) {
+                        var li = document.createElement('li');
+                        li.innerHTML = days;
+                        picked.appendChild(li);
+                    }
+
+                    last.innerHTML = '';
+                    var li = document.createElement('li');
+                    li.innerHTML = this.lastSelectedDay;
+                    last.appendChild(li);
+                }
+            }
+
+
+
+
+
+            const corpsDeSeanceCarousel = document.querySelector(".BlockWrapperCarousel_CORPSDESEANCE");
+            const corpsDeSeanceCarouselSlider = document.querySelector(".BlockWrapperCarousel_CORPSDESEANCE .slider");
+
+            let corpsDeSeanceCarousel_top = corpsDeSeanceCarousel.dataset.top;
+
+
+            document.querySelector(".BlockWrapperCarousel_CORPSDESEANCE .increment").addEventListener("click", () => {
+               const toMove = parseInt(corpsDeSeanceCarousel_top, 10) -100;
+               const toMoveString = toMove + "%"
+
+                corpsDeSeanceCarouselSlider.style.top = toMoveString;
+                corpsDeSeanceCarousel_top = toMove;
+            });
+
+            document.querySelector(".BlockWrapperCarousel_CORPSDESEANCE .decrement").addEventListener("click", () => {
+               const toMove = parseInt(corpsDeSeanceCarousel_top, 10) +100;
+               const toMoveString = toMove + "%"
+
+                corpsDeSeanceCarouselSlider.style.top = toMoveString;
+                corpsDeSeanceCarousel_top = toMove;
+            });
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            const retourAuCalmeCarousel = document.querySelector(".BlockWrapperCarousel_RETOURAUCALME");
+            const retourAuCalmeCarouselSlider = document.querySelector(".BlockWrapperCarousel_RETOURAUCALME .slider");
+
+            let retourAuCalmeCarousel_top = retourAuCalmeCarousel.dataset.top;
+
+
+            document.querySelector(".BlockWrapperCarousel_RETOURAUCALME .increment").addEventListener("click", () => {
+               const toMove = parseInt(retourAuCalmeCarousel_top, 10) -100;
+               const toMoveString = toMove + "%"
+
+                retourAuCalmeCarouselSlider.style.top = toMoveString;
+                retourAuCalmeCarousel_top = toMove;
+            });
+
+            document.querySelector(".BlockWrapperCarousel_RETOURAUCALME .decrement").addEventListener("click", () => {
+               const toMove = parseInt(retourAuCalmeCarousel_top, 10) +100;
+               const toMoveString = toMove + "%"
+
+                retourAuCalmeCarouselSlider.style.top = toMoveString;
+                retourAuCalmeCarousel_top = toMove;
+            });
+
+
+
+
+
+
+
+
+
+
+
+             const echauffementCarousel = document.querySelector(".BlockWrapperCarousel_ECHAUFFEMENT");
+            const echauffementCarouselSlider = document.querySelector(".BlockWrapperCarousel_ECHAUFFEMENT .slider");
+
+            let echauffementCarousel_top = echauffementCarousel.dataset.top;
+
+
+            document.querySelector(".BlockWrapperCarousel_ECHAUFFEMENT .increment").addEventListener("click", () => {
+               const toMove = parseInt(echauffementCarousel_top, 10) -100;
+               const toMoveString = toMove + "%"
+
+                echauffementCarouselSlider.style.top = toMoveString;
+                echauffementCarousel_top = toMove;
+            });
+
+            document.querySelector(".BlockWrapperCarousel_ECHAUFFEMENT .decrement").addEventListener("click", () => {
+               const toMove = parseInt(echauffementCarousel_top, 10) +100;
+               const toMoveString = toMove + "%"
+
+                echauffementCarouselSlider.style.top = toMoveString;
+                echauffementCarousel_top = toMove;
+            });
+
+
+
+            document.querySelector("#selectDate").addEventListener("click", () => {
+                
+                document.querySelector("#calendarWrapper").open = true;
+            })
+
+            document.querySelector("#closeDateModal").addEventListener("click", () => {
+                
+                document.querySelector("#calendarWrapper").open = false;
+            })
+
+            document.querySelector("#validateDateModal").addEventListener("click", () => {
+                document.querySelector("#ProgrammeDate-input").value = document.querySelector("#ProgrammeDate-modal").value;
+                document.querySelector("#displayDate").innerHTML = document.querySelector("#ProgrammeDate-modal").value;
+                document.querySelector("#calendarWrapper").open = false;
+            })
+
+            document.querySelector("#echauffementTimeButton").addEventListener("click", () => {
+                
+                document.querySelectorAll(".echauffementTimeButton_toReveal").forEach(item => {
+                    item.style.display = "block";
+                })
+            })
+
+            document.querySelector("#corpsSeanceTimeButton").addEventListener("click", () => {
+                
+                document.querySelectorAll(".corpsSeanceTimeButton_toReveal").forEach(item => {
+                    item.style.display = "block";
+                })
+            })
+
+            document.querySelector("#retourAuCalmeTimeButton").addEventListener("click", () => {
+                
+                document.querySelectorAll(".retourAuCalmeTimeButton_toReveal").forEach(item => {
+                    item.style.display = "block";
+                })
+            })
+
+
+             document.querySelector("#echauffementTimeButton-ok").addEventListener("click", () => {
+                const timeEx = document.querySelector("#echauffementTimeButton_exerciceTime").value;
+                const unitEx = document.querySelector("#echauffementTimeButton_exerciceTimeUnit").value;
+
+                
+                document.querySelector("#echauffementTimeButton").innerHTML = timeEx + unitEx;
+                document.querySelector("#echauffementTimeButton-input").value = timeEx +  unitEx;
+                document.querySelectorAll(".retourAuCalmeTimeButton_toReveal").forEach(item => {
+                    item.style.display = "none";
+                })
+            })
+
+             document.querySelector("#corpsSeanceTimeButton-ok").addEventListener("click", () => {
+                const timeEx = document.querySelector("#corpsSeanceTimeButton_exerciceTime").value;
+                const unitEx = document.querySelector("#corpsSeanceTimeButton_exerciceTimeUnit").value;
+
+                
+                document.querySelector("#echauffementTimeButton").innerHTML = timeEx + unitEx;
+                document.querySelector("#echauffementTimeButton-input").value = timeEx +  unitEx;
+                document.querySelectorAll(".corpsSeanceTimeButton_toReveal").forEach(item => {
+                    item.style.display = "none";
+                })
+            })
+
+
+             document.querySelector("#retourAuCalmeTimeButton-ok").addEventListener("click", () => {
+                const timeEx = document.querySelector("#retourAuCalmeTimeButton_exerciceTime").value;
+                const unitEx = document.querySelector("#retourAuCalmeTimeButton_exerciceTimeUnit").value;
+
+                
+                document.querySelector("#echauffementTimeButton").innerHTML = timeEx + unitEx;
+                document.querySelector("#echauffementTimeButton-input").value = timeEx +  unitEx;
+                document.querySelectorAll(".retourAuCalmeTimeButton_toReveal").forEach(item => {
+                    item.style.display = "none";
+                })
+            })
+
+            
+
+            
+
+
+            document.querySelectorAll(".fieldInfo").forEach((elem) => {
+                elem?.addEventListener("click", (item) => {
+                    if (item.target.className?.indexOf("partialValidate") === -1) {
+                        return;
+                    }
+
+                    const buttonElem = item.target;
+                    const ExerciceId = buttonElem.dataset.ExerciceId;
+                    const sections = buttonElem.dataset.target;
+                    buttonElem.parentElement.querySelectorAll("input").forEach((e) => {
+                        if (e.value) {
+                            if (e.name === "MoveExerciceReps") {
+                                exercices[ExerciceId]["MoveExerciceReps"] = e.value;
+                                exercices[ExerciceId]["MoveExercicePRUnit"] = "reps";
+                                document.querySelector(".ExerciseIndicatorReps-"+ExerciceId + " .value").innerHTML = e.value;
+                                document.querySelector(".ExerciseIndicatorReps-"+ExerciceId + " .unit").innerHTML = "reps";
+                                document.querySelector(".ExerciseIndicatorReps-"+ExerciceId).style.display = "block";
+                            }
+
+                            if (e.name === "MoveExerciceSets") {
+                                exercices[ExerciceId]["MoveExerciceSets"] = e.value;
+                                document.querySelector(".ExerciseIndicatorSets-"+ExerciceId + " .value").innerHTML = e.value + "x";
+                                document.querySelector(".ExerciseIndicatorSets-"+ExerciceId).style.display = "block";
+                            }
+
+                            if (e.name === "MoveExerciseTime") {
+                                exercices[ExerciceId]["MoveExerciseTime"] = e.value;
+                                const unit = e.parentElement.querySelector("select").value;
+                                exercices[ExerciceId]["MoveExercicePRUnit"] = unit;
+                                exercices[ExerciceId]["MoveExerciceTimeUnit"] = unit;
+                                document.querySelector(".ExerciseIndicatorTime-"+ExerciceId + " .value").innerHTML = e.value;
+                                document.querySelector(".ExerciseIndicatorTime-"+ExerciceId + " .unit").innerHTML = unit;
+                                document.querySelector(".ExerciseIndicatorTime-"+ExerciceId).style.display = "block";
+                            }
+
+                            if (e.name === "MoveExerciceWeight") {
+                                exercices[ExerciceId]["MoveExerciceWeight"] = e.value;
+                                const unit = e.parentElement.querySelector("select").value;
+                                exercices[ExerciceId]["MoveExercicePRUnit"] = unit;
+                                exercices[ExerciceId]["MoveExerciceWeightUnit"] = unit;
+                                document.querySelector(".ExerciseIndicatorWeight-"+ExerciceId + " .value").innerHTML = e.value;
+                                document.querySelector(".ExerciseIndicatorWeight-"+ExerciceId + " .unit").innerHTML = unit;
+                                document.querySelector(".ExerciseIndicatorWeight-"+ExerciceId).style.display = "block";
+
+                            }
+
+                            switch(sections) {
+                                case "RetourAuCalmeWrapper":
+                                    document.querySelector(".ExerciseIndicatorType-"+ExerciceId).innerHTML = "Retour au calme";
+                                    document.querySelector(".ExerciseIndicatorType-"+ExerciceId).style.display = "block";
+                                break;
+                                case "CorpsDeSeanceWrapper" :
+                                    document.querySelector(".ExerciseIndicatorType-"+ExerciceId).innerHTML = "Corps de séance";
+                                    document.querySelector(".ExerciseIndicatorType-"+ExerciceId).style.display = "block";
+                                break;
+                                case "EchauffementWrapper" :
+                                    document.querySelector(".ExerciseIndicatorType-"+ExerciceId).innerHTML = "échauffement";
+                                    document.querySelector(".ExerciseIndicatorType-"+ExerciceId).style.display = "block";
+                                break;
+                            }
+                        }
+                    })
+                    document.querySelector(`input.payload[data--exercice-id="${ExerciceId}"]`).value = JSON.stringify(exercices[ExerciceId])
+                    buttonElem.parentElement.querySelectorAll(`.${sections}[data--exercice-id="${ExerciceId}"]`).forEach((it) => {
+                        it.style.display = "none";
+                    });
+                    buttonElem.style.display = "none";
+                });
+            })
+
+
+
+
+    });
+
+    setTimeout(mod, 1000)
+    
+    </script>
+}

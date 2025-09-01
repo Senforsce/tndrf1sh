@@ -118,7 +118,7 @@ func WithO8MJ(a *router.Tndr0cean) error {
 	a.S("mj:EmailAddress", "info@coachmjapa.fr")
 	a.S("i18n:ContactFormLabelForName", "Votre Nom(s)")
 	a.S("i18n:ContactFormLabelForTelephone", "Téléphone")
-	a.S("i18n:ContactFormLabelForMessage", "Méssage")
+	a.S("i18n:ContactFormLabelForMessage", "Message")
 	a.S("i18n:ContactFormLabelForClientType", "Particulier/Entreprise")
 	a.S("i18n:ContactFormLabelForBeginner", "Débutant")
 	a.S("i18n:ContactFormLabelForIntermediate", "Intermédiaire")

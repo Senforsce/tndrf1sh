@@ -1,0 +1,18 @@
+PREFIX :     <http://senforsce.com/o8/brain/>
+PREFIX mj:   <http://senforsce.com/o8/brain/coach-mj/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sen:  <http://senforsce.com/o8/brain/>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+INSERT DATA {
+    <%s>
+        rdf:type             sen:UserAddress , owl:NamedIndividual;
+        sen:addressCity      "%s";
+        sen:addressCountry   "%s";
+        sen:addressLine1     "%s";
+        sen:addressLine2     "%s";
+        sen:addressPostCode  "%s";
+        sen:belongsToUser    <%s> .
+
+}

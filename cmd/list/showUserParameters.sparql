@@ -1,0 +1,15 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	BIND(<%s> AS ?user)
+	OPTIONAL{
+        ?parameters rdf:type :UserParameter .
+        ?parameters  :belongsToUser ?user .
+		OPTIONAL{ ?parameters :userThemeBgColor ?UserThemeBgColor . }
+        OPTIONAL{ ?parameters :userThemeTextColor ?UserThemeTextColor . }
+		OPTIONAL{ ?parameters :userThemeDarkMode ?UserThemeDarkMode . }
+    }		
+} LIMIT 1000

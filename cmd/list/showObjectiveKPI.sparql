@@ -1,0 +1,19 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	BIND(<%s> AS ?user)
+    BIND(<%s> AS ?objective)
+
+    OPTIONAL{
+            ?kpi rdf:type :UserObjectiveKPI .
+            ?kpi  :belongsToUser ?user .
+            ?kpi  :belongsToObjective ?objective .
+
+            OPTIONAL{ ?kpi :hasObjectiveKPIDate ?ObjectiveKPIDate . }
+            OPTIONAL{ ?kpi :hasObjectiveKPIValue ?ObjectiveKPIValue . }
+            OPTIONAL{ ?kpi :hasObjectiveKPIComment ?ObjectiveKPIComment . }
+    }
+} LIMIT 1000

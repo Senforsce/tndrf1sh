@@ -1,0 +1,14 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sen: <http://senforsce.com/o8/brain/>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	BIND(<%s> AS ?user)
+    ?s rdf:type   sen:PersonnalizedProgram ;
+        sen:hasTrainingMethod  ?TrainingMethod;
+        sen:hasTrainingUser    ?user ;
+        sen:persoProgDate      ?PersoProgDate ;
+        sen:persoProgName      ?PersoProgName .
+			
+} LIMIT 1000

@@ -1,11 +1,10 @@
 package service
 
 import "github.com/senforsce/tndr0cean/router"
-import "github.com/senforsce/sparql"
 
 import "github.com/senforsce/tndrf1sh/web/owl/userlist"
 
-t1 HTMX(c *router.Context) {
+t1 HTMX(c *router.Context, list []UserBooking) {
     <div class="serviceview">
         <div>
             <h5>Cours Collectifs</h5>
@@ -15,18 +14,30 @@ t1 HTMX(c *router.Context) {
 
             <div>
                 <h6>Abonnés</h6>
-                @userlist.HTMX([]map[string]sparql.Binding{},c)
+                @userlist.HTMX([]userlist.TndrSimpleUser{},c)
             </div>
 
             <div>
                 <h6>Utilisateurs Uniques</h6>
-                @userlist.HTMX([]map[string]sparql.Binding{},c)
-
+                @userlist.HTMX([]userlist.TndrSimpleUser{},c)
             </div>
 
 
             <div>
-                <h6>Prochaine Séance</h6>
+                <h6>Demandes de Coaching</h6>
+                <ul>
+                for _, elem := range(list) {
+                    <li style="list-style-type:none;">
+                        <div data-subject={elem.Subject} style="display:flex;gap:1rem;">
+                            <p>{elem.BelongsToUser}</p>
+                            <p>{elem.BookingType}</p>
+                            <p>{elem.BookingRequestDate}</p>
+                            <p>{elem.BookingComment}</p>
+                        </div>
+                    
+                    </li>
+                }
+                </ul>
             </div>
 
 

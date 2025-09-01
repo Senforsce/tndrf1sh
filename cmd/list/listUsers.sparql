@@ -1,0 +1,8 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE {  
+    ?s rdf:type <http://senforsce.com/o8/brain/coach-mj/User> .
+	?s :hasEmail ?UserEmail .
+}

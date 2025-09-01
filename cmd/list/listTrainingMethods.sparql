@@ -1,0 +1,9 @@
+PREFIX : <http://senforsce.com/o8/brain/>
+
+SELECT * WHERE {
+  ?s a <http://senforsce.com/o8/brain/SportMovementTrainingMethod> ;
+    :ProgramTypeName ?ProgramTypeName ;
+    :ProgramTypeShortName ?ProgramTypeShortName .
+}
+
+LIMIT 100

@@ -3,29 +3,37 @@ package programmetypedrag
 import (
 	"fmt"
 	"github.com/senforsce/tndr0cean/router"
+    "github.com/senforsce/htmx/hx"
+
 )
+
+var HXGETPATH = "/mj/programmetypedrag"
+
+t1 HTMXOnLoad(c *router.Context) {
+    @hx.GetInnerHTMLOnLoad(c, hx.GET{Path: HXGETPATH}, "")
+}
 
 t1 HTMX(vc []ViewConfig, c *router.Context) {
 	<div class={ tr.Echo("")} >
 
-	<ul class={ tr.Echo("step1 ") } >
+	<ul style="display:flex;flex-wrap:wrap;" class={ tr.Echo("step1 ") } >
 		for _, v := range vc {
-            <li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+            <li style="width:48%;" class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
                 <span class={ tr.Echo("Block Block--item2 Block--isDraggable")}
-                    data-item={ tr.Echo(`{ "ProgramTypeName": "`+v.ProgramTypeName+`", "type": "programmetype", "Subject": "`+ v.Subject +`", "Comment": "`+v.Comment+`"}`)}
+                    data-item={ tr.Echo(`{ "ProgramTypeName": "`+v.ProgramTypeName+`", "type": "programmetype", "Subject": "`+ v.Subject +`", "Comment": "`+v.Comment+`", "BgColor": "`+v.BgColor+`", "Illustration": "`+v.Illustration+`", "ShortDefinition": "`+v.ShortDefinition+`"}`)}
                     title={ tr.Echo("Click to drag")} tabindex="0" style="">
-                    <div class="BlockContent">
+                    <div class="BlockContent" data-bg={ v.BgColor }>
                         <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
                             <span class="programName">
                                 { fmt.Sprintf("%s", v.ProgramTypeName ) }
                             </span>
+                            <img src={ v.Illustration } alt={ v.ProgramTypeName }  />
                         </h3>
                         <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
                         <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
                     </div>
                 </span>
             </li>
-
 		}
 	</ul>
 	</div>

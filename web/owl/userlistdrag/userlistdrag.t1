@@ -3,9 +3,16 @@ package userlistdrag
 import (
 	"fmt"
 	"github.com/senforsce/tndr0cean/router"
+    "github.com/senforsce/htmx/hx"
 )
 
-t1 HTMX(vc []ViewConfig, c *router.Context) {
+var HXGETPATH = "/mj/userlistdrag"
+
+t1 HTMXOnLoad(c *router.Context) {
+    @hx.GetInnerHTMLOnLoad(c, hx.GET{Path: HXGETPATH}, "")
+}
+
+t1 HTMX(vc []CompleteMainInfo, c *router.Context) {
 	<div class={ tr.Echo("userlistdrag")} >
 
 	<ul class={ tr.Echo("step1 ") } >
@@ -17,7 +24,11 @@ t1 HTMX(vc []ViewConfig, c *router.Context) {
                             <div class="BlockContent">
                                 <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
                                     <span class="image">
-                                        <img src={ v.ProfilePicture } />
+                                        if v.HasProfilePicture.Filename == "" {
+                                            <img src="/static/img/cat.jpg" alt={ tr.Echo("Pas de Photo de profil") } />
+                                        } else {
+                                            <img src={ tr.Echo(fmt.Sprintf("data:image/png;base64,%s", v.HasProfilePicture.Data )) } alt="" />
+                                        }
                                     </span>
                                     <span class="userfullname">
                                         { fmt.Sprintf("%s %s", v.Firstname, v.Lastname) }

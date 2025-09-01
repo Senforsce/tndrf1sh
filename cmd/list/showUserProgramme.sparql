@@ -1,0 +1,62 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sen: <http://senforsce.com/o8/brain/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+    SELECT * WHERE {
+        <%s>
+            <http://senforsce.com/o8/brain/persoProgName> ?sPersoProgName ;
+            <http://senforsce.com/o8/brain/persoProgDate> ?sPersoProgDate ;
+            <http://senforsce.com/o8/brain/hasTrainingMethod> ?t ;
+            <http://senforsce.com/o8/brain/hasTrainingUser> ?u ;
+            <http://senforsce.com/o8/brain/hasCorpsDeSeance> ?c;
+            <http://senforsce.com/o8/brain/hasEchauffement> ?e ;
+            <http://senforsce.com/o8/brain/hasRetourAuCalme> ?r ;
+            <http://senforsce.com/o8/brain/persoProgName>  ?n ;
+            <http://senforsce.com/o8/brain/persoProgDate> ?d .
+
+        ?t    <http://senforsce.com/o8/brain/ProgramTypeName> ?tProgramTypeName .
+        
+
+    ?e sen:MoveExerciceWeightUnit ?eMoveExerciceWeightUnit ;
+        sen:MoveExercicePRMin ?eMoveExercicePRMin ;
+        sen:MoveExercicePRUnit ?eMoveExercicePRUnit ;
+        sen:MoveExerciceReps ?eMoveExerciceReps ;
+        sen:MoveExerciceSets ?eMoveExerciceSets ;
+        sen:ExerciseName ?eExerciseName ;
+        sen:MoveExerciceTimeUnit ?eMoveExerciceTimeUnit ;
+        sen:MoveExercicePRLast ?eMoveExercicePRLast ;
+        sen:MoveExercicePRBest ?eMoveExercicePRBest ;
+        sen:MoveExerciceLastTimeDate ?eMoveExerciceLastTimeDate ;
+        sen:MoveExerciceWeight ?eMoveExerciceWeight ;
+        sen:MoveExerciseTime ?eMoveExerciseTime ;
+        sen:hasSportMovement/mj:MoveExerciceName ?eMoveName .
+
+    ?c sen:MoveExerciceWeightUnit ?cMoveExerciceWeightUnit ;
+        sen:MoveExercicePRMin ?cMoveExercicePRMin ;
+        sen:MoveExercicePRUnit ?cMoveExercicePRUnit ;
+        sen:MoveExerciceReps ?cMoveExerciceReps ;
+        sen:MoveExerciceSets ?cMoveExerciceSets ;
+        sen:ExerciseName ?cExerciseName ;
+        sen:MoveExerciceTimeUnit ?cMoveExerciceTimeUnit ;
+        sen:MoveExercicePRLast ?cMoveExercicePRLast ;
+        sen:MoveExercicePRBest ?cMoveExercicePRBest ;
+        sen:MoveExerciceLastTimeDate ?cMoveExerciceLastTimeDate ;
+        sen:MoveExerciceWeight ?cMoveExerciceWeight ;
+        sen:MoveExerciseTime ?cMoveExerciseTime ;
+        sen:hasSportMovement/mj:MoveExerciceName ?cMoveName .
+
+    ?r sen:MoveExerciceWeightUnit ?rMoveExerciceWeightUnit ;
+        sen:MoveExercicePRMin ?rMoveExercicePRMin ;
+        sen:MoveExercicePRUnit ?rMoveExercicePRUnit ;
+        sen:MoveExerciceReps ?rMoveExerciceReps;
+        sen:MoveExerciceSets ?rMoveExerciceSets ;
+        sen:ExerciseName ?rExerciseName ;
+        sen:MoveExerciceTimeUnit ?rMoveExerciceTimeUnit ;
+        sen:MoveExercicePRLast ?rMoveExercicePRLast ;
+        sen:MoveExercicePRBest ?rMoveExercicePRBest ;
+        sen:MoveExerciceLastTimeDate ?rMoveExerciceLastTimeDate ;
+        sen:MoveExerciceWeight ?rMoveExerciceWeight ;
+        sen:MoveExerciseTime ?rMoveExerciseTime ;
+        sen:hasSportMovement/mj:MoveExerciceName ?rMoveName .
+
+
+} LIMIT 1000

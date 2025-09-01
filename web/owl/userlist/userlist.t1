@@ -1,31 +1,56 @@
 package userlist
 
 import(
-
-	"github.com/senforsce/sparql"
+  "fmt"
 	"github.com/senforsce/tndr0cean/router"
 )
 
-t1 HTMX(b []map[string]sparql.Binding, c *router.Context) {
+t1 HTMX(b []TndrSimpleUser, c *router.Context) {
    <section>
    <h5>Utilisateurs</h5>
   <div class="avatars">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=14" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=41" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=21" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=12" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=36" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=55" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=31" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=18" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=29" alt="">
-    <img class="avatar" src="https://i.pravatar.cc/200?img=37" alt="">
+  for _, user := range b {
+      <div style="display:flex;position:relative;">
+        <a href={ t1.SafeURL(fmt.Sprintf("/userinfo/%s", user.Subject )) } title={ fmt.Sprintf("visite la page de %s %s", user.Firstname, user.Lastname) }>
+          if user.HasProfilePicture.Filename == "" {
+              <img width="40" height="40" class="avatar" src={ tr.Echo("/static/img/cat.jpg")} alt={ fmt.Sprintf("%s %s", user.Firstname, user.Lastname)}>
+
+          } else {
+              <img height="40" width="40" class="avatar" src={ tr.Echo(fmt.Sprintf("data:image/png;base64,%s", user.HasProfilePicture.Data ))} alt={ fmt.Sprintf("%s %s", user.Firstname, user.Lastname)}>
+
+          }
+        </a>
+        <button hx-swap="innerHTML"
+            hx-put={ fmt.Sprintf("/mj/user/%s", user.Subject) }
+            hx-target="#formView"
+            class="btn"
+            title={ tr.Echo("Editer l'utilisateur") }
+            style="background:transparent;border:none;width:20px;height:20px;position:absolute;left:10%;top:0;z-index:-1;"
+            hx-trigger="click">
+            +
+        </button>
+        <button hx-swap="innerHTML"
+            hx-delete={ fmt.Sprintf("/mj/user/%s", user.Subject) }
+            hx-target="#formView"
+            title={ tr.Echo("Supprimer l'utilisateur") }
+            class="btn"
+            style="background:transparent;border:none;width:20px;height:20px;position:absolute;right:20%;top:0;z-index:-1;"
+            hx-trigger="click">
+            x
+        </button>
+      </div>
+  }
+  <button hx-swap="innerHTML"
+			hx-get="/forms/newUser"
+			hx-target="#formView"
+      style="background:transparent;border:none;"
+			hx-trigger="click"><img class="avatar" src="/static/img/negatif.svg" style="transform:rotate(45deg)" /></button>
   </div>
   <style>
 
 .avatars {
   --avatar-count: 10;
-  --avatar-size: 75px;
+  --avatar-size: 100px;
 
   --column-size: calc(var(--avatar-size) / 2);
   position: relative;
@@ -39,6 +64,10 @@ t1 HTMX(b []map[string]sparql.Binding, c *router.Context) {
 .avatars:hover {
   --column-size: calc(var(--avatar-size) * 1.5);
   transition-delay: 0ms;
+
+  & button {
+    z-index: 1000 !important;
+  }
 }
 
 .avatar {

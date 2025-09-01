@@ -46,7 +46,7 @@ t1 HTMX(c *router.Context, vc []ViewConfig,) {
 								<td class={ tr.Echo("fw-600") }>{ v.Subject }</td>
 								<td>
 									<span class={ tr.Echo("") }>
-									 <img src={ "/static/img/"+ v.MJMoveGifMediaDescription } alt={ v.MoveExerciceName } width="300" />
+									 <img src={ "/static/img/o/g/"+ v.MJMoveGifMediaDescription } alt={ v.MoveExerciceName } width="300" />
 									</span>
 									<small>{ v.MoveGifDescriptionCredits }</small>
 								</td>

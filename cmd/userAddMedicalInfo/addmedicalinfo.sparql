@@ -1,0 +1,20 @@
+PREFIX :     <http://senforsce.com/o8/brain/>
+PREFIX mj:   <http://senforsce.com/o8/brain/coach-mj/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sen:  <http://senforsce.com/o8/brain/>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+INSERT DATA {
+    <%s>    rdf:type                        sen:UserMedicalInformation , owl:NamedIndividual;
+            sen:belongsToUser               <%s>;
+            sen:mjhasDoctorsEmail           "%s";
+            sen:mjhasDoctorsPhoneNumber     "%s";
+            sen:mjhasEmergencyContactEmail  "%s";
+            sen:mjhasEmergencyContactFullname
+                    "%s";
+            sen:mjhasGP                     "%s";
+            sen:mjhasSpecialistName         "%s";
+            sen:mjhasUserHeight             "%s"^^xsd:decimal;
+            sen:mjhasUserWeight             "%s"^^xsd:decimal .
+}
