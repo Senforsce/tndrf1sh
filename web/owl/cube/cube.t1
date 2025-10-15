@@ -3,7 +3,7 @@ package cube
 import "github.com/senforsce/tndr0cean/router"
 t1 HTMX(c *router.Context) {
     <div class="perspective">
-    <div class="box">
+    <div class={ tr.Echo("box") }>
         <div class="face top"></div>
         <div class="face bottom"></div>
         <div class="face back"></div>

@@ -20,7 +20,7 @@ t1 HTMX(c *router.Context) {
 }
 
 t1 O8(c Config) {
-	<div class="o8_data" data-propagate={ t1.JSONString(c) }></div>
+	<div class="o8_data" data-propagate={ tndr.JSONString(c) }></div>
 	<script defer>
 	(() => {
 		const data = document.querySelectorAll(".o8_data");

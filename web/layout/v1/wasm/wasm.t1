@@ -4,7 +4,7 @@ import "github.com/senforsce/tndr0cean/router"
 
 t1 HTMX(c *router.Context) {
 	<script src=§path:WasmExecJs!></script>
-	<div class="wasm_data" data-propagate={ t1.JSONString(c) }></div>
+	<div class="wasm_data" data-propagate={ tndr.JSONString(c) }></div>
 	<script>
 	(() => {
 		const data = document.querySelectorAll(".wasm_data");

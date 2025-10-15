@@ -2,7 +2,7 @@ package crispr
 
 import "github.com/senforsce/tndr0cean/router"
 t1 Tuto(c *router.Context) {
-    <div id="tutorial">
+    <div id={ tr.Echo("tutorial") }>
     <h2>CRISPR Gene Editing Tutorial</h2>
     <p>
       Welcome to the CRISPR simulation. In this tutorial, you will learn about CRISPR-Cas9 gene editing and its application in curing Cystic Fibrosis.

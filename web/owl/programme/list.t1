@@ -9,13 +9,15 @@ t1 List(vc []ViewConfig, c *router.Context) {
 	<div class={ tr.Echo("")} >
         <ul class={ tr.Echo("") } >
             for _, v := range vc {
-                <li class={ tr.Echo("") } >
-                    <span class="moveName">
+                <li class={ tr.Echo("") } style="display: flex;" >
+                    <div class="persoProgName" style="width: 70%;">
                         { fmt.Sprintf("%s", v.PersoProgName) }
-                    </span>
+                    </div>
+                    <div class="persoProgOptions" style="width: 30%;">
+                        @HTMXEditProgrammeOnclick(c, v.Subject)
+                    </div>
                 </li>
             }
         </ul>
 	</div>
 }
-

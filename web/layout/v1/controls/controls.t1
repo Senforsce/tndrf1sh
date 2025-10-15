@@ -36,7 +36,7 @@ t1 HTMX(c *router.Context) {
 // used by text editor to prevent cyclic dependencies
 
 t1 Propagate(c meta.TextEditorConfig) {
-	<div class="propagate_controls" data-propagate={ t1.JSONString(c) }></div>
+	<div class="propagate_controls" data-propagate={ tndr.JSONString(c) }></div>
 	<script>
 	(() => {
 		const data = document.querySelectorAll(".propagate_controls");

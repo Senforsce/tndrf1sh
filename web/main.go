@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"fmt"
 	_ "image/gif"
@@ -12,24 +13,9 @@ import (
 
 	jira "github.com/andygrunwald/go-jira"
 	"github.com/joho/godotenv"
-	"github.com/senforsce/fh/handlers"
-	"github.com/senforsce/owl/connected/movelist"
 	"github.com/senforsce/sparql"
+	"github.com/senforsce/telemetry"
 	"github.com/senforsce/tndr0cean/router"
-	"github.com/senforsce/tndrf1sh/web/layout"
-	"github.com/senforsce/tndrf1sh/web/owl/abonnement"
-	"github.com/senforsce/tndrf1sh/web/owl/blogtexteditor"
-	"github.com/senforsce/tndrf1sh/web/owl/programme"
-	"github.com/senforsce/tndrf1sh/web/owl/queryandtable"
-
-	"github.com/senforsce/tndrf1sh/web/owl/movement"
-	"github.com/senforsce/tndrf1sh/web/owl/moves"
-	"github.com/senforsce/tndrf1sh/web/owl/movesdrag"
-	"github.com/senforsce/tndrf1sh/web/owl/programmetypedrag"
-	"github.com/senforsce/tndrf1sh/web/owl/service"
-	"github.com/senforsce/tndrf1sh/web/owl/user"
-	"github.com/senforsce/tndrf1sh/web/owl/userlist"
-	"github.com/senforsce/tndrf1sh/web/owl/userlistdrag"
 
 	"github.com/senforsce/userconfig"
 )
@@ -41,7 +27,20 @@ import (
 var staticDir embed.FS
 
 func main() {
-	app := router.New()
+	tndrf1shContext := context.Background()
+	logOptions := telemetry.SenforsceLoggerOptions{
+		Context:        tndrf1shContext,
+		LogLevel:       "debug",
+		LoggerName:     "tndrf1sh",
+		ServiceName:    "main",
+		ServiceVersion: "0.1.0",
+		Verbose:        true,
+	}
+	tndrf1shLogger, tndrf1shLoggerProvider := telemetry.NewLogger(logOptions)
+
+	defer tndrf1shLoggerProvider.Shutdown(tndrf1shContext)
+
+	app := router.New(tndrf1shLogger)
 	Plugs(app)
 	userConfig := userconfig.NewUserConfig()
 	//	roots := []string{userConfig.StaticRoot, userConfig.SubjectStaticRoot}
@@ -65,6 +64,7 @@ func Plugs(app *router.Tndr0cean) {
 	WithO8(app)
 	WithO8MJ(app)
 	WithBootstrap(app)
+	WithAdminSection(app)
 	userConfig := userconfig.NewUserConfig()
 
 	app.Plug(WithAuth)
@@ -72,49 +72,10 @@ func Plugs(app *router.Tndr0cean) {
 	WithSparQlServer(app, userConfig)
 	WithHTMXComponents(app)
 	WithHTMXRegistry(app)
-	WithHTMXServer(app)
 	WithHTMXPreviews(app)
 }
 
-func WithHTMXServer(app *router.Tndr0cean) func(h router.Handler) {
-	app.Get("/", layout.Handler)
-	app.Get("/forms/newMovement", handlers.FormNewMovement)
-	app.Get("/blog/new", blogtexteditor.Handler)
-	app.Get("/programme/new", programme.Handler)
-	app.Post("/programme/process", handlers.HandleCreateNewProgramme)
-
-	app.Post("/process/newMove", handlers.HandleCreateNewMovement)
-	app.Get("/forms/newUser", handlers.FormNewUser)
-	app.Post("/process/newUser", handlers.HandleCreateNewUser)
-	app.Get("/mj/moves", moves.Handler)
-	app.Get("/mj/movelist", movelist.ListHandler)
-
-	app.Get("/mj/programmes", programme.ListHandler)
-	app.Get("/mj/programmetable", programme.ListHandler)
-	app.Put("/mj/programme/*programmeName", programme.ListHandler)
-	app.Delete("/mj/programme/*programmeName", programme.ListHandler)
-
-	app.Get("/mj/queryandtable", queryandtable.Handler)
-
-	app.Get("/mj/userlist", userlist.Handler)
-
-	app.Get("/mj/user/*userIRI", user.Handler)
-	app.Put("/mj/user/*userIRI", user.EditHandler)
-	app.Delete("/mj/user/*userIRI", user.DeleteHandler)
-
-	app.Get("/mj/movement/show/*moveId", movement.Handler)
-	app.Get("/mj/movement/edit/*moveId", movement.EditHandler)
-	app.Post("/process/editMove", handlers.HandleEditMovement)
-	app.Get("/mj/movement/delete/*moveId", movement.DeleteHandler)
-
-	app.Get("/mj/abonnement/*abonnementName", abonnement.Handler)
-	app.Get("/mj/service/*serviceName", service.Handler)
-	app.Get("/mj/movesdrag/*skip", movesdrag.Handler)
-	app.Get("/mj/userlistdrag", userlistdrag.Handler)
-	app.Get("/mj/programmetypedrag", programmetypedrag.Handler)
-	// Other routes will be injected with tree-shaking on build inside ./injected_routes.go
-	return nil
-}
+const PAGEPATH = "/"
 
 func WithSparQlServer(app *router.Tndr0cean, userConfig *userconfig.UserConfig) func(h router.Handler) {
 	repo, err := sparql.NewRepo(userConfig.SparQlUrl,

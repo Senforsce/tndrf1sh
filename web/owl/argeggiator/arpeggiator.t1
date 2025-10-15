@@ -5,7 +5,7 @@ t1 HTMX(c *router.Context) {
     <article id="arp">
 
     <aside id="aside"></aside>
-    <main id="main"></main>
+    <main id={ tr.Echo("main") }></main>
     </article>
     <script>
 console.clear();

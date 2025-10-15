@@ -2,6 +2,6 @@ package abonnement
 import "github.com/senforsce/tndr0cean/router"
 
 t1 HTMX(c *router.Context) {
-    <div class="abonnementview">
+    <div class={ tr.Echo("abonnementview") }>
     </div>
 }

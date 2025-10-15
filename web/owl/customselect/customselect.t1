@@ -3,7 +3,7 @@ package customselect
 t1 HTMX() {
     <select>
   <button>
-    <span class="label">Where</span>
+    <span class={ tr.Echo("label") }>Where</span>
     <selectedcontent></selectedcontent>
   </button>
   <div class="option-container">

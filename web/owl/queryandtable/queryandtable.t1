@@ -6,7 +6,7 @@ import "github.com/senforsce/tndrf1sh/web/owl/table"
 import "github.com/senforsce/sparql"
 
 t1 HTMX(c *router.Context, qr string, res []map[string]sparql.Binding) {
-    <div id="queryandtable">
+    <div id={ tr.Echo("queryandtable") }>
         @query.HTMX(c, qr)
         @table.HTMX(c, res)
     </div>

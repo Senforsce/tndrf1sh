@@ -2,7 +2,7 @@ package crispr
 
 import "github.com/senforsce/tndr0cean/router"
 t1 HTMX(c *router.Context) {
-    <div id="simulation-container">
+    <div id={ tr.Echo("simulation-container") }>
         <img id="cas9-image" src="path/to/cas9-image.png" alt="Cas9 Image" class="draggable" draggable="true">
         <img id="guide-rna-image" src="path/to/guide-rna-image.png" alt="Guide RNA Image" class="draggable" draggable="true">
 

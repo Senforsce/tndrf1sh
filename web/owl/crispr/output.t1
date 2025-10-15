@@ -2,7 +2,7 @@ package crispr
 
 import "github.com/senforsce/tndr0cean/router"
 t1 Output(c *router.Context) {
-    <div id="output">
+    <div id={ tr.Echo("output") }>
         <h2>Gene Editing Results:</h2>
         <p id="result">Results will be displayed here.</p>
     </div>

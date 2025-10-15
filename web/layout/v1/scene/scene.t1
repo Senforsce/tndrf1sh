@@ -71,7 +71,7 @@ t1 HTMX(c *router.Context) {
 }
 
 t1 Propagate(c meta.Config) {
-	<div class="propagate_scene" data-propagate={ t1.JSONString(c) }></div>
+	<div class="propagate_scene" data-propagate={ tndr.JSONString(c) }></div>
 	<script>
 	(() => {
 		const data = document.querySelectorAll(".propagate_scene");

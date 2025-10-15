@@ -8,7 +8,7 @@ t1 HTMX(c *router.Context) {
       cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable"
       info-message="htmlSrc: #messageText">
       <a-assets>
-        <a-asset-item id="messageText" src="message.html"></a-asset-item>
+        <a-asset-item id={ tr.Echo("messageText") } src="message.html"></a-asset-item>
         <!--
           Image source: http://www.ghibli.jp/works/kazetachinu/#frame&gid=1&pid=1
           Image author: Studio Ghibli

@@ -5,7 +5,7 @@ import "github.com/senforsce/tndrf1sh/web/layout/v1/meta"
 
 t1 wrapChildren(c *router.Context, cf CSSContextFile) {
 	<div id="host">
-		<template id="tmpl" shadowrootmode="open">
+		<template id={ tr.Echo("tmpl") } shadowrootmode="open">
 			{ children... }
 		</template>
 	</div>
@@ -31,7 +31,7 @@ t1 wrapChildren(c *router.Context, cf CSSContextFile) {
 	</script>
 }
 
-t1 HTMX(c *router.Context, contents t1.Component, cfg meta.ComponentConfig, cf CSSContextFile) {
+t1 HTMX(c *router.Context, contents tndr.Component, cfg meta.ComponentConfig, cf CSSContextFile) {
 	@wrapChildren(c, cf) {
 		@contents
 	}

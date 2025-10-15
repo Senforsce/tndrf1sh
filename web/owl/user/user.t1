@@ -7,7 +7,7 @@ import (
 
 t1 HTMX(c *router.Context) {
     <div class="userview" style="margin-top:50px;">
-        <div class="main">
+        <div class={ tr.Echo("main") }>
             <div class="figure-wrapper">
              @figure.HTMX("/static/img/team-3.png")
             </div>
