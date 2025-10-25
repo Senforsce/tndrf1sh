@@ -13,15 +13,16 @@ t1 HTMXOnLoad(c *router.Context) {
 }
 
 t1 HTMX(vc []CompleteMainInfo, c *router.Context) {
-	<div class={ tr.Echo("userlistdrag")} >
+	<div class={ tr.Echo("userlistdrag ConceptListDrag")} >
 
 	<ul class={ tr.Echo("step1 ") } >
 		for _, v := range vc {
-				<li class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="2">
+				<li class={ tr.Echo("userlistdrag__li ConceptListDrag__li BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="2">
 					 <span class={ tr.Echo("Block Block--item2 Block--isDraggable")}
+                            data-subject={ v.Subject }
                             data-item={ tr.Echo(`{ "ProfilePicture": "`+ v.ProfilePicture +`", "Firstname": "`+ v.Firstname +`", "Lastname": "`+ v.Lastname +`", "Subject": "`+ v.Subject +`", "type" : "user"}`)}
                             title={ tr.Echo("Click to drag")} tabindex="0" style="">
-                            <div class="BlockContent">
+                            <div class="BlockContent" data-subject={ v.Subject }>
                                 <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
                                     <span class="image">
                                         if v.HasProfilePicture.Filename == "" {

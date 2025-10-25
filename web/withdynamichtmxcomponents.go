@@ -11,14 +11,16 @@ import (
 	"github.com/senforsce/tndrf1sh/web/layout"
 	"github.com/senforsce/tndrf1sh/web/owl/abonnement"
 	"github.com/senforsce/tndrf1sh/web/owl/blogtexteditor"
-	"github.com/senforsce/tndrf1sh/web/owl/exercice"
 	"github.com/senforsce/tndrf1sh/web/owl/movement"
 	"github.com/senforsce/tndrf1sh/web/owl/moves"
 	"github.com/senforsce/tndrf1sh/web/owl/movesdrag"
+	"github.com/senforsce/tndrf1sh/web/owl/object"
+	"github.com/senforsce/tndrf1sh/web/owl/predicate"
 	"github.com/senforsce/tndrf1sh/web/owl/programme"
 	"github.com/senforsce/tndrf1sh/web/owl/programmetypedrag"
 	"github.com/senforsce/tndrf1sh/web/owl/queryandtable"
 	"github.com/senforsce/tndrf1sh/web/owl/service"
+	"github.com/senforsce/tndrf1sh/web/owl/subject"
 	"github.com/senforsce/tndrf1sh/web/owl/user"
 	"github.com/senforsce/tndrf1sh/web/owl/userlist"
 	"github.com/senforsce/tndrf1sh/web/owl/userlistdrag"
@@ -58,6 +60,9 @@ func WithDynamicHTMXComponents(app *router.Tndr0cean, sessionStore *rds.RedisSes
 	app.Post("/process/editMove", logged.Logged(sessionStore, authClient, handlers.HandleEditMovement))
 
 	programme.Routes(app, sessionStore, authClient)
-	exercice.Routes(app, sessionStore, authClient)
+	subject.Routes(app, sessionStore, authClient)
+	predicate.Routes(app, sessionStore, authClient)
+	object.Routes(app, sessionStore, authClient)
+
 	// Other routes will be injected with tree-shaking on build inside ./injected_routes.go
 }

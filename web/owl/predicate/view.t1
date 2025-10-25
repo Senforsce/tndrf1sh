@@ -1,0 +1,59 @@
+package predicate
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/htmx/hx"
+import "fmt"
+import "github.com/senforsce/sparql"
+
+
+var HXVIEWPATHROOT = "/mj/viewpredicate/"
+var HXVIEWPATH = "/mj/viewpredicate/*predicatename"
+
+t1 HTMXViewOnclick(c *router.Context, exerciceString string) {
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXVIEWPATHROOT + exerciceString}, "#editExerciceView", "👀", "")
+}
+
+t1 SubjectView(c *router.Context, res []map[string]sparql.Binding) {
+    <div class={ tr.Echo("EditExercice") }>
+        <h3> Voir Prédicat { res[0]["s"].Value }</h3>
+        <dialog id="AddPredicate"></dialog>
+        <dialog id="EditPredicate"></dialog>
+        <dialog id="EditObject"></dialog>
+        <div class="table-wrapper">
+            <table id="queryResponse">
+                <thead>
+                    <th rowspan={ len(res) }>Subject</th>
+                    <th>Predicate</th>
+                    <th>Object</th>
+                </thead>
+                <tbody>
+                    for idx, triple := range(res) {
+                        <tr>
+                            if idx == 0 {
+                                <td rowspan={ 0 }>
+                                    { RemovePrefix(triple["s"].Value) }
+                                </td>
+                            }
+                            <td>
+                                @SenMaybeEditableTableField(c, triple["p"].Value, triple, RemovePrefix)
+                            </td>
+                            <td>
+                                @SenMaybeEditableTableField(c, triple["o"].Value, triple, RemovePrefix)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">{ fmt.Sprintf("Trouvé %d Triples", len(res)) } </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <script>
+            $(() => {
+                let table = new DataTable('#queryResponse');
+            })
+        </script>
+    </div>
+}

@@ -1,0 +1,25 @@
+package object
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/htmx/hx"
+import "github.com/senforsce/sparql"
+
+
+var HXVIEWPATHROOT = "/mj/viewobject/"
+var HXVIEWPATH = "/mj/viewobject/*objectname"
+
+t1 HTMXViewOnclick(c *router.Context, exerciceString string) {
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXVIEWPATHROOT + exerciceString}, "#editExerciceView", "👀", "")
+}
+
+t1 SubjectView(c *router.Context, res []map[string]sparql.Binding) {
+    <div class={ tr.Echo("EditExercice") }>
+        <h3> Valeur pour <span>{ res[0]["s"].Value }</span> <span>{ res[0]["p"].Value }</span> </h3>
+        for _, triple := range(res) {
+            if triple["datatype"].Value == "http://www.w3.org/2002/07/owl#DatatypeProperty" {
+                <p>{ triple["o"].Value }</p>
+            }
+        }
+
+    </div>
+}

@@ -5,14 +5,17 @@ import "github.com/senforsce/htmx/hx"
 import "fmt"
 import "github.com/senforsce/sparql"
 import "strings"
-import "github.com/senforsce/tndrf1sh/web/owl/exercice"
+//import "github.com/senforsce/tndrf1sh/web/owl/subject"
+import "github.com/senforsce/tndrf1sh/web/owl/predicate"
+import "github.com/senforsce/tndrf1sh/web/owl/object"
+import "github.com/senforsce/tndrf1sh/web/owl/subject"
 
 
 var HXEDITPATHROOT = "/mj/editprogramme/"
 var HXEDITPATH = "/mj/editprogramme/*progname"
 
 t1 HTMXEditProgrammeOnclick(c *router.Context, programmeString string) {
-    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXEDITPATHROOT + programmeString}, "#editProgrammeView", "edit", "")
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXEDITPATHROOT + programmeString}, "#editProgrammeView", "🖊️", "")
 }
 
 func RemovePrefix(value string) string {
@@ -25,13 +28,16 @@ func NoOp(value string) string {
 
 t1 EditProgramme(c *router.Context, res []map[string]sparql.Binding) {
     <div class={ tr.Echo("EditProgramme") }>
-        <h3> Programme { res[0]["s"].Value }</h3>
+        <h3> Modifie Programme { res[0]["s"].Value }</h3>
+        <dialog id="AddPredicate"></dialog>
+        <dialog id="EditPredicate"></dialog>
+        <dialog id="EditObject"></dialog>
         <div class="table-wrapper">
             <table id="queryResponse">
                 <thead>
-                    <th rowspan={ len(res) }>Subject</th>
+                    <th rowspan={ len(res) }>Sujet</th>
+                    <th>Predicat</th>
                     <th>Object</th>
-                    <th>Options</th>
                 </thead>
                 <tbody>
                     for idx, triple := range(res) {
@@ -89,11 +95,42 @@ t1 SenMaybeEditableTableField(c *router.Context, fieldValue string, triple map[s
                 <button>🔒</button>
             </div>
         } else {
-            <div class="SenEditable SenNotEditable" data-sen-subject={ triple["s"].Value }>
-                <button>Details</button>
-                @exercice.HTMXOnclick(c, fieldValue)
-                <button>Supprimer</button>
-            </div>
+
+            if triple["p"].Value == fieldValue {
+                @PredicateOptions(c, fieldValue, triple)
+            } else if triple["p"].Value == "http://senforsce.com/o8/brain/hasEchauffement" || 
+                triple["p"].Value == "http://senforsce.com/o8/brain/hasCorpsDeSeance" ||
+                triple["p"].Value == "http://senforsce.com/o8/brain/hasRetourAuCalme" {
+                @ObjectAsSubjectOptions(c, fieldValue, triple)
+            }  else {
+                @ObjectOptions(c, fieldValue, triple)
+            }
+            
         }
+    </div>
+}
+
+t1 PredicateOptions(c *router.Context, fieldValue string, triple map[string]sparql.Binding) {
+    <div class="SenEditable SenEditablePredicate" data-sen-subject={ triple["s"].Value }>
+        @predicate.HTMXViewOnclick(c, fieldValue)
+        @predicate.HTMXEditOnclick(c, fieldValue)
+        <button>❌</button>
+    </div>
+}
+
+t1 ObjectOptions(c *router.Context, fieldValue string, triple map[string]sparql.Binding) {
+    <div class="SenEditable SenEditableObject" data-sen-subject={ triple["s"].Value }>
+        @object.HTMXViewOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
+        @object.HTMXEditOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
+        <button>❌</button>
+    </div>
+}
+
+t1 ObjectAsSubjectOptions(c *router.Context, fieldValue string, triple map[string]sparql.Binding) {
+    <div class="SenEditable SenEditableObject" data-sen-subject={ triple["o"].Value }>
+        @subject.HTMXViewOnclick(c, fmt.Sprintf("%s", triple["o"].Value))
+        <button>🔒</button>
+        //@subject.HTMXEditOnclick(c, fmt.Sprintf("%s", triple["o"].Value))
+        <button>❌</button>
     </div>
 }

@@ -1,0 +1,50 @@
+package object
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/htmx/hx"
+import "github.com/senforsce/fh/forms/tripleforms"
+import "fmt"
+import "strings"
+import "github.com/senforsce/sparql"
+
+
+var HXEDITPATHROOT = "/mj/editobject/"
+var HXEDITPATH = "/mj/editobject/*objectname"
+
+t1 HTMXEditOnclick(c *router.Context, exerciceString string) {
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXEDITPATHROOT + exerciceString}, "#EditObject", "🖊️", "")
+}
+
+func RemovePrefix(value string) string {
+    return strings.Replace(value, "http://senforsce.com/o8/brain/", "", 1)
+}
+
+func NoOp(value string) string {
+    return value
+}
+
+
+t1 EditView(c *router.Context, res []map[string]sparql.Binding) {
+    <div class={ tr.Echo("EditExercice") }>
+        <h3> Valeur pour <span>{ RemovePrefix(res[0]["s"].Value) }</span> <span>{ RemovePrefix(res[0]["p"].Value) }</span> </h3>
+        <h4 class="OldValue"> Ancienne Valeur <span> { res[0]["o"].Value } </span></h4>
+        <h4 class="NewValue"> Nouvelle Valeur <span id="NewValueToEdit"></span></h4>
+        @tripleforms.HTMXEditTripleObjectFormOnLoad(c, fmt.Sprintf("%s§%s§%s", res[0]["s"].Value, res[0]["p"].Value, res[0]["o"].Value ))
+    </div>
+    <style>
+        #EditObject {
+            display: flex;
+            place-items: center;
+        }
+        .EditExercice {
+            width: 60%;
+            height: 50%;
+            border: 1px solid gold;
+            border-radius: 1.5rem;
+
+            &:has(.programmetypedrag) {
+                height: 70% !important;
+            }
+        }
+    </style>
+}

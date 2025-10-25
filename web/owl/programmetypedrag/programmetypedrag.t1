@@ -14,28 +14,27 @@ t1 HTMXOnLoad(c *router.Context) {
 }
 
 t1 HTMX(vc []ViewConfig, c *router.Context) {
-	<div class={ tr.Echo("")} >
-
-	<ul style="display:flex;flex-wrap:wrap;" class={ tr.Echo("step1 ") } >
-		for _, v := range vc {
-            <li style="width:48%;" class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
-                <span class={ tr.Echo("Block Block--item2 Block--isDraggable")}
-                    data-item={ tr.Echo(`{ "ProgramTypeName": "`+v.ProgramTypeName+`", "type": "programmetype", "Subject": "`+ v.Subject +`", "Comment": "`+v.Comment+`", "BgColor": "`+v.BgColor+`", "Illustration": "`+v.Illustration+`", "ShortDefinition": "`+v.ShortDefinition+`"}`)}
-                    title={ tr.Echo("Click to drag")} tabindex="0" style="">
-                    <div class="BlockContent" data-bg={ v.BgColor }>
-                        <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
-                            <span class="programName">
-                                { fmt.Sprintf("%s", v.ProgramTypeName ) }
-                            </span>
-                            <img src={ v.Illustration } alt={ v.ProgramTypeName }  />
-                        </h3>
-                        <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
-                        <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
-                    </div>
-                </span>
-            </li>
-		}
-	</ul>
+	<div class={ tr.Echo("programmetypedrag ConceptListDrag")} >
+        <ul style="display:flex;flex-wrap:wrap;" class={ tr.Echo("step1 ") } >
+            for _, v := range vc {
+                <li style="width:48%;" data-subject={ v.Subject } class={ tr.Echo("programmetypedrag__li ConceptListDrag__li BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied") } data-dropzone="4">
+                    <span class={ tr.Echo("Block Block--item2 Block--isDraggable")}
+                        data-item={ tr.Echo(`{ "ProgramTypeName": "`+v.ProgramTypeName+`", "type": "programmetype", "Subject": "`+ v.Subject +`", "Comment": "`+v.Comment+`", "BgColor": "`+v.BgColor+`", "Illustration": "`+v.Illustration+`", "ShortDefinition": "`+v.ShortDefinition+`"}`)}
+                        title={ tr.Echo("Click to drag")} tabindex="0" style="">
+                        <div class="BlockContent" data-subject={ v.Subject } data-bg={ v.BgColor }>
+                            <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
+                                <span class="programName">
+                                    { fmt.Sprintf("%s", v.ProgramTypeName ) }
+                                </span>
+                                <img src={ v.Illustration } alt={ v.ProgramTypeName }  />
+                            </h3>
+                            <div class={ tr.Echo("Pattern Pattern--typeHalftone")}></div>
+                            <div class={ tr.Echo("Pattern Pattern--typePlaced")}></div>
+                        </div>
+                    </span>
+                </li>
+            }
+        </ul>
 	</div>
 }
 

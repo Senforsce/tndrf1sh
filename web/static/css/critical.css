@@ -3,6 +3,32 @@
     overflow: hidden;
 }
 
+.EditProgramme, .EditExercice {
+    margin-top: 3rem;
+
+    & > h3 {
+        font-size: 2rem;
+        color: gold;
+        text-decoration: underline;
+        margin-bottom: 1rem;
+    }
+}
+
+.SenEditable {
+    display: flex;
+    gap: 0.5rem;
+
+    & button {
+        width: 2rem;
+        background-color: #000;
+        border: 1px solid gold;
+
+        &:hover {
+            scale: 2;
+        }
+    }
+}
+
 .scene:has(+ .controls .fileeditor div) {
     margin-bottom: 0;
 }
@@ -4718,5 +4744,7 @@ a.NavLink:active {
                     background-color: #036;
                     outline: 0 none;
                 }*/
+
+
 
 /*# sourceMappingURL=examples-app.css.map */
