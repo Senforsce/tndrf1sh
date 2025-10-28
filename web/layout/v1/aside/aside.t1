@@ -126,6 +126,12 @@ t1 HTMX(c *router.Context) {
 			hx-trigger="click">Ajouter</button>
 		<hr/>
 
+		<button class="btn" hx-swap="innerHTML"
+			hx-get="/programme/table"
+			hx-target="#programmeView"
+			hx-trigger="click">Voir Tous</button>
+		<hr/>
+
 		<div
 			hx-swap="innerHTML"
 			class=§cls:dirloader!

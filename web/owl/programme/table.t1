@@ -1,0 +1,61 @@
+package programme
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/htmx/hx"
+import "fmt"
+import "github.com/senforsce/sparql"
+
+t1 HTMXEditOnclick(c *router.Context, exerciceString string) {
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXEDITPATHROOT + exerciceString}, "#editOrogrammeView", "🖊️", "")
+}
+
+t1 Table(c *router.Context, res []map[string]sparql.Binding) {
+    <div class={ tr.Echo("EditExercice") }>
+        <h3> Liste des Programmes </h3>
+        <dialog id="AddPredicate"></dialog>
+        <dialog id="EditPredicate"></dialog>
+        <dialog id="EditObject"></dialog>
+        <div class="table-wrapper">
+            <table id="queryResponse">
+                <thead>
+                    <th>Subject</th>
+                    <th>persoProgName</th>
+                    <th>TrainingMethod</th>
+                    <th>persoProgDate</th>
+                    <th>TrainingUser</th>
+                </thead>
+                <tbody>
+                    for _, triple := range(res) {
+                        <tr>
+                            <td>
+                                { RemovePrefix(triple["s"].Value) }
+                            </td>
+                            <td>
+                                @SenMaybeEditableTableField(c, triple["persoProgName"].Value, triple, RemovePrefix)
+                            </td>
+                            <td>
+                                @SenMaybeEditableTableField(c, triple["TrainingMethod"].Value, triple, RemovePrefix)
+                            </td>
+                            <td>
+                                @SenMaybeEditableTableField(c, triple["persoProgDate"].Value, triple, RemovePrefix)
+                            </td>
+                            <td>
+                                @SenMaybeEditableTableField(c, triple["TrainingUser"].Value, triple, RemovePrefix)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">{ fmt.Sprintf("Trouvé %d Triples", len(res)) } </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <script>
+            $(() => {
+                let table = new DataTable('#queryResponse');
+            })
+        </script>
+    </div>
+}

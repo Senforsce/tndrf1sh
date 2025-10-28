@@ -2,8 +2,8 @@ package programme
 
 import (
 	"fmt"
+	"log"
 	"strings"
-	"time"
 
 	"github.com/senforsce/sparql"
 	"github.com/senforsce/tndr0cean/router"
@@ -21,6 +21,18 @@ SELECT ?s ?p ?o WHERE {
 	?s ?p ?o .
 } LIMIT 100`
 
+var programmeDetails = `
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT * WHERE {  
+	?s rdf:type <http://senforsce.com/o8/brain/PersonnalizedProgram> .
+	?s :persoProgName ?persoProgName .
+	?s :hasTrainingMethod ?TrainingMethod .
+	?s :persoProgDate ?persoProgDate .
+	?s :hasTrainingUser ?TrainingUser .
+
+} LIMIT 1000`
+
 var editDetails = `
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT ?s ?p ?o WHERE {
@@ -31,12 +43,10 @@ SELECT ?s ?p ?o WHERE {
 var panicMessage = "failed sparql query %s"
 
 func ListHandler(c *router.Context) error {
-	repo, err1 := sparql.NewRepo("http://localhost:3030/ds",
-		sparql.DigestAuth("dba", "dba"),
-		sparql.Timeout(time.Millisecond*1500),
-	)
-	if err1 != nil {
-		panic("bad")
+	repo, ok := c.Get("sparqlRepo").(*sparql.Repo)
+
+	if !ok {
+		log.Println("wrong user context")
 	}
 
 	query := selectDetails
@@ -57,13 +67,30 @@ func ListHandler(c *router.Context) error {
 	return c.Render(List(views, c))
 }
 
+func TableHandler(c *router.Context) error {
+	repo, ok := c.Get("sparqlRepo").(*sparql.Repo)
+
+	if !ok {
+		log.Println("wrong user context")
+	}
+
+	query := programmeDetails
+	res, err := repo.Query(query)
+
+	if err != nil {
+		panic(fmt.Sprintf(panicMessage, query))
+	}
+
+	log.Println(res.Results.Bindings)
+
+	return c.Render(Table(c, res.Results.Bindings))
+}
+
 func EditHandler(c *router.Context) error {
-	repo, err1 := sparql.NewRepo("http://localhost:3030/ds",
-		sparql.DigestAuth("dba", "dba"),
-		sparql.Timeout(time.Millisecond*1500),
-	)
-	if err1 != nil {
-		panic("bad")
+	repo, ok := c.Get("sparqlRepo").(*sparql.Repo)
+
+	if !ok {
+		log.Println("wrong user context")
 	}
 
 	progname := strings.Replace(c.Param("progname"), "/", "", 1)
