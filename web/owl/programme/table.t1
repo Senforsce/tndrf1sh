@@ -27,8 +27,14 @@ t1 Table(c *router.Context, res []map[string]sparql.Binding) {
                 <tbody>
                     for _, triple := range(res) {
                         <tr>
-                            <td>
-                                { RemovePrefix(triple["s"].Value) }
+                            <td style="display:flex;">
+                                <div class="persoProgName" style="width: 70%;">
+                                    { RemovePrefix(triple["s"].Value) }
+                                </div>
+                                <div class="persoProgOptions" style="width: 30%;">
+                                    @HTMXEditProgrammeOnclick(c, triple["s"].Value)
+                                </div>
+                                
                             </td>
                             <td>
                                 @SenMaybeEditableTableField(c, triple["persoProgName"].Value, triple, RemovePrefix)
