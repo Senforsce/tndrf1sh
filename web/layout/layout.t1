@@ -30,6 +30,13 @@ t1 Base(c *router.Context) {
 			<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 			<link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet" type="text/css" />
 			<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+			<style>
+			svg.markmap {
+				width: 100%;
+				height: 100vh;
+			}
+			</style>
+    		<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.18"></script>
 
 		</head>
 		<body>
