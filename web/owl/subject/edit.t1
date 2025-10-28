@@ -102,7 +102,7 @@ t1 PredicateOptions(c *router.Context, fieldValue string, triple map[string]spar
 t1 ObjectOptions(c *router.Context, fieldValue string, triple map[string]sparql.Binding) {
     <div class="SenEditable SenEditableObject" data-sen-subject={ triple["s"].Value }>
         @object.HTMXViewOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
-        @object.HTMXEditOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
+        @object.HTMXEditObjectOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
         <button>❌</button>
     </div>
 }

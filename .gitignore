@@ -22,3 +22,4 @@ go.work
 
 *_t1.go
 .env
+web/web

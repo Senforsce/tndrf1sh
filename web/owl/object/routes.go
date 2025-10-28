@@ -10,9 +10,11 @@ import (
 )
 
 func Routes(app *router.Tndr0cean, sessionStore *rds.RedisSessionManager, authClient *auth.Client) {
-	hx.Route(app, HXEDITPATH, logged.Logged(sessionStore, authClient, EditHandler))
-	hx.Route(app, HXVIEWPATH, logged.Logged(sessionStore, authClient, ViewHandler))
+	hx.Route(app, HXEDITOBJECTPATH, logged.Logged(sessionStore, authClient, EditHandler))
+	hx.Route(app, HXVIEWOBJECTPATH, logged.Logged(sessionStore, authClient, ViewHandler))
+	hx.Route(app, HXDELETEOBJECTPATH, logged.Logged(sessionStore, authClient, tripleforms.DeleteTripleHandler))
 
+	hx.Route(app, tripleforms.HXDELETEPATH, logged.Logged(sessionStore, authClient, tripleforms.ActuallyDeleteTriple))
 	hx.Route(app, tripleforms.HXGETPATH, logged.Logged(sessionStore, authClient, tripleforms.EditTripleHandler))
 	hx.RoutePost(app, tripleforms.HXPOSTPATH, logged.Logged(sessionStore, authClient, tripleforms.HandleObjectValue))
 }

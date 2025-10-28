@@ -62,6 +62,9 @@ t1 EditProgramme(c *router.Context, res []map[string]sparql.Binding) {
                     </tr>
                 </tfoot>
             </table>
+            <div>
+                @predicate.ShowPredicatesToAdd(c, res)
+            </div>
         </div>
         <script>
             $(() => {
@@ -114,23 +117,23 @@ t1 PredicateOptions(c *router.Context, fieldValue string, triple map[string]spar
     <div class="SenEditable SenEditablePredicate" data-sen-subject={ triple["s"].Value }>
         @predicate.HTMXViewOnclick(c, fieldValue)
         @predicate.HTMXEditOnclick(c, fieldValue)
-        <button>❌</button>
+        <button disabled style="display:inline-flex">❌🔒</button>
     </div>
 }
 
 t1 ObjectOptions(c *router.Context, fieldValue string, triple map[string]sparql.Binding) {
     <div class="SenEditable SenEditableObject" data-sen-subject={ triple["s"].Value }>
         @object.HTMXViewOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
-        @object.HTMXEditOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
-        <button>❌</button>
+        @object.HTMXEditObjectOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
+        @object.HTMXDeleteObjectOnclick(c, fmt.Sprintf("%s§%s§%s", triple["s"].Value, triple["p"].Value, triple["o"].Value))
     </div>
 }
 
 t1 ObjectAsSubjectOptions(c *router.Context, fieldValue string, triple map[string]sparql.Binding) {
     <div class="SenEditable SenEditableObject" data-sen-subject={ triple["o"].Value }>
         @subject.HTMXViewOnclick(c, fmt.Sprintf("%s", triple["o"].Value))
-        <button>🔒</button>
+        <button disabled>🔒</button>
         //@subject.HTMXEditOnclick(c, fmt.Sprintf("%s", triple["o"].Value))
-        <button>❌</button>
+        <button disabled style="display:inline-flex">❌🔒</button>
     </div>
 }

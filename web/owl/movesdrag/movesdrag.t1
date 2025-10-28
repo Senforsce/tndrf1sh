@@ -7,20 +7,28 @@ import (
 
 )
 
+var HXGETPATH = "/mj/movesdrag/0"
+
+t1 HTMXOnLoad(c *router.Context) {
+    @hx.GetInnerHTMLOnLoad(c, hx.GET{Path: HXGETPATH}, "createNewExerciceDrag")
+}
+
 t1 HTMXWithParamsOnLoad(c *router.Context, index uint16) {
     @hx.GetInnerHTMLOnLoad(c, hx.GET{Path: fmt.Sprintf("/mj/movesdrag/%d", index)}, "")
 }
 
 t1 HTMX(vc []ViewConfig, c *router.Context, skipValue int) {
-	<div class={ tr.Echo("")} >
+	<div class={ tr.Echo("movesdrag ConceptListDrag")} >
         <ul style="display:flex;flex-wrap:wrap;" class={ tr.Echo("step1 ") } >
             for _, v := range vc {
 
-                <li style="width:31%;" class={ tr.Echo("BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied mxZone") }  data-dropzone={ fmt.Sprintf("%d", (skipValue)) }>
+                <li style="width:31%;" class={ tr.Echo("movesdrag__li ConceptListDrag__li BlockWrapper BlockWrapper--isDropzone draggable-dropzone--occupied mxZone") }  data-dropzone={ fmt.Sprintf("%d", (skipValue)) }>
                     <span class={ tr.Echo("Block Block--item6 Block--isDraggable")}
                         data-item={ tr.Echo(`{ "ExerciceId": "`+ v.NewId +`", "MoveExerciceLastTimeDate": "`+ "2025-07-02" +`", "MoveExercicePRLast": "`+ "0" +`", "MoveExercicePRBest": "`+ "0" +`", "MoveExercicePRUnit": "`+ "reps" +`", "MoveExercicePRMin": "`+ "0" +`", "MoveExerciceTimeUnit": "`+ "minutes" +`", "MoveExerciceWeightUnit": "`+ "kg" +`", "MoveExerciceWeight": "`+ "0" +`", "MoveExerciceReps": "`+ "0" + `", "MoveExerciceSets": "`+ "1" +`", "MoveExerciseTime": "`+ "0" +`", "MoveExerciceName": "Exercice `+ v.MoveExerciceName +`", "MoveName": "`+ v.MoveExerciceName +`", "MJMoveGifMediaDescription": "`+ v.MJMoveGifMediaDescription +`", "type": "moveexercise", "Subject": "`+ v.Subject +`", "MovePoster": "`+ v.MovePoster +`"}`)}
+                        data-subject={ v.Subject }
+                        data-movename={ v.MoveExerciceName }
                         title={ tr.Echo("Click to drag")} tabindex="0" style="">
-                        <div class="BlockContent">
+                        <div class="BlockContent"  data-subject={ v.Subject } data-movename={ v.MoveExerciceName }>
                             <h3 class={ tr.Echo("Heading Heading--size2 text-no-select")}>
                                 <p style="display:none;" class={ tr.Echo("ExerciseIndicatorType ExerciseIndicatorType-"+ v.NewId) }>
                                     

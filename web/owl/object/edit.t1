@@ -8,12 +8,13 @@ import "strings"
 import "github.com/senforsce/sparql"
 
 
-var HXEDITPATHROOT = "/mj/editobject/"
-var HXEDITPATH = "/mj/editobject/*objectname"
+var HXEDITOBJECTPATHROOT = "/mj/editobject/"
+var HXEDITOBJECTPATH = "/mj/editobject/*objectname"
 
-t1 HTMXEditOnclick(c *router.Context, exerciceString string) {
-    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXEDITPATHROOT + exerciceString}, "#EditObject", "🖊️", "")
+t1 HTMXEditObjectOnclick(c *router.Context, exerciceString string) {
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXEDITOBJECTPATHROOT + exerciceString}, "#EditObject", "🖊️", "")
 }
+
 
 func RemovePrefix(value string) string {
     return strings.Replace(value, "http://senforsce.com/o8/brain/", "", 1)

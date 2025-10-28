@@ -22,6 +22,15 @@ SELECT ?s ?p ?o WHERE {
 	BIND(<%s> AS ?s)
 	?s ?p ?o .
 } LIMIT 1000`
+
+var predicateDetails = `
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?s ?p ?o WHERE {
+	BIND(<%s> AS ?s)
+	BIND(<%s> AS ?p)
+
+	?s ?p ?o .
+} LIMIT 1000`
 var panicMessage = "failed sparql query %s"
 
 func ListHandler(c *router.Context) error {
@@ -78,6 +87,38 @@ func ViewHandler(c *router.Context) error {
 	// }
 
 	return c.Render(SubjectView(c, res.Results.Bindings))
+}
+
+func AddformViewHandler(c *router.Context) error {
+	repo, err1 := sparql.NewRepo("http://localhost:3030/ds",
+		sparql.DigestAuth("dba", "dba"),
+		sparql.Timeout(time.Millisecond*1500),
+	)
+	if err1 != nil {
+		panic("bad")
+	}
+
+	objectname := strings.Replace(c.Param("predicatestring"), "/", "", 1)
+	triple := strings.Split(objectname, "§")
+	subject := triple[0]
+	predicate := triple[1]
+
+	query := fmt.Sprintf(predicateDetails, subject, predicate)
+	res, err := repo.Query(query)
+
+	if err != nil {
+		panic(fmt.Sprintf(panicMessage, query))
+	}
+
+	// liste := ListOfSubjects(res.Results.Bindings)
+	// views := []ViewConfig{}
+	// for i, _ := range liste {
+	// 	view := NewViewConfig(liste[i])
+	// 	views = append(views, view)
+
+	// }
+
+	return c.Render(AddPredicateFormLoader(c, res.Results.Bindings))
 }
 
 func EditHandler(c *router.Context) error {

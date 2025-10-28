@@ -5,11 +5,11 @@ import "github.com/senforsce/htmx/hx"
 import "github.com/senforsce/sparql"
 
 
-var HXVIEWPATHROOT = "/mj/viewobject/"
-var HXVIEWPATH = "/mj/viewobject/*objectname"
+var HXVIEWOBJECTPATHROOT = "/mj/viewobject/"
+var HXVIEWOBJECTPATH = "/mj/viewobject/*objectname"
 
 t1 HTMXViewOnclick(c *router.Context, exerciceString string) {
-    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXVIEWPATHROOT + exerciceString}, "#editExerciceView", "👀", "")
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXVIEWOBJECTPATHROOT + exerciceString}, "#editExerciceView", "👀", "")
 }
 
 t1 SubjectView(c *router.Context, res []map[string]sparql.Binding) {

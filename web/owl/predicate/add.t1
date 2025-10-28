@@ -1,0 +1,82 @@
+package predicate
+
+import (
+	"fmt"
+	"github.com/senforsce/tndr0cean/router"
+    "github.com/senforsce/sparql"
+    "github.com/senforsce/htmx/hx"
+)
+import "github.com/senforsce/fh/forms/tripleforms"
+
+
+var HXADDPREDICATEPATHROOT = "/mj/addpredicate/"
+var HXADDPREDICATEPATH = "/mj/addpredicate/*predicatestring"
+
+t1 HTMXAddPredicateFormOnclick(c *router.Context, exerciceString string) {
+    @hx.GetInnerHTMLOnClick(c, hx.GET{Path: HXADDPREDICATEPATHROOT + exerciceString}, "#AddTriplePredicate", "➕", "")
+}
+
+
+t1 AddPredicateFormLoader(c *router.Context, res []map[string]sparql.Binding) {
+    <div class={ tr.Echo("AddPredicateFormLoader") }>
+        <h3> Valeur pour <span>{ RemovePrefix(res[0]["s"].Value) }</span> <span>{ RemovePrefix(res[0]["p"].Value) }</span> </h3>
+        <h4 class="NewValue"> Nouvelle Valeur <span id="NewValueToEdit"></span></h4>
+        @tripleforms.HTMXAddTriplePredicateFormOnLoad(c, fmt.Sprintf("%s§%s", res[0]["s"].Value, res[0]["p"].Value ))
+    </div>
+    <style>
+        .AddPredicateFormLoader {
+            width: 90%;
+            height: 50%;
+            border: 1px solid gold;
+            border-radius: 1.5rem;
+
+            &:has(.programmetypedrag) {
+                height: 70% !important;
+            }
+        }
+    </style>
+}
+
+t1 ShowPredicatesToAdd(c *router.Context, res []map[string]sparql.Binding) {
+	<div class={ tr.Echo("")} >
+        <details>
+	        <summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">
+                <h3 style="font-size: 2rem; color:gold;margin-block: 1rem;"> Ajoute Prédicat pour { res[0]["s"].Value }</h3>
+            </summary>
+            <div id="AddTriplePredicate"></div>
+            <ul class={ tr.Echo("") } >
+                for _, triple := range(uniquePredicate(res)) {
+                    <li class={ tr.Echo("") } style="display: flex;" >
+                    { fmt.Sprintf("%s", triple["p"].Value) }
+                        <div class="AddPredicateFormOptions" style="width: 70%;">
+                            @HTMXAddPredicateFormOnclick(c, fmt.Sprintf("%s§%s", triple["s"].Value, triple["p"].Value ))
+                        </div>
+                    </li>
+                }
+            </ul>
+        </details>
+	</div>
+}
+
+func uniquePredicate(res []map[string]sparql.Binding) []map[string]sparql.Binding {
+    var toReturn []map[string]sparql.Binding
+    var predicateList = make(map[string]bool, len(toReturn))
+    for _, triple := range(res) {
+        if (!predicateList[triple["p"].Value]) && (isValidPredicate(triple["p"].Value)) {
+            toReturn = append(toReturn, triple)
+            predicateList[triple["p"].Value] = true
+        }
+    }
+
+
+    return toReturn
+}
+
+func isValidPredicate(val string) bool {
+    return (
+        val != "" &&
+        val != "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" &&
+        val != "http://senforsce.com/o8/brain/persoProgDate" &&
+        val != "http://senforsce.com/o8/brain/persoProgName" &&
+        val != "http://senforsce.com/o8/brain/hasTrainingMethod")
+}
