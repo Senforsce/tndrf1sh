@@ -40,12 +40,12 @@ t1 HTMX(c *router.Context) {
 						colorFreezeLevel: 2
 						---
 
-						# markmap
+						# CoachMj
 
-						## Links
+						## Liens
 
-						- <https://markmap.js.org/>
-						- [GitHub](https://github.com/markmap/markmap)
+						- <https://http://180.149.198.99:3000/>
+						- [GitHub](https://github.com/senforsce/coach-mj)
 
 						## Related
 
@@ -54,10 +54,10 @@ t1 HTMX(c *router.Context) {
 
 						## Features
 
-						- links
-						- **inline** ~~text~~ *styles*
-						- multiline
-						text
+						- Ajoute un utilisateur
+						- Création de Programme
+						- Modification de Mouvement 
+						d'exercice
 						- `inline code`
 						- Katex - $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$
 						- This is a very very very very very very very very very very very very very very very long line.
