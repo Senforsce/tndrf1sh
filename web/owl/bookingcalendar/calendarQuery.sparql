@@ -1,0 +1,61 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://senforsce.com/o8/brain/>
+PREFIX path: <http://senforsce.com/o8/brain/path/>
+PREFIX mj: <http://senforsce.com/o8/brain/coach-mj/>
+
+SELECT * WHERE { 
+	?user rdf:type <http://senforsce.com/o8/brain/coach-mj/User> .
+    ?main rdf:type :UserMainInfo .
+    ?main :belongsToUser ?user .
+ 	OPTIONAL{ ?main :hasBirthdaydate ?Birthdaydate . }
+	OPTIONAL{ ?main mj:hasFirstname ?Firstname . }
+	OPTIONAL{ ?main :hasLastname ?Lastname . }
+	OPTIONAL{ ?main :hasEmail ?Email . }
+	OPTIONAL{ ?main :hasTelephone ?Telephone . }
+  	OPTIONAL{ ?main :joinedSince ?JoinedSince . }
+
+	?booking rdf:type :UserBookingRequest .
+	?booking  :belongsToUser ?user .
+	OPTIONAL{ ?booking :hasBookingStatusString ?BookingStatusString . }
+	OPTIONAL{ ?booking :hasBookingType ?BookingType . }
+	OPTIONAL{ ?booking :hasBookingRequestDate ?BookingRequestDate . }
+	OPTIONAL{ ?booking :hasBookingComment ?BookingComment . }
+    
+
+	OPTIONAL {
+		?credits rdf:type :PayableCoachMJServiceCredit .
+		?credits :creditsBelongsToUser ?user .
+		OPTIONAL{ ?credits :isValidFrom ?ValidFrom . }
+		OPTIONAL{ ?credits :isValidUntil ?ValidUntil . }
+		OPTIONAL{ ?credits :hasCreditNumberValue ?CreditNumberValue . }
+		OPTIONAL{ ?credits :creditsBelongsToService ?BelongsToService . }
+		OPTIONAL{ ?credits :creditsBelongsToService/:hasLongName ?BelongsToServiceLongName . }
+		OPTIONAL{ ?credits :creditsBelongsToService/:hasPictureImg ?PictureImg . }
+
+		OPTIONAL {
+			?unit rdf:type :PayableCoachMJCreditForCoachingIndividuel .
+			?unit :creditUseBelongsToCredit ?credits .
+			OPTIONAL{ ?unit :hasCreditUnitValue ?CreditUnitValue . }
+			OPTIONAL{ ?unit :hasCreditUnitUsedTime ?CreditUnitUsedTime . }
+			OPTIONAL{ ?unit :hasCreditBookingHostToClientRedirectTime ?CreditBookingHostToClientRedirectTime . }
+			OPTIONAL{ ?unit :hasCreditBookingAskTime ?CreditBookingAskTime . }
+			OPTIONAL{ ?unit :hasCreditBookingAgreedTime ?CreditBookingAgreedTime . }
+		}
+
+
+	}
+
+	OPTIONAL{ 
+      ?subs rdf:type :UserSubscription .
+      ?subs  :belongsToUser ?user .
+ 	 }
+
+
+	OPTIONAL{
+			?service rdf:type :UserService .
+			?service  :belongsToUser ?user .
+  	}
+
+
+			
+} LIMIT 1000

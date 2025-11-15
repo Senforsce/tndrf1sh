@@ -1,0 +1,134 @@
+package rangebox
+
+import "github.com/senforsce/tndr0cean/router"
+t1 HTMX(c *router.Context) {
+    <h1>Selecting ranges</h1>
+    <div class={ tr.Echo("grid") }>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="not-a-box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <style>
+        .grid {
+        border: 5px solid var(--clr-blue-500);
+        }
+
+        .box {
+        border: 4px solid var(--clr-red-400);
+        }
+
+        /* .box:nth-of-type(n + 1):nth-of-type(-1n + 4) {
+        border-color: var(--clr-blue-300);
+        }
+
+        .box:nth-of-type(n + 5):nth-of-type(-1n + 8) {
+        border-color: green;
+        }
+        */
+
+        .box:nth-child(2n of .box) {
+        border-color: yellow;
+        }
+
+        @layer styles-for-demo-stuff {
+        .box {
+            padding: 2rem;
+        }
+
+        .not-a-box {
+            border: 4px solid var(--clr-purple-400);
+            border-radius: 100vw;
+            padding: 2rem;
+            grid-column: span 2;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+        }
+
+        @layer general-styling {
+        :root {
+            --content-max-width: 75ch;
+
+            --font-family: system-ui;
+
+            --fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
+            --fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
+            --fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
+            --fs-600: clamp(1.62rem, calc(1.37rem + 1.24vw), 2.33rem);
+            --fs-700: clamp(1.94rem, calc(1.54rem + 2.03vw), 3.11rem);
+            --fs-800: clamp(2.33rem, calc(1.7rem + 3.15vw), 4.14rem);
+            --fs-900: clamp(2.8rem, calc(1.85rem + 4.74vw), 5.52rem);
+
+            --clr-blue-700: hsl(219, 76%, 75%);
+            --clr-blue-600: hsl(219, 76%, 50%);
+            --clr-blue-500: hsl(219, 76%, 35%);
+            --clr-blue-400: hsl(219, 76%, 25%);
+            --clr-blue-300: hsl(219, 76%, 15%);
+
+            --clr-purple-700: hsl(269, 75%, 75%);
+            --clr-purple-600: hsl(269, 75%, 50%);
+            --clr-purple-500: hsl(269, 75%, 35%);
+            --clr-purple-400: hsl(269, 75%, 20%);
+            --clr-purple-300: hsl(269, 75%, 15%);
+
+            --clr-red-700: hsl(358, 72%, 75%);
+            --clr-red-600: hsl(358, 72%, 50%);
+            --clr-red-500: hsl(358, 72%, 35%);
+            --clr-red-400: hsl(358, 72%, 20%);
+            --clr-red-300: hsl(358, 72%, 15%);
+
+            --clr-neutral-900: hsl(219, 15%, 90%);
+            --clr-neutral-700: hsl(219, 15%, 75%);
+            --clr-neutral-600: hsl(219, 15%, 50%);
+            --clr-neutral-500: hsl(219, 15%, 35%);
+            --clr-neutral-400: hsl(219, 15%, 20%);
+            --clr-neutral-300: hsl(219, 15%, 15%);
+            --clr-neutral-100: hsl(219, 15%, 5%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+            --clr-blue-300: hsl(219, 76%, 75%);
+            --clr-blue-400: hsl(219, 76%, 50%);
+            --clr-blue-500: hsl(219, 76%, 35%);
+            --clr-blue-600: hsl(219, 76%, 25%);
+            --clr-blue-700: hsl(219, 76%, 15%);
+
+            --clr-purple-300: hsl(269, 75%, 75%);
+            --clr-purple-400: hsl(269, 75%, 50%);
+            --clr-purple-500: hsl(269, 75%, 35%);
+            --clr-purple-600: hsl(269, 75%, 20%);
+            --clr-purple-700: hsl(269, 75%, 15%);
+
+            --clr-red-300: hsl(358, 72%, 75%);
+            --clr-red-400: hsl(358, 72%, 50%);
+            --clr-red-500: hsl(358, 72%, 35%);
+            --clr-red-600: hsl(358, 72%, 20%);
+            --clr-red-700: hsl(358, 72%, 15%);
+
+            --clr-neutral-100: hsl(219, 15%, 90%);
+            --clr-neutral-300: hsl(219, 15%, 75%);
+            --clr-neutral-400: hsl(219, 15%, 50%);
+            --clr-neutral-500: hsl(219, 15%, 35%);
+            --clr-neutral-600: hsl(219, 15%, 20%);
+            --clr-neutral-700: hsl(219, 15%, 15%);
+            --clr-neutral-900: hsl(219, 15%, 5%);
+            }
+        }
+
+    </style>
+}

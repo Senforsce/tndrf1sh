@@ -3,13 +3,19 @@ package userlist
 import(
   "fmt"
 	"github.com/senforsce/tndr0cean/router"
+  "github.com/senforsce/htmx/hx"
 )
 
+
+t1 OnLoad(c *router.Context) {
+	@hx.GetInnerHTMLOnLoad(c, hx.GET{Path: "/mj/userlist"}, "")
+}
+
+
 t1 HTMX(b []TndrSimpleUser, c *router.Context) {
-  <section>
-    <h5>Utilisateurs</h5>
+  <section class="tndr-menu-collapsable">
     <details>
-      <summary>Liste Rapide</summary>
+      <summary class="glassy-button"><span class="tndr-aside-icon"><i data-feather="users"></i><h5 class="tndr-venture-app">Users</h5></span></summary>
       <div class="avatars">
       for _, user := range b {
           <div style="display:flex;position:relative;">
@@ -48,8 +54,8 @@ t1 HTMX(b []TndrSimpleUser, c *router.Context) {
           style="background:transparent;border:none;"
           hx-trigger="click"><img class="avatar" src="/static/img/negatif.svg" style="transform:rotate(45deg)" /></button>
       </div>
+      <button>Liste Complete</button>
     </details>
-    <button>Liste Complete</button>
   <style>
 
 .avatars {

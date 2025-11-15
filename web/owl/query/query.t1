@@ -1,6 +1,7 @@
 package query
 
 import "github.com/senforsce/tndr0cean/router"
+
 t1 HTMX(c *router.Context, query string) {
     <div>
         <h2 style="margin-top:100px;" class="WelcomeMessage">Nouvelle Requête SPARQL</h2>

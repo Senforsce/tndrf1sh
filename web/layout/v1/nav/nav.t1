@@ -1,7 +1,6 @@
 package nav
 
 import (
-	"github.com/senforsce/tndrf1sh/web/layout/i"
 	"github.com/senforsce/tndr0cean/router"
 )
 
@@ -11,12 +10,8 @@ t1 HTMX(c *router.Context) {
 			<li>
 				<h3>
 					<div class=§cls:icon-holder!>
-						<a hx-swap="innerHTML"
-						hx-get="/mj/queryandtable"
-						hx-target="#queryAndTableView"
-						href="javascript:void(0);"
-						hx-trigger="click">
-							@i.Home()
+						<a title=§i18n:Dashboard! href="/">
+							<i data-feather="home"></i>
 						</a>
 					</div>
 				</h3>
@@ -24,8 +19,12 @@ t1 HTMX(c *router.Context) {
 			<li>
 				<h3>
 					<div class=§cls:icon-holder!>
-						<a title=§i18n:Dashboard! href="/">
-							@i.DashboardGauge()
+						<a hx-swap="innerHTML"
+						hx-get="/mj/queryandtable"
+						hx-target="#queryAndTableView"
+						href="javascript:void(0);"
+						hx-trigger="click">
+							<i data-feather="search"></i>
 						</a>
 					</div>
 				</h3>
@@ -34,7 +33,7 @@ t1 HTMX(c *router.Context) {
 				<h3>
 					<div class=§cls:icon-holder!>
 						<a title=§i18n:Config! href="/">
-							@i.Config()
+							<i data-feather="settings"></i>
 						</a>
 					</div>
 				</h3>
@@ -43,4 +42,11 @@ t1 HTMX(c *router.Context) {
 		<hr/>
 		<div><small>§sen:Thunderf1shAppVersion!</small></div>
 	</div>
+	<style>
+		aside.reduced {
+			& .secondary-nav {
+				display: none;
+			}
+		}
+	</style>
 }

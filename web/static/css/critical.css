@@ -372,7 +372,6 @@ input.biggg::-webkit-calendar-picker-indicator {
 aside {
     grid-area: aside;
     padding: 0 1rem;
-    background-color: #21212c;
 }
 
 .noComponentWrapper {
@@ -455,7 +454,6 @@ h1 small, .owlComponent > h4 {
 .icon-holder svg {
     width: 32px;
     height: 32px;
-    fill: white;
 }
 
 main.work-area {
@@ -504,6 +502,12 @@ body:not(:has(aside.meta .metaContents div)) {
     grid-template-areas: "aside main";
     grid-template-columns: 16% calc(84% - 0.5rem);
     gap: 1.5rem;
+}
+
+body:not(:has(aside.meta .metaContents div)):has(aside.container.reduced) {
+    grid-template-areas: "aside main";
+    grid-template-columns: 114px calc(100% - 114px - 0.5rem);
+    gap: 0.5rem;
 }
 
 .scene-active {

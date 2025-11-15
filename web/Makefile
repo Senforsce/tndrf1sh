@@ -5,8 +5,8 @@ dev:
 	t1 generate --watch --proxy="http://localhost:3000" --cmd="make up"
 
 up:
-	go build .
-	go run .
+	orch8rion go build .
+	orch8rion go run .
 
 regenup:
 	@make -C ../ regen
@@ -15,6 +15,7 @@ regenup:
 
 genup:
 	@make -C ../../fh generate
+	@make -C ../../owl generate
 	@make -C ../../htmx generate
 
 	t1 generate

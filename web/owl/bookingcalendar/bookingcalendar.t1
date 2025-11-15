@@ -1,0 +1,115 @@
+package bookingcalendar
+
+import "github.com/senforsce/tndr0cean/router"
+import "github.com/senforsce/owl/connected/calendar"
+import "github.com/senforsce/owl/connected/booking"
+import "fmt"
+
+t1 AsideOnLoad(c *router.Context) {
+  <section class="tndr-menu-collapsable">
+    <details>
+      <summary class="glassy-button"><span class="tndr-aside-icon"><i data-feather="calendar"></i><h5 class="tndr-venture-app">RDV</h5></span></summary>
+	  <div class="tndr-buttons">
+
+		<button hx-swap="innerHTML"
+			hx-get="/calendar/view"
+			hx-target="#calendarView"
+			class="glassy-button"
+			hx-trigger="click"><span>Calendrier</span></button>
+		<button hx-swap="innerHTML"
+			hx-get="/calendar/table"
+			hx-target="#calendarView"
+			class="glassy-button"
+			hx-trigger="click"><span>table</span></button>
+		
+	  </div>
+    </details>
+  </section>
+}
+
+t1 HTMX(c *router.Context, cu []booking.UserListBooking) {
+    <h3 class={ tr.Echo("WelcomeMessage") }>Calendrier</h3>
+    @calendar.HTM(c)
+	@calendar.OnlyBookings(c, cu)
+  		<script type="module">
+			import { RenderCalendar, GetCalendarData } from "/static/js/calendar.js"
+			import { ReplaceDates } from "/static/js/replaceDates.js"
+
+			function capitalizeFirstLetter(string) {
+				return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+
+			jQuery(document).ready(function () {
+				RenderCalendar(GetCalendarData())
+				ReplaceDates()
+
+				document.querySelectorAll(".fc-button").forEach(button => {
+					button.addEventListener("click", () => {
+						ReplaceDates();
+					})
+				})
+
+				jQuery('#dayOfTheWeek').text(capitalizeFirstLetter(new Date().toLocaleString('fr-fr', {  weekday: 'long' })));
+				jQuery('#dayPrettyNumber').text(new Date().getDate());
+				jQuery('#dayOrdinal').text(new Date().toLocaleString('fr-fr', { month: 'long' }));
+				document.querySelectorAll("span.DemandeEnvoyee").forEach(it => {
+					it.innerHTML = "Demande Envoyée"
+				})
+			});
+		</script>
+}
+
+t1 Table(c *router.Context, cu []booking.UserListBooking) {
+    <div class={ tr.Echo("EditExercice") }>
+        <h3> Modifie Prédicat</h3>
+        <dialog id="AddPredicate"></dialog>
+        <dialog id="EditPredicate"></dialog>
+        <dialog id="EditObject"></dialog>
+        <div class="table-wrapper">
+            <table id="queryResponse2">
+                <thead>
+				    <th>Email</th>
+					<th>Fullname</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+				    for _, user := range(cu) {
+
+						for _, triple := range(user.BookingList) {
+							<tr>
+								<td >
+									{ user.Email }
+								</td>
+								<td >
+									{ user.Firstname } { user.Lastname }
+								</td>
+								<td>
+									{ triple.BookingRequestDate }
+								</td>
+								
+								<td>
+									{ triple.BookingType }
+								</td>
+								<td>
+									{ triple.BookingStatusString }
+								</td>
+							</tr>
+                    	}
+				}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">{ fmt.Sprintf("Trouvé %d Triples", len(cu)) } </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <script>
+            $(() => {
+                let table = new DataTable('#queryResponse2');
+            })
+        </script>
+    </div>
+}

@@ -4,11 +4,20 @@ import (
 	"github.com/senforsce/tndrf1sh/web/layout/v1/nav"
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/layout/i"
+	"github.com/senforsce/tndrf1sh/web/owl/dirls"
+	"github.com/senforsce/tndrf1sh/web/owl/userlist"
+	"github.com/senforsce/tndrf1sh/web/owl/moves"
+	"github.com/senforsce/tndrf1sh/web/owl/programme"
+	"github.com/senforsce/tndrf1sh/web/owl/service"
+	"github.com/senforsce/tndrf1sh/web/owl/blogtexteditor"
+	"github.com/senforsce/tndrf1sh/web/owl/bookingcalendar"
+
 )
 
 t1 HTMX(c *router.Context) {
 	<aside class=§cls:container!>
 		<div class=§cls:header!>
+			<button id="menutoggler" class="menuToggler" style="width:24px;"><i data-feather="menu"></i></button>
 			<h1>
 				<a href=§path:Root! title=§sen:Thunderf1shAppName!>
 					@i.Thunderf1shYellow()
@@ -16,137 +25,49 @@ t1 HTMX(c *router.Context) {
 			</h1>
 			@nav.HTMX(c)
 		</div>
-		<hr/>
-		<hr/>
-		<div class="aside-users">
-			<div
-			hx-swap="innerHTML"
-			hx-get="/mj/userlist"
-			hx-trigger=§hx:load!>
-				<progress />
+		<h3 class="WelcomeMessage" style="padding-block:2rem;">My Apps</h3>
+		<div class="tndr-venture-options">
+			<div class="aside-users tndr-aside-menu">
+				@userlist.OnLoad(c)
+			</div>
+			<div class="tndr-aside-menu">
+				@moves.AsideOnLoad(c)
+			</div>
+			<div class="tndr-aside-menu">
+				@service.AsideOnLoad(c)
+			</div>
+			<div class="tndr-aside-menu">
+				@programme.AsideOnLoad(c)
+			</div>
+			<div class="tndr-aside-menu">
+				@bookingcalendar.AsideOnLoad(c)
+			</div>
+			<div class="tndr-aside-menu">
+				@dirls.OnLoad(c)
+			</div>
+			<div class="tndr-aside-menu">
+				@blogtexteditor.AsideOnLoad(c)
 			</div>
 		</div>
-		
-		<hr/>
-		<h3>Contenu</h3>
-		<div>Bibliothèque. de Mouvements</div>
-		<button hx-swap="innerHTML"
-			hx-get="/mj/movelist"
-			hx-target="#movelistview"
-			style="margin-block:1rem;"
-			class="btn"
-			hx-trigger="click">Voir tous</button>
-		<button hx-swap="innerHTML"
-			hx-get="/forms/newMovement"
-			hx-target="#formView"
-			style="margin-bottom:1rem;"
-			class="btn"
-			hx-trigger="click">Ajouter</button>
-		<details>
-			<summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">Liste</summary>
-			<div
-				hx-swap="innerHTML"
-				hx-get="/mj/moves"
-				hx-trigger=§hx:load!>
-				<progress />
-			</div>
-		</details>
-		
-		<hr/>
-		<div>Services & Prestations</div>
-		<details>
-			<summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">Voir Tous les payable</summary>
-				<ul class="services" style="background-color:#333;color:white;">
-					<li><a hx-swap="innerHTML"
-								hx-get="/mj/service/collectiveCourse"
-								hx-target="#serviceView"
-								style="color:white;border-bottom:1px,solid,white;"
-								hx-trigger="click"
-							><span class="image">
-								<img src="/static/img/cours-collectifs.svg" width="30px" height="30px" />
-							</span><span>Cours Collectifs</span></a>
-					 <hr />
-					</li>
-					<li><a hx-swap="innerHTML"
-								hx-get="/mj/service/collectiveCourse"
-								hx-target="#serviceView"
-								style="color:white;border-bottom:1px,solid,white;"
-								hx-trigger="click"
-							><span class="image">
-								<img src="/static/img/coaching-individuel.svg" width="30px" height="30px" />
-							</span><span>Cours Individuels En Présentiel</span></a>
-							
-					 <hr />
-					</li>
-					<li><a hx-swap="innerHTML"
-								hx-get="/mj/service/collectiveCourse"
-								hx-target="#serviceView"
-								style="color:white;border-bottom:1px,solid,white;"
-								hx-trigger="click"
-							><span class="image">
-								<img src="/static/img/consulting.svg" width="30px" height="30px" />
-							</span><span>Consulting Sportif</span></a> <hr />
-						</li>
-					<li><a hx-swap="innerHTML"
-								hx-get="/mj/service/collectiveCourse"
-								hx-target="#serviceView"
-								style="color:white;border-bottom:1px,solid,white;"
-								hx-trigger="click"
-							><span class="image">
-								<img src="/static/img/suivi-nutritionnel.svg" width="30px" height="30px" />
-							</span><span>Services Nutritionels</span></a> <hr />
-						</li>
-					<li><a hx-swap="innerHTML"
-								hx-get="/mj/service/collectiveCourse"
-								hx-target="#serviceView"
-								style="color:white;border-bottom:1px,solid,white;"
-								hx-trigger="click"
-							><span class="image">
-								<img src="/static/img/accompagnement-adapte.svg" width="30px" height="30px" />
-							</span><span>Accompagnement Physique Adapté</span></a> <hr />
-						</li>
-				</ul>
-		</details>
 
-		<hr />
-		<h4>Programme Personalisés.</h4>
-		<details>
-			<summary style="padding-block:2rem;margin-block:1rem;font-size:2rem;text-align:center;text-decoration:underline;background-color:#333;color:white;font-weight:bold;">Liste des programmes</summary>
-			<div
-				hx-swap="innerHTML"
-				hx-get="/mj/programmes"
-				hx-trigger=§hx:load!>
-			<progress />
-			</div>
-		</details>
-		
-		<button class="btn" hx-swap="innerHTML"
-			hx-get="/programme/new"
-			hx-target="#programmeView"
-			hx-trigger="click">Ajouter</button>
-		<hr/>
-
-		<button class="btn" hx-swap="innerHTML"
-			hx-get="/programme/table"
-			hx-target="#programmeView"
-			hx-trigger="click">Voir Tous</button>
-		<hr/>
-
-		<div
-			hx-swap="innerHTML"
-			class=§cls:dirloader!
-			hx-get=§path:DirLs!
-			hx-trigger=§hx:load!>
-		Loading Folder
-		</div>
-		<hr />
-		<h4>Blog</h4>
-		<button hx-swap="innerHTML"
-			hx-get="/blog/new"
-			hx-target="#blogView"
-			hx-trigger="click">Ajouter</button>
 	</aside>
 	<style>
+		.tndr-venture-options {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
+			position: relative;
+			width: 100%;
+
+			& .tndr-aside-menu {
+				width: calc(33% - 1rem);
+
+				&:has( .tndr-menu-collapsable > details[open]) {
+					width: 100%;
+				}
+			}
+		}
+
 		.services, .admins, .dirloader {
 			& li a, & summary {
 				display: flex;
@@ -160,5 +81,39 @@ t1 HTMX(c *router.Context) {
 				margin-top: 10px;
 			}
 		}
+
+		aside.container {
+			&.reduced {
+				width: 114px;
+				position: relative;
+
+				& .WelcomeMessage {
+					visibility: hidden;
+				}
+
+				& .tndr-venture-options {
+					& .tndr-aside-menu {
+						width: 100%;
+					}
+
+				}
+			}
+		}
 	</style>
+	<script>
+		setTimeout(() => {
+			let asideMenuReduced = false; 
+			menutoggler.addEventListener("click", () => {
+				if (!asideMenuReduced) {
+					document.querySelector("aside.container").classList.add("reduced");
+					document.querySelector("body").classList.add("reduced");
+				} else {
+					document.querySelector("aside.container").classList.remove("reduced");
+					document.querySelector("body").classList.remove("reduced");
+				}
+
+				asideMenuReduced = !asideMenuReduced;
+			})
+		}, 500)
+	</script>
 }

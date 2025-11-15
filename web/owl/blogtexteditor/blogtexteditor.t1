@@ -2,6 +2,18 @@ package blogtexteditor
 
 import "github.com/senforsce/tndr0cean/router"
 
+t1 AsideOnLoad(c *router.Context) {
+  <section class="tndr-menu-collapsable">
+    <details>
+      <summary class="glassy-button"><span class="tndr-aside-icon"><i data-feather="book"></i><h5 class="tndr-venture-app">Blog</h5></span></summary>
+      <button hx-swap="innerHTML"
+        hx-get="/blog/new"
+        hx-target="#blogView"
+        hx-trigger="click">Ajouter</button>
+    </details>
+  </section>
+}
+
 t1 HTMX(c *router.Context) {
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />

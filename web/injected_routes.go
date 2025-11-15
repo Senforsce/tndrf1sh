@@ -4,7 +4,7 @@ import (
 	"github.com/senforsce/tndr0cean/router"
 	"github.com/senforsce/tndrf1sh/web/owl/componentpreview"
 	"github.com/senforsce/tndrf1sh/web/owl/currentcomponent"
-	dirls "github.com/senforsce/tndrf1sh/web/owl/dirLs"
+	"github.com/senforsce/tndrf1sh/web/owl/dirls"
 	"github.com/senforsce/tndrf1sh/web/owl/texteditor"
 )
 

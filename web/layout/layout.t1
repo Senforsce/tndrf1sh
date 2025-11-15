@@ -18,10 +18,12 @@ t1 Base(c *router.Context) {
 			<title>§sen:Thunderf1shPageTitle!</title>
 			<link rel="stylesheet" href="/static/css/pico.classless.min.css" type="text/css"/>
 			<link rel="stylesheet" href="/static/css/critical.css" type="text/css"/>
+			<link rel="stylesheet" href="/static/css/colors.css" type="text/css"/>
 			<link rel="icon" href="/static/img/favicon.svg" type="text/css"/>
 			<script src=§se:HTMXUrl! defer></script>
 			<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 			<script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+			<script src="https://unpkg.com/feather-icons"></script>
 			<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 			<link
 			rel="stylesheet"
@@ -30,39 +32,67 @@ t1 Base(c *router.Context) {
 			<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 			<link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet" type="text/css" />
 			<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+			<link
+				rel="stylesheet"
+				href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css"
+			/>
 			<style>
 			svg.markmap {
 				width: 100%;
 				height: 100vh;
+			}
+
+			.feather {
+				width: 24px;
+				height: 24px;
+				stroke: var(--tndr-text);
+				stroke-width: 2;
+				stroke-linecap: round;
+				stroke-linejoin: round;
+				fill: none;
 			}
 			</style>
     		<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.18"></script>
 
 		</head>
 		<body>
+		// <svg class="feather">
+		// 	<use href="/static/feather/feather-sprite.svg" />
+		// </svg>
 			@aside.HTMX(c)
 			<main class={ tr.Echo("container-fluid work-area") } style="position:relative;">
-				<a href="/" title="Logo du Project Coach MJ" class={ tr.Echo("sticky-company-logo") }>
-					<h1 class={ tr.Echo("m-0 text-primary") } style="display:inline-flex;">
-						<img src=§path:LogoImgSymbol! class=§cls:LogoImgSymbol! width="60px" height="60px" alt="Coach MJ - Logo Symbol" />
-						<img style="filter:invert(100%)" src=§path:LogoImgTitle! class=§cls:LogoImgTitle! width="196px" height="60px" alt={tr.Echo("Coach Mj")} />
-					</h1>
-				</a>
+				
 				<div class="sticky-header">
 					<div class="userSection">
-						<p class="userGreeting">
-							<span class="greeting">Bonjour</span> <span class="username">Maxence !</span>
-						</p>
+						// <p class="userGreeting">
+						// 	<span class="greeting">Bonjour</span> <span class="username">Maxence !</span>
+						// </p>
+						<a href="/" title="Logo du Project Coach MJ" class={ tr.Echo("") } style="position:relative;top:14px;">
+							<h1 class={ tr.Echo("m-0 text-primary") } style="display:inline-flex;">
+								<img src=§path:LogoImgSymbol! class=§cls:LogoImgSymbol! width="60px" height="60px" alt="Coach MJ - Logo Symbol" />
+								<img style="filter:invert(100%)" src=§path:LogoImgTitle! class=§cls:LogoImgTitle! width="196px" height="60px" alt={tr.Echo("Coach Mj")} />
+							</h1>
+						</a>
 						<div class="userWrapper">
-							<div class="userAvatar">
+							<button popovertarget="profile" id="custom-user-button" class="user-button userAvatar">
+								 <div class="visually-hidden">Profile options</div>
 								<img src="/static/img/team-1.png" width="60px" height="60px" alt="" />
-							</div>
-							<div class="UserInfo">
-								<p>Coach-MJ</p>
-								<p>Administrator</p>
-							</div>
+							</button>
+							
+							// <div class="UserInfo">
+							// 	<p>Coach-MJ</p>
+							// 	<p>Administrator</p>
+							// </div>
 						</div>
 					</div>
+					<dialog popover id="profile" class="profile-menu">
+						<div class="profile grid-flow">
+							<span class="profile-name"><strong>UserName838</strong></span>
+							<span class="profile-email">email@address.com</span>
+						</div>
+						<button id="manage">Manage Account</button>
+						<button id="signout">Sign out</button>
+					</dialog>
 				</div>
 				<div id="queryAndTableView"></div>
 				<div id="formView"></div>
@@ -99,15 +129,310 @@ t1 Base(c *router.Context) {
 				// Render KITT's interface
 				SpeechKITT.vroom();
 				}
+
+				const glassyButtons = document.querySelectorAll(".glassy-button");
+				glassyButtons.forEach((button) => {
+				button.addEventListener("mousemove", (event) => {
+					const centerX = button.offsetWidth / 2;
+					const centerY = button.offsetHeight / 2;
+
+					const offsetX = event.offsetX - centerX;
+					const offsetY = event.offsetY - centerY;
+
+					button.style.setProperty("--_x-motion", `${offsetX}px`);
+					button.style.setProperty("--_y-motion", `${offsetY}px`);
+				});
+				});
 			</script>
 			<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
+
 			<script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+			<script src="/static/js/splitjs.js" type="module" defer></script>
+			<script src="/static/js/deps.js"></script>
+			<script>
+				jQuery(document).ready(function() {
+					setTimeout(() => {
+						feather.replace();
+					},1000)
+
+				})
+			</script>
 
 			<style>
 			#skitt-ui {
 				left: 260px !important;
 			}
-			
+			.reduced #skitt-ui {
+				left: 120px !important;
+			}
+			:root {
+				--bg: hsla(221, 60%, 61%, 1.00);
+				--button-text: hsla(2, 29%, 43%, 1.00);
+				--button-1-surface: hsl(197, 88%, 58%);
+				--button-2-surface: hsl(41, 96%, 56%);
+				--clr-surface-1: hsl(240, 29%, 8%);
+				--clr-surface-2: hsl(240, 29%, 12%);
+				--clr-surface-3: hsl(240, 29%, 16%);
+				/* BUTTONS */
+				--btn-border-radius: 0.25rem;
+
+				--btn-default-surface: var(--clr-surface-2);
+				--btn-default-text: var(--clr-text-2);
+				--btn-default-surface-hover: var(--clr-surface-3);
+			}
+
+			.user-button {
+				padding: 0;
+				border-radius: 100vw;
+				aspect-ratio: 1;
+
+				anchor-name: --profile-button;
+			}
+			  :is(button, .button) {
+				display: inline-flex;
+				cursor: pointer;
+				text-decoration: none;
+				font-weight: 500;
+				background-color: var(--btn-surface, var(--btn-default-surface));
+				color: white;
+				border: 0;
+				border-radius: 1rem;
+				transition: scale 0.125s;
+			}
+
+			:is(button, .button):is(:hover, :focus-visible) {
+				background-color: var(
+				--btn-surface-hover,
+				var(--btn-default-surface-hover)
+				);
+			}
+
+			:is(button, .button):active {
+				scale: 0.95;
+			}
+
+
+			.profile-menu {
+				display: none;
+				/* anchoring to the button */
+				position: absolute;
+				position-anchor: --profile-button;
+				margin: 0;
+				width: 300px;
+				height: 200px;
+				min-width: 300px;
+				min-height: 200px;
+				top: anchor(top);
+				right: anchor(left);
+				left: anchor(left);
+				opacity: 0;
+				transition: opacity 1s, display 1s, overlay 1s;
+				transition-behavior: allow-discrete;
+
+				position-try-fallbacks: --right;
+
+				margin-left: 0.25rem;
+
+				& > * {
+					padding: 0.5rem;
+				}
+
+				&:popover-open {
+					display: grid;
+					opacity: 1;
+
+					@starting-style {
+					display: grid;
+					opacity: 0;
+					}
+				}
+			}
+
+			@position-try --right {
+				inset: auto;
+				top: anchor(bottom);
+				right: anchor(left);
+			}
+
+			  .visually-hidden {
+				clip: rect(0 0 0 0);
+				clip-path: inset(50%);
+				height: 1px;
+				overflow: hidden;
+				position: absolute;
+				white-space: nowrap;
+				width: 1px;
+			}
+
+			  .user-button {
+				border: 6px solid var(--clr-surface-3);
+				&:hover,
+				&:focus-visible {
+				outline: 0;
+				border-color: hsl(from var(--clr-surface-2) h s 45%);
+				}
+			}
+
+			.profile-image {
+				aspect-ratio: 1;
+				border-radius: 100%;
+				width: 75px;
+				aspect-ratio: 1;
+				object-fit: cover;
+			}
+
+			.profile {
+				display: grid;
+				gap: 0.25rem;
+			}
+
+			.profile-menu {
+				/* general styling for the dialog */
+				border: 0;
+				padding: 0;
+				border-radius: 0.25rem;
+				background: hsl(197, 87%, 39%);
+				color: white;
+				font-size: 0.5rem;
+				overflow: hidden;
+			}
+
+			.profile-menu button {
+				padding: var(--size-300);
+				border-top: 1px solid var(--clr-surface--1);
+				border-radius: 0;
+				background-color: hsl(197, 87%, 39%);
+			}
+
+
+			.tndr-buttons {
+				display: flex;
+				gap: 2rem;
+			}
+
+			.glassy-button {
+				--_padding: 1rem 1.5rem;
+				--_transition-speed: 200ms;
+				--_hover-opacity: 0.4;
+				--_pressed-opacity: 0.15;
+				--_hover-blurriness: 5px;
+				--_pressed-blurriness: 10px;
+				--_frostiness: 0.3;
+				--_hover-offset: 0.5rem;
+				--_pressed-offset: 0.25rem;
+				--_motion-factor: 0.1; /* 0 -> 1 */
+
+				outline: 0;
+				cursor: pointer;
+				font: inherit;
+				color: var(--button-text);
+				font-weight: 500;
+				padding: 0;
+				border: 0;
+				border-radius: 1rem;
+				background-color: transparent;
+				position: relative;
+
+				span {
+					display: block;
+					overflow: hidden;
+					padding: var(--_padding);
+					border-radius: inherit;
+					background-color: hsl(0 0% 100% / 0);
+					backdrop-filter: blur(0px);
+					transition: background-color var(--_transition-speed),
+					backdrop-filter var(--_transition-speed),
+					translate var(--_transition-speed);
+
+					&::before {
+					content: "";
+					position: absolute;
+					inset: 0;
+					z-index: -1;
+					background-image: url("data:image/svg+xml, %3C!-- svg: first layer --%3E%3Csvg viewBox='0 0 171 171' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.74' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+					opacity: 0;
+					transition: opacity var(--_transition-speed);
+					}
+				}
+
+				&::after {
+					content: "";
+					position: absolute;
+					z-index: -1;
+					inset: 0;
+					border-radius: inherit;
+					background-color: var(--_surface);
+					transition: scale var(--_transition-speed),
+					translate var(--_transition-speed);
+					animation: exit forwards var(--_transition-speed);
+				}
+
+				&:hover,
+				&:focus-visible {
+					span {
+					outline: 1px solid hsl(0 0% 100% / 0.7);
+					background-color: hsl(0 0% 100% / var(--_hover-opacity));
+					backdrop-filter: blur(var(--_hover-blurriness));
+					translate: 0 calc(var(--_hover-offset) * -1);
+
+					&::before {
+						opacity: var(--_frostiness);
+					}
+					}
+					&::after {
+					scale: 0.95;
+					translate: 0 0.125rem;
+					animation: enter forwards var(--_transition-speed);
+					}
+				}
+
+				&:active {
+					span {
+					backdrop-filter: blur(var(--_pressed-blurriness));
+					background-color: hsl(0 0% 100% / var(--_pressed-opacity));
+					translate: 0 calc(var(--_pressed-offset) * -1);
+					}
+					&::after {
+					scale: 0.875;
+					translate: 0 0.25rem;
+					}
+				}
+				}
+
+				@keyframes enter {
+				from {
+					transform: translate(0, 0);
+				}
+				to {
+					transform: translate(
+					calc(var(--_x-motion) * var(--_motion-factor) * -1),
+					calc(var(--_y-motion) * var(--_motion-factor) * -1)
+					);
+				}
+				}
+
+				@keyframes exit {
+				from {
+					transform: translate(
+					calc(var(--_x-motion) * var(--_motion-factor) * -1),
+					calc(var(--_y-motion) * var(--_motion-factor) * -1)
+					);
+				}
+				to {
+					transform: translate(0, 0);
+				}
+				}
+
+				.glassy-button:nth-child(1) {
+				--_surface: var(--button-1-surface);
+				}
+
+				.glassy-button:nth-child(2) {
+				--_surface: var(--button-2-surface);
+				}
+
+
 			</style>
 		</body>
 	</html>

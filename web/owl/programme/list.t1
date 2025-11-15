@@ -3,7 +3,35 @@ package programme
 import (
 	"fmt"
 	"github.com/senforsce/tndr0cean/router"
+    "github.com/senforsce/htmx/hx"
 )
+
+t1 AsideOnLoad(c *router.Context) {
+    <section class="tndr-menu-collapsable">
+        <details>
+            <summary class="glassy-button"><span class="tndr-aside-icon"><i data-feather="cpu"></i><h5 class="tndr-venture-app">Plan</h5></span></summary>
+            <div class="tndr-buttons">
+                <button class="glassy-button" hx-swap="innerHTML"
+                    hx-get="/programme/new"
+                    hx-target="#programmeView"
+                    hx-trigger="click"><span>Ajouter</span></button>
+
+                <button class="glassy-button" hx-swap="innerHTML"
+                    hx-get="/programme/table"
+                    hx-target="#programmeView"
+                    hx-trigger="click"><span>Voir Tous</span></button>
+            </div>
+            @ListOnLoad(c)
+        </details>
+    </section>
+
+}
+
+
+t1 ListOnLoad(c *router.Context) {
+	@hx.GetInnerHTMLOnLoad(c, hx.GET{Path: "/mj/programmes"}, "")
+}
+
 
 t1 List(vc []ViewConfig, c *router.Context) {
 	<div class={ tr.Echo("")} >

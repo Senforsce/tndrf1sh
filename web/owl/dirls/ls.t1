@@ -1,0 +1,48 @@
+package dirls
+
+import (
+	"github.com/senforsce/tndrf1sh/web/layout/v1/meta"
+	"github.com/senforsce/tndr0cean/router"
+	"github.com/senforsce/htmx/hx"
+	"fmt"
+)
+
+
+t1 OnLoad(c *router.Context) {
+	@hx.GetInnerHTMLOnLoad(c, hx.GET{Path: tr.Tr("path:DirLs", c)}, "")
+}
+
+t1 HTMX(cf meta.Config, c *router.Context, folder string, list []File) {
+	  <section class="tndr-menu-collapsable">
+		<details class=§cls:OwlComponent!>
+			<summary class="glassy-button">
+				<span class="tndr-aside-icon"><i data-feather="folder"></i>
+				<h5 class="tndr-venture-app">View</h5>
+				</span>
+			</summary>
+			<p>{ folder }</p>
+			<ul>
+				for i := range(list) {
+					<li>
+						if !list[i].isDir {
+							<a
+								class=§cls:file-tree! 
+								hx-get={fmt.Sprintf("%s%s/%s", tr.Tr("path:FileOpen", c), folder, list[i].Name)}
+								hx-target=§ids:fileeditor!
+								hx-trigger=§hx:click!
+							>{ list[i].Name }</a>
+						} else {
+							<a
+								class=§cls:file-tree!
+								hx-get={fmt.Sprintf("%s/%s", tr.Tr("path:DirLs", c), list[i].Name)}
+								hx-trigger=§hx:click!
+								hx-swap=§hx:SwapOuterHTML!
+							>{ list[i].Name }</a>
+						}
+					</li>
+				}
+			</ul>
+		</details>
+		@meta.O8(cf)
+	</section>
+}

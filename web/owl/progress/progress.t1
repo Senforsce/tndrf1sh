@@ -1,0 +1,144 @@
+package progress
+
+import "github.com/senforsce/tndr0cean/router"
+t1 HTMX(c *router.Context) {
+    <div class={ tr.Echo("progressbar") }>
+    <!--  you probably want a more useful message here  -->
+    <span>This <em>really awesome feature</em> requires JS 😢</span>
+    </div>
+    <style>
+        /* let's us animate the custom prop */
+        /* if @property isn't supported, everything works, just without the animation */
+        @property --progress {
+        syntax: "<length-percentage>";
+        inherits: false;
+        initial-value: 0%;
+        }
+
+        [role="progressbar"] {
+        --size: 132px;
+        --bar-width: 20px;
+
+        font-size: 2rem;
+        width: var(--size);
+        aspect-ratio: 1 / 1;
+        margin: 2rem auto;
+        background: conic-gradient(
+            var(--color-dark),
+            var(--color-dark) var(--progress),
+            var(--color-dark-glare) 0%
+        );
+        border-radius: 50vmax;
+
+        display: grid;
+        place-items: center;
+
+        /* this works thanks to the @property at the top */
+        transition: --progress 500ms linear;
+
+        /* we only have this role if JS is enabled */
+        /* which means it's safe to hide the message here */
+        > span {
+            display: none;
+        }
+        }
+
+        /* using aria-valuenow, to help enforce using it in the JS */
+        [role="progressbar"]::after {
+        content: attr(aria-valuenow) "%";
+        background: white;
+        width: calc(100% - var(--bar-width));
+        aspect-ratio: 1;
+        border-radius: inherit;
+        display: grid;
+        place-items: center;
+        }
+
+        /* when progress === 100 */
+        [role="progressbar"][aria-valuenow="100"]::after {
+        /* this is kind of hacky, but it allows the percent to be at 100% for a bit before the checkbox comes in, which feels better */
+        animation: progressComplete 0s forwards;
+        animation-delay: 1000ms;
+        }
+
+        @keyframes progressComplete {
+        to {
+            content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODUiIGhlaWdodD0iODUiIHZpZXdCb3g9IjUgMzAgNzUgMTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zNS40MjM3IDUzLjczMjdMNjcuOTc4NyAyMS4xNzc3TDcyLjk4OTUgMjYuMTg0MkwzNS40MTk1IDYzLjc1TDEyLjg4NiA0MS4yMTIyTDE3Ljg5MjUgMzYuMjAxNUwzNS40MjM3IDUzLjczMjdaIiBmaWxsPSIjMWYxYTM4Ii8+Cjwvc3ZnPgo=");
+            background: var(--color-success);
+        }
+        }
+
+        /* if js is disabled */
+        .progressbar:not([role="progressbar"]) {
+        position: relative;
+        &::after {
+            display: none;
+        }
+        span {
+            font-size: 1rem;
+            text-align: center;
+            color: var(--color-success-dark);
+        }
+        }
+    </style>
+    <script>
+        const progressbar = document.querySelector(".progressbar");
+        let progress = 0;
+
+        function enableProgessBar() {
+        /* if JS is working, we'll enable the progess bar */
+        /* all the styling for it comes from the role="progressbar" */
+        /* and having that removes the no-js message */
+        /* min of 0 and max of 100 are defaults, so we don't need aria-valuemin or -valuemax */
+        progressbar.setAttribute("role", "progressbar");
+        progressbar.setAttribute("aria-valuenow", progress);
+        progressbar.setAttribute("aria-live", "polite");
+        }
+
+        enableProgessBar();
+
+        // for simulating stuff when we click the buttons
+        const testingGround = document.querySelector(".testing-ground");
+        let interval = null;
+
+        function simulateProgress(newProgressValue) {
+        clearInterval(interval);
+        if (newProgressValue === "fake-upload") {
+            simulateUpload();
+        } else {
+            updateProgress(newProgressValue);
+        }
+        }
+
+        testingGround.addEventListener("click", (e) => {
+        if (!e.target.closest("button")) return;
+
+        progress = e.target.dataset.progress;
+        simulateProgress(progress);
+        });
+
+        function updateProgress(progress) {
+        progressbar.setAttribute("aria-valuenow", progress);
+        progressbar.style.setProperty("--progress", progress + "%");
+        }
+
+        function simulateUpload() {
+        // aria-busy prevents it from announcing every change as it keeps updating the progress
+        // make sure to set it false once the progress is finished
+        progressbar.setAttribute("aria-busy", "true");
+        let progress = 0;
+        updateProgress(progress);
+
+        intervalTimer = setInterval(() => {
+            progress += 5;
+            updateProgress(progress);
+            if (progress === 100) {
+            // probably want something to catch errros and also have this set to false then too
+            progressbar.setAttribute("aria-busy", "false");
+            clearInterval(intervalTimer);
+            }
+        }, 500);
+        }
+
+    </script>
+}

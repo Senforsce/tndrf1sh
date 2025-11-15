@@ -4,6 +4,64 @@ import "github.com/senforsce/tndr0cean/router"
 
 import "github.com/senforsce/tndrf1sh/web/owl/userlist"
 
+t1 AsideOnLoad(c *router.Context) {
+    <section class="tndr-menu-collapsable">
+    <details>
+        <summary class="glassy-button"><span class="tndr-aside-icon"><i data-feather="dollar-sign"></i><h5 class="tndr-venture-app">Services</h5></span></summary>
+            <ul class="services" style="background-color:#333;color:white;">
+                <li><a hx-swap="innerHTML"
+                            hx-get="/mj/service/collectiveCourse"
+                            hx-target="#serviceView"
+                            style="color:white;border-bottom:1px,solid,white;"
+                            hx-trigger="click"
+                        ><span class="image">
+                            <img src="/static/img/cours-collectifs.svg" width="30px" height="30px" />
+                        </span><span>Cours Collectifs</span></a>
+                    <hr />
+                </li>
+                <li><a hx-swap="innerHTML"
+                            hx-get="/mj/service/collectiveCourse"
+                            hx-target="#serviceView"
+                            style="color:white;border-bottom:1px,solid,white;"
+                            hx-trigger="click"
+                        ><span class="image">
+                            <img src="/static/img/coaching-individuel.svg" width="30px" height="30px" />
+                        </span><span>Cours Individuels En Présentiel</span></a>
+                        
+                    <hr />
+                </li>
+                <li><a hx-swap="innerHTML"
+                            hx-get="/mj/service/collectiveCourse"
+                            hx-target="#serviceView"
+                            style="color:white;border-bottom:1px,solid,white;"
+                            hx-trigger="click"
+                        ><span class="image">
+                            <img src="/static/img/consulting.svg" width="30px" height="30px" />
+                        </span><span>Consulting Sportif</span></a> <hr />
+                    </li>
+                <li><a hx-swap="innerHTML"
+                            hx-get="/mj/service/collectiveCourse"
+                            hx-target="#serviceView"
+                            style="color:white;border-bottom:1px,solid,white;"
+                            hx-trigger="click"
+                        ><span class="image">
+                            <img src="/static/img/suivi-nutritionnel.svg" width="30px" height="30px" />
+                        </span><span>Services Nutritionels</span></a> <hr />
+                    </li>
+                <li><a hx-swap="innerHTML"
+                            hx-get="/mj/service/collectiveCourse"
+                            hx-target="#serviceView"
+                            style="color:white;border-bottom:1px,solid,white;"
+                            hx-trigger="click"
+                        ><span class="image">
+                            <img src="/static/img/accompagnement-adapte.svg" width="30px" height="30px" />
+                        </span><span>Accompagnement Physique Adapté</span></a> <hr />
+                    </li>
+            </ul>
+    </details>
+    </section>
+}
+
 t1 HTMX(c *router.Context, list []UserBooking) {
     <div class="serviceview">
         <div>
